@@ -4,6 +4,7 @@
  * @constructor
  */
 cog.Input = function Input() {};
+cog.Input.abstract = true;
 
 (proto => {
 

@@ -13,7 +13,7 @@ cog.InputDate.extends = cog.Input;
      * @param _this
      */
     proto.buildDom = function buildDom(_this) {
-        cog.Util._super("buildDom", _this);
+        _this.super.buildDom();
         _this.dom.type = "date";
     };
 

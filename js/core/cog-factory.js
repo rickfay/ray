@@ -35,24 +35,31 @@ cog.Factory = {
      * @param parentDom
      */
     construct: (id, className, parentDom) => {
+
+        // Construction of abstract classes is not permitted
+        if (cog[className].abstract) {
+            console.error(`Cannot construct abstract class ${className}`);
+            return;
+        }
+
+        // Construct the object using a closure to provide its own private scope
         ((id, className) => {
 
-            // Construct the $component
+            // Construct the component
             this.component = new cog[className]();
+
+            // Assign private scope properties
             this.id = parentDom ? `${parentDom.id}.${id}` : id;
             this.metadata = cog.Metadata.Components[className][id];
             this.className = className;
+            this.super = {};
 
-            // Component Build Pipeline:
-            cog.Factory.proxyToPrototype(this.component, this);
+            // Build the componnt functions as proxies to prototypal functions, and inherit properties from parent class(es)
+            cog.Factory.proxyToPrototype(this);
             cog.Factory.extend(this, this.component.constructor.extends);
 
-            this.component.construct();
-            this.component.buildDom();
-
-            cog.Factory.applyCss(this);
-            cog.Util.appendDom(parentDom, this.dom);
-            cog.Factory.buildChildren(this.component);
+            // Allow the object to construct itself
+            this.component.construct(parentDom);
 
         })(id, className);
     },
@@ -70,6 +77,8 @@ cog.Factory = {
             for (let key of Object.keys(parentClass.prototype)) {
                 if (!_this.component.hasOwnProperty(key)) {
                     _this.component[key] = $.proxy(parentClass.prototype[key], _this.component, _this);
+                } else if (!_this.super[key]) {
+                    _this.super[key] = $.proxy(parentClass.prototype[key], _this.component, _this);
                 }
             }
 
@@ -78,42 +87,13 @@ cog.Factory = {
     },
 
     /**
-     *
-     * @param _this
-     */
-    applyCss: (_this) => {
-        cog.Util.applyStyle(_this.dom, _this.metadata.Style);
-        cog.Util.applyClass(_this.dom, _this.metadata.Class);
-        cog.Util.applyClass(_this.dom, ...[cog.Util.getClasses(_this).map(clazz => `cog${clazz.name}`)]);
-    },
-
-    /**
      * Proxy inherited prototype properties
      *
-     * @param $component
      * @param _this
      */
-    proxyToPrototype: ($component, _this) => {
-        for (let key of Object.keys($component.__proto__)) {
-            $component[key] = $.proxy($component.__proto__[key], $component, _this);
-        }
-    },
-
-    /**
-     * Recursively builds the child Elements on this Component
-     *
-     * @param $component
-     */
-    buildChildren: $component => {
-        let dom = $component.getDom();
-        if (dom) {
-            // Recursively construct child Component Elements
-            let elements = $component.getMetadata().Elements;
-            if (elements) {
-                for (let element in elements) {
-                    cog.Factory.construct(element, elements[element], dom);
-                }
-            }
+    proxyToPrototype: _this => {
+        for (let key of Object.keys(_this.component.__proto__)) {
+            _this.component[key] = $.proxy(_this.component.__proto__[key], _this.component, _this);
         }
     }
 };

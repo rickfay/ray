@@ -1,0 +1,20 @@
+body {
+    font-family: Arial, serif;
+    display: block;
+    width: 640px;
+}
+
+.cogDemoTitle {
+    background-color: #00FF00;
+    font-size: 24px;
+    padding: 10px;
+}
+
+.demoInput {
+    width: 250px;
+    border: 5px solid red;
+}
+
+.meeseeks {
+    width: 100%;
+}

@@ -53,6 +53,16 @@ cog.Util = {
     },
 
     /**
+     *
+     * @param _this
+     */
+    applyCss: (_this) => {
+        cog.Util.applyStyle(_this.dom, _this.metadata.Style);
+        cog.Util.applyClass(_this.dom, _this.metadata.Class);
+        cog.Util.applyClass(_this.dom, ...[cog.Util.getClasses(_this).map(clazz => `cog${clazz.name}`)]);
+    },
+
+    /**
      * Applies the given css definition to the given dom element
      *
      * @param dom
@@ -83,6 +93,24 @@ cog.Util = {
     },
 
     /**
+     * Recursively builds the child Elements on this Component
+     *
+     * @param component
+     */
+    buildChildren: component => {
+        let dom = component.getDom();
+        if (dom) {
+            // Recursively construct child Component Elements
+            let elements = component.getMetadata().Elements;
+            if (elements) {
+                for (let element in elements) {
+                    cog.Factory.construct(element, elements[element], dom);
+                }
+            }
+        }
+    },
+
+    /**
      * Determines if obj is empty
      *
      * @param obj
@@ -107,10 +135,10 @@ cog.Util = {
      * @param _this
      * @param func
      * @param args
-     */
+     *
     _super: (func, _this, args) => {
         cog[_this.className].extends.prototype[func](_this,  args);
-    },
+    },*/
 
     /**
      * Returns an Array of all the cog Component classes _this object

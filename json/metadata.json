@@ -22,42 +22,13 @@
             "cogDemoContainer": {
                 "Elements": {
                     "cogDemoText": "Text",
-                    "comic": "Image",
-                    "rickAndMortyText": "Text",
+                    "meeseeks": "Image",
+                    "meeseeksText": "Text",
                     "demoForm": "Form"
                 },
                 "Style": {
                     "text-align": "center"
                 }
-            }
-        },
-        "Image": {
-            "comic": {
-                "Source": "https://i.redditmedia.com/xf83M9ZNjEB1Q8mwfwqvoeKCZ7vkhrN2ikOoVw5iOkc.png?s=e5412d0ae44fefc45f0e33b5087550ff",
-                "Style": {
-                    "width": "300px",
-                    "height": "300px"
-                }
-            }
-        },
-        "Input": {
-            "demoInput": {
-                "DefaultText": "Enter a value..."
-            }
-        },
-        "InputDate": {
-            "demoInputDate": {
-            }
-        },
-        "InputRadio": {
-            "demoInputRadio": {
-                "Label": "Rick",
-                "Value": "Rick"
-            }
-        },
-        "InputText": {
-            "demoInputText": {
-                "DefaultText": "Enter a value..."
             }
         },
         "Form": {
@@ -68,10 +39,36 @@
                     "demoInputText": "InputText",
                     "demoInputDate": "InputDate",
                     "demoInputRadio": "InputRadio"
-                },
-                "Style": {
-                    "border": "5px solid #00FF00"
                 }
+            }
+        },
+        "Image": {
+            "meeseeks": {
+                "Source": "https://cdn-images-1.medium.com/max/1600/0*eGkQxJeiBuNzwKG9.jpg",
+                "Class": [
+                    "meeseeks"
+                ]
+            }
+        },
+        "InputDate": {
+            "demoInputDate": {
+            }
+        },
+        "InputRadio": {
+            "demoInputRadio": {
+                "Options": {
+                    "Select": "Select",
+                    "Rick": "Rick",
+                    "Morty": "Morty",
+                    "Summer": "Summer",
+                    "Beth": "Beth",
+                    "Jerry": "Jerry"
+                }
+            }
+        },
+        "InputText": {
+            "demoInputText": {
+                "DefaultText": "Enter a value..."
             }
         },
         "Select": {
@@ -97,16 +94,11 @@
             "demoText": {
                 "Text": "Demo Form. This is just some text blah blah blah"
             },
+            "meeseeksText": {
+                "Text": "I can't take it anymore. I just want to die!<br />We all want to die! We're Meeseeks!<br />Why did you even rope me into this?<br />'Cause he roped me into this!<br />Well, him over there, he roped me into this!<br />Well, he roped me into this!<br />Well, what about me? He roped me into this.<br />Well, that one over there roped me into this.<br />Well, he roped me into this."
+            },
             "rickAndMortyText": {
-                "Text": "All right, all right, cool it! I see what's happening here. You're both young, you're both unsure about your place in the universe, and you both want to be Grandpa's favorite. I can fix this. Morty, sit here. Summer, you sit here. Now, listen—I know the two of you are very different from each other in a lot of ways, but you have to understand that as far as Grandpa's concerned, you're both pieces of shit! Yeah. I can prove it mathematically. Actually, l-l-let me grab my whiteboard. This has been a long time coming, anyways.",
-                "Style": {
-                    "background-color": "#DDDDDD",
-                    "border": "2px solid #CCCCCC",
-                    "border-radius": "25px",
-                    "font-size": "20px",
-                    "padding": "10px",
-                    "margin": "10px"
-                }
+                "Text": "All right, all right, cool it! I see what's happening here. You're both young, you're both unsure about your place in the universe, and you both want to be Grandpa's favorite. I can fix this. Morty, sit here. Summer, you sit here. Now, listen—I know the two of you are very different from each other in a lot of ways, but you have to understand that as far as Grandpa's concerned, you're both pieces of shit! Yeah. I can prove it mathematically. Actually, l-l-let me grab my whiteboard. This has been a long time coming, anyways."
             }
         }
     }

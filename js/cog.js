@@ -16,17 +16,21 @@ let cog = {
          * System Imports Needed for COG to run
          */
         Dependencies: [
+
+            // Libs
             "js/lib/jquery.js",
 
-            "js/cog-ajax.js",
-            "js/cog-log.js",
-            "js/cog-factory.js",
-            "js/cog-pubsub.js",
-            "js/cog-util.js",
+            // Framework Core
+            "js/core/cog-ajax.js",
+            "js/core/cog-log.js",
+            "js/core/cog-factory.js",
+            "js/core/cog-pubsub.js",
+            "js/core/cog-util.js",
 
-            "js/components/cog-component.js", // Import before the other components
+            // Components
 
             "js/components/cog-app.js",
+            "js/components/cog-component.js",
             "js/components/cog-container.js",
             "js/components/cog-form.js",
             "js/components/cog-image.js",
@@ -37,7 +41,9 @@ let cog = {
             "js/components/cog-select.js",
             "js/components/cog-text.js",
 
-            "css/cog-style.css"
+            // CSS
+            "css/cog-style.css",
+            "css/user-style.css"
         ],
 
         /**
@@ -49,6 +55,8 @@ let cog = {
          */
         importFile: (url, successCallback) => {
             return new Promise(function (resolve) {
+
+                // TODO Build in wildcard file loading
 
                 let fileType = url.substring(url.lastIndexOf("."));
                 let fileElem = undefined;

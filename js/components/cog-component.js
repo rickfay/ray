@@ -6,6 +6,7 @@
  * @constructor
  */
 cog.Component = function Component() {};
+cog.Component.abstract = true;
 
 (proto => {
 
@@ -13,9 +14,13 @@ cog.Component = function Component() {};
      * Construct the Component
      *
      * @param _this
+     * @param parentDom
      */
-    proto.construct = function construct(_this) {
-        // TODO put something here
+    proto.construct = function construct(_this, parentDom) {
+        _this.component.buildDom();
+        cog.Util.applyCss(_this);
+        cog.Util.appendDom(parentDom, _this.dom);
+        cog.Util.buildChildren(_this.component);
     };
 
     /**
@@ -24,7 +29,8 @@ cog.Component = function Component() {};
      * @param _this
      */
     proto.buildDom = function buildDom(_this) {
-        // TODO put something here
+        _this.dom = document.createElement("div");
+        _this.dom.id = _this.id;
     };
 
     /**
@@ -45,7 +51,7 @@ cog.Component = function Component() {};
      */
     proto.getMetadata = function getMetadata(_this) {
         return _this.metadata;
-    }
+    };
 
     /**
      * Get the DOM
