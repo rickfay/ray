@@ -1,7 +1,6 @@
 /**
  * COG Container Component Definition
  *
- * @param id
  * @constructor
  */
 cog.Container = function Container() {};
@@ -9,12 +8,13 @@ cog.Container = function Container() {};
 (proto => {
 
     /**
+     * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        $scope.dom = document.createElement("div");
-        $scope.dom.id = $scope.id;
+    proto.buildDom = function buildDom(_this) {
+        _this.dom = document.createElement("div");
+        _this.dom.id = _this.id;
     };
 
 })(cog.Container.prototype);

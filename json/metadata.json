@@ -26,7 +26,7 @@
                     "rickAndMortyText": "Text",
                     "demoForm": "Form"
                 },
-                "CSS": {
+                "Style": {
                     "text-align": "center"
                 }
             }
@@ -34,7 +34,7 @@
         "Image": {
             "comic": {
                 "Source": "https://i.redditmedia.com/xf83M9ZNjEB1Q8mwfwqvoeKCZ7vkhrN2ikOoVw5iOkc.png?s=e5412d0ae44fefc45f0e33b5087550ff",
-                "CSS": {
+                "Style": {
                     "width": "300px",
                     "height": "300px"
                 }
@@ -69,7 +69,7 @@
                     "demoInputDate": "InputDate",
                     "demoInputRadio": "InputRadio"
                 },
-                "CSS": {
+                "Style": {
                     "border": "5px solid #00FF00"
                 }
             }
@@ -90,7 +90,7 @@
         "Text": {
             "cogDemoText": {
                 "Text": "COG Framework Demo",
-                "Classes": [
+                "Class": [
                     "cogDemoTitle"
                 ]
             },
@@ -99,7 +99,7 @@
             },
             "rickAndMortyText": {
                 "Text": "All right, all right, cool it! I see what's happening here. You're both young, you're both unsure about your place in the universe, and you both want to be Grandpa's favorite. I can fix this. Morty, sit here. Summer, you sit here. Now, listen—I know the two of you are very different from each other in a lot of ways, but you have to understand that as far as Grandpa's concerned, you're both pieces of shit! Yeah. I can prove it mathematically. Actually, l-l-let me grab my whiteboard. This has been a long time coming, anyways.",
-                "CSS": {
+                "Style": {
                     "background-color": "#DDDDDD",
                     "border": "2px solid #CCCCCC",
                     "border-radius": "25px",

@@ -1,7 +1,6 @@
 /**
  * COG Form Class Definition
  *
- * @param id
  * @constructor
  */
 cog.Form = function Form() {};
@@ -11,11 +10,11 @@ cog.Form = function Form() {};
     /**
      * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        $scope.dom = document.createElement("form");
-        $scope.dom.id = $scope.id;
+    proto.buildDom = function buildDom(_this) {
+        _this.dom = document.createElement("form");
+        _this.dom.id = _this.id;
     };
 
 })(cog.Form.prototype);

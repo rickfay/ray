@@ -10,20 +10,20 @@ cog.Select = function Select() {};
     /**
      * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        $scope.dom = document.createElement("select");
+    proto.buildDom = function buildDom(_this) {
+        _this.dom = document.createElement("select");
 
         // Build the options
         // TODO Add support for DefaultOption
-        let options = $scope.metadata.Options;
+        let options = _this.metadata.Options;
         for (let option in options) {
 
             let optionDom = document.createElement("option");
             optionDom.innerHTML = option;
             optionDom.value = options[option];
-            $scope.dom.appendChild(optionDom);
+            _this.dom.appendChild(optionDom);
         }
     };
 

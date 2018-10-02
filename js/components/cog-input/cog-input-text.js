@@ -12,12 +12,12 @@ cog.InputText.extends = cog.Input;
     /**
      * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        cog.Util.$super("buildDom", $scope);
-        $scope.dom.type = "text";
-        $scope.dom.value = $scope.metadata.DefaultText;
+    proto.buildDom = function buildDom(_this) {
+        cog.Util._super("buildDom", _this);
+        _this.dom.type = "text";
+        _this.dom.value = _this.metadata.DefaultText;
     };
 
 })(cog.InputText.prototype);

@@ -10,11 +10,11 @@ cog.App = function App() {};
     /**
      * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        $scope.dom = cog.Root;
-        $scope.dom.id = $scope.id;
+    proto.buildDom = function buildDom(_this) {
+        _this.dom = cog.Root;
+        _this.dom.id = _this.id;
     };
 
 })(cog.App.prototype);

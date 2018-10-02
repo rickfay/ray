@@ -84,13 +84,13 @@ let cog = {
             console.log("Bootstrapping COG Framework...");
 
             // Load system dependencies
-            let promiseArray = [];
-            for (let sysImport of cog.Init.Dependencies) {
-                promiseArray.push(cog.Init.importFile(sysImport));
+            let dependencyPromises = [];
+            for (let dependency of cog.Init.Dependencies) {
+                dependencyPromises.push(cog.Init.importFile(dependency));
             }
 
             // Ensure all dependencies have loaded before continuing...
-            Promise.all(promiseArray).then(() => {
+            Promise.all(dependencyPromises).then(() => {
 
                 // Get base element to anchor COG app
                 const COG_APP_ATTRIBUTE = "[data-cog-app-id]";

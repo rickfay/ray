@@ -10,10 +10,10 @@ cog.Input = function Input() {};
     /**
      * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        $scope.dom = document.createElement("input");
+    proto.buildDom = function buildDom(_this) {
+        _this.dom = document.createElement("input");
     };
 
 })(cog.Input.prototype);

@@ -1,93 +1,22 @@
 /**
  * Component Object Generator Factory
  *
- * @type {{extend: cog.Factory.extend, construct: (function(*=, *=, *=)), buildCogApp: cog.Factory.buildCogApp}}
+ * @type {{extend: cog.Factory.extend, applyCss: cog.Factory.applyCss, construct: (function(*=, *=, *=)), establishBaseComponent: cog.Factory.establishBaseComponent, buildCogApp: cog.Factory.buildCogApp}}
  */
 cog.Factory = {
 
     /**
-     * Inherit component properties off the component's parent
+     * Builds the COG Application
      *
-     * @param $scope
-     * @param component
-     * @param parentClass
+     * @param appId
      */
-    extend: ($scope, component, parentClass) => {
-
-        // Proxy inherited prototype properties
-        if (parentClass) {
-            for (let key of Object.keys(parentClass.prototype)) {
-                if (!component.hasOwnProperty(key)) {
-                    component[key] = $.proxy(parentClass.prototype[key], component, $scope);
-                }
-            }
-
-            cog.Factory.extend($scope, component, parentClass.extends);
-        }
+    buildCogApp: appId => {
+        cog.Factory.establishBaseComponent();
+        cog.Factory.construct(appId, cog.App.name, null);
     },
 
     /**
-     * Constructs a new COG Component
-     *
-     * @param clazz
-     * @param id
-     * @param parentDom
-     */
-    construct: function (id, clazz, parentDom) {
-
-        // Build the Component
-        let component = ((id, clazz) => {
-
-            let component = new cog[clazz]();
-            let $scope = {
-                id: parentDom ? `${parentDom.id}.${id}` : id,
-                metadata: cog.Metadata.Components[clazz][id],
-                clazz: clazz
-            };
-
-            // Proxy inherited prototype properties
-            for (let key of Object.keys(component.__proto__)) {
-                component[key] = $.proxy(component.__proto__[key], component, $scope);
-            }
-
-            cog.Factory.extend($scope, component, component.constructor.extends);
-
-            component.construct();
-            component.buildDom();
-
-            $scope.dom.setAttribute("data-cog-class", clazz);
-
-            cog.Util.applyCss($scope.dom, $scope.metadata.CSS);
-            cog.Util.applyCssClasses($scope.dom, $scope.metadata.Classes);
-
-            return component;
-
-        })(id, clazz);
-
-        let dom = component.getDom();
-        if (dom) {
-
-            // Append newly constructed Component to the DOM
-            if (parentDom) {
-                parentDom.appendChild(dom);
-            }
-
-            // Recursively construct child Component Elements
-            let elements = component.getMetadata().Elements;
-            if (elements) {
-                for (let element in elements) {
-                    cog.Factory.construct(element, elements[element], component.getDom());
-                }
-            }
-        } else {
-            console.error(`No DOM built on Component: ${component}`);
-        }
-
-        return component;
-    },
-
-    /**
-     * Any COG Components that don't specify a class to extend will automatically be assigned cog.Component
+     * This exists so that I don't have to write "cog.Blah.extends = cog.Component;" on every class that doesn't extend anything.
      */
     establishBaseComponent: () => {
         for (let key of Object.keys(cog)) {
@@ -99,12 +28,92 @@ cog.Factory = {
     },
 
     /**
-     * Builds the COG Application
+     * Constructs a new COG Component
      *
-     * @param appId
+     * @param className
+     * @param id
+     * @param parentDom
      */
-    buildCogApp: appId => {
-        cog.Factory.establishBaseComponent();
-        cog.Factory.construct(appId, cog.App.name, null);
+    construct: (id, className, parentDom) => {
+        ((id, className) => {
+
+            // Construct the $component
+            this.component = new cog[className]();
+            this.id = parentDom ? `${parentDom.id}.${id}` : id;
+            this.metadata = cog.Metadata.Components[className][id];
+            this.className = className;
+
+            // Component Build Pipeline:
+            cog.Factory.proxyToPrototype(this.component, this);
+            cog.Factory.extend(this, this.component.constructor.extends);
+
+            this.component.construct();
+            this.component.buildDom();
+
+            cog.Factory.applyCss(this);
+            cog.Util.appendDom(parentDom, this.dom);
+            cog.Factory.buildChildren(this.component);
+
+        })(id, className);
+    },
+
+    /**
+     * Inherit component properties off the component's parent
+     *
+     * @param _this
+     * @param parentClass
+     */
+    extend: (_this, parentClass) => {
+
+        // Proxy inherited prototype properties
+        if (parentClass) {
+            for (let key of Object.keys(parentClass.prototype)) {
+                if (!_this.component.hasOwnProperty(key)) {
+                    _this.component[key] = $.proxy(parentClass.prototype[key], _this.component, _this);
+                }
+            }
+
+            cog.Factory.extend(_this, parentClass.extends);
+        }
+    },
+
+    /**
+     *
+     * @param _this
+     */
+    applyCss: (_this) => {
+        cog.Util.applyStyle(_this.dom, _this.metadata.Style);
+        cog.Util.applyClass(_this.dom, _this.metadata.Class);
+        cog.Util.applyClass(_this.dom, ...[cog.Util.getClasses(_this).map(clazz => `cog${clazz.name}`)]);
+    },
+
+    /**
+     * Proxy inherited prototype properties
+     *
+     * @param $component
+     * @param _this
+     */
+    proxyToPrototype: ($component, _this) => {
+        for (let key of Object.keys($component.__proto__)) {
+            $component[key] = $.proxy($component.__proto__[key], $component, _this);
+        }
+    },
+
+    /**
+     * Recursively builds the child Elements on this Component
+     *
+     * @param $component
+     */
+    buildChildren: $component => {
+        let dom = $component.getDom();
+        if (dom) {
+            // Recursively construct child Component Elements
+            let elements = $component.getMetadata().Elements;
+            if (elements) {
+                for (let element in elements) {
+                    cog.Factory.construct(element, elements[element], dom);
+                }
+            }
+        }
     }
 };

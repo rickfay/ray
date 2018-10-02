@@ -12,15 +12,13 @@ cog.InputRadio.extends = cog.Input;
     /**
      * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        cog.Util.$super("buildDom", $scope);
-        $scope.dom.type = "radio";
-        $scope.dom.innerHTML = $scope.metadata.Label;
-        $scope.dom.value = $scope.metadata.Value;
-
-        // TODO Needs work
+    proto.buildDom = function buildDom(_this) {
+        cog.Util._super("buildDom", _this);
+        _this.dom.type = "radio";
+        _this.dom.innerHTML = _this.metadata.Label;
+        _this.dom.value = _this.metadata.Value;
     };
 
 })(cog.InputRadio.prototype);

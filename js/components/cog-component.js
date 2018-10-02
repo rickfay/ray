@@ -12,47 +12,49 @@ cog.Component = function Component() {};
     /**
      * Construct the Component
      *
-     * @param $scope
+     * @param _this
      */
-    proto.construct = function construct($scope) {};
+    proto.construct = function construct(_this) {
+        // TODO put something here
+    };
 
     /**
      * Build the DOM
      *
-     * @param $scope
+     * @param _this
      */
-    proto.buildDom = function buildDom($scope) {
-        console.log("Default buildDom()");
+    proto.buildDom = function buildDom(_this) {
+        // TODO put something here
     };
 
     /**
-     * Get the DOM
+     * Get the ID of this Component
      *
-     * @param $scope
+     * @param _this
      * @returns {*}
      */
-    proto.getDom = function getDom($scope) {
-        return $scope.dom;
+    proto.getId = function getId(_this) {
+        return _this.id;
     };
 
     /**
      * Get the Metadata
      *
-     * @param $scope
+     * @param _this
      * @returns {*|SVGMetadataElement}
      */
-    proto.getMetadata = function getMetadata($scope) {
-        return $scope.metadata;
+    proto.getMetadata = function getMetadata(_this) {
+        return _this.metadata;
     }
 
     /**
-     * Get the ID of this Component
+     * Get the DOM
      *
-     * @param $scope
+     * @param _this
      * @returns {*}
      */
-    proto.getId = function getId($scope) {
-        return $scope.id;
+    proto.getDom = function getDom(_this) {
+        return _this.dom;
     };
 
 })(cog.Component.prototype);

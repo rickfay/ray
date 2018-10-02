@@ -1,19 +1,22 @@
+/**
+ * COG Image Class Definition
+ *
+ * @constructor
+ */
 cog.Image = function Image() {};
 
 (proto => {
 
-    proto.supportedProperties = {
-        "Source": "src",
-        "AltText": "alt"
-    };
-
-    proto.buildDom = function buildDom($scope) {
-        $scope.dom = document.createElement("img");
-        $scope.dom.id = $scope.id;
-
-        Object.keys($scope.metadata).map(key => {
-            $scope.dom[proto.supportedProperties[key]] = $scope.metadata[key];
-        });
+    /**
+     * Builds the DOM
+     *
+     * @param _this
+     */
+    proto.buildDom = function buildDom(_this) {
+        _this.dom = document.createElement("img");
+        _this.dom.id = _this.id;
+        _this.dom.src = _this.metadata.Source;
+        _this.dom.alt = _this.metadata.AltText;
     }
 
 })(cog.Image.prototype);
