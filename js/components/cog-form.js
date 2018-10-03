@@ -10,12 +10,10 @@ cog.Form.extends = cog.Component;
 
     /**
      * Build the DOM
-     *
-     * @param _scope
      */
-    proto.buildDom = function buildDom(_scope) {
-        _scope.dom = document.createElement("form");
-        _scope.dom.id = _scope.id;
+    proto.buildDom = function buildDom() {
+        this.dom = document.createElement("form");
+        this.dom.id = this.id;
     };
 
 })(cog.Form.prototype);

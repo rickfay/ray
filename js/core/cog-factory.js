@@ -1,7 +1,7 @@
 /**
- * Component Object Generator Factory
+ *  Component Object Generator Factory
  *
- * @type {{extend: cog.Factory.extend, applyCss: cog.Factory.applyCss, construct: (function(*=, *=, *=)), establishBaseComponent: cog.Factory.establishBaseComponent, buildCogApp: cog.Factory.buildCogApp}}
+ * @type {{buildCogApp: cog.Factory.buildCogApp, establishBaseComponent: cog.Factory.establishBaseComponent, construct: cog.Factory.construct, validate: (function(*, *): boolean), proxyPrototypeFunctions: cog.Factory.proxyPrototypeFunctions, extend: cog.Factory.extend, resetCss: cog.Factory.resetCss, buildChildren: cog.Factory.buildChildren}}
  */
 cog.Factory = {
 
@@ -12,17 +12,18 @@ cog.Factory = {
      */
     buildCogApp: appId => {
         cog.Factory.establishBaseComponent();
-        cog.Factory.construct(appId, cog.App.name, null);
+        cog.app = cog.Factory.construct(appId, cog.App.name, null);
     },
 
     /**
-     *
+     * Some pre-processing
+     * TODO clean up
      */
     establishBaseComponent: () => {
         for (let className of Object.keys(cog)) {
             let clazz = cog[className];
 
-            if (typeof clazz === "function") {
+            if (!clazz.abstract && typeof clazz === "function") {
                 if (clazz.static) {
                     cog[className] = cog.Factory.construct(null, className, null);
                 } else if (!clazz.extends && clazz !== cog.Cog) {
@@ -41,31 +42,23 @@ cog.Factory = {
      */
     construct: function construct(id, className, parentDom) {
 
-        // Construct the object using a closure to provide its own private scope
-        return (function privateScope(id, className) {
+        // Validate
+        if (!cog.Factory.validate(id, className)) {
+            return null;
+        }
 
-            // Validate
-            if (!cog[className].static && !cog.Factory.validate(id, className)) {
-                return null;
-            }
+        // Construct the Component
+        let obj = new cog[className]();
+        let _this = new cog.PrivateScope(obj);
 
-            // Construct the Component
-            let _this = cog[className].static ? cog[className] : new cog[className]();
-            _this.super = {};
+        // Build the component functions as proxies to prototype functions, and inherit properties from parent class(es)
+        cog.Factory.proxyPrototypeFunctions(obj, _this);
+        cog.Factory.extend(obj, _this);
 
-            // Construct the Component's private scope
-            let _scope = {};
+        // Allow the object to construct itself
+        obj.construct(id, className, parentDom);
 
-            // Build the component functions as proxies to prototype functions, and inherit properties from parent class(es)
-            cog.Factory.proxyPrototypeFunctions(_scope, _this);
-            cog.Factory.extend(_scope, _this);
-
-            // Allow the object to construct itself
-            _this.construct(id, className, parentDom);
-
-            return _this;
-
-        })(id, className);
+        return obj;
     },
 
     /**
@@ -77,39 +70,40 @@ cog.Factory = {
      */
     validate:
         (id, className) => {
-
-            if (!cog.Metadata.Components[className] || !cog.Metadata.Components[className][id]) {
-                console.error(`Cannot find Component Metadata definition for { ${id}: ${className} }`);
-                return false;
+            let isValid = true;
+            if (!cog[className].static && (!cog.Metadata.Components[className] || !cog.Metadata.Components[className][id])) {
+                console.error(`Cannot construct non-static instance from metadata definition: { ${id}: ${className} }`);
+                isValid = false;
             }
-
-            return true;
+            return isValid;
         },
 
     /**
      * Proxy inherited prototype properties
      *
-     * @param _scope
+     * @param obj
      * @param _this
      */
     proxyPrototypeFunctions:
-        (_scope, _this) => {
+        (obj, _this) => {
 
             let proto;
-            if (typeof _this === "function") {
-                proto = _this.prototype;
+            if (typeof obj === "function") {
+                proto = obj.prototype;
             }
-            else if (typeof _this === "object") {
-                proto = _this.__proto__;
+            else if (typeof obj === "object") {
+                proto = obj.__proto__;
             } else {
-                console.error(`Cannot proxy prototype functions to unexpected type: ${typeof _this}`);
+                console.error(`Cannot proxy prototype functions to unexpected type: ${typeof obj}`);
             }
 
             for (let key of Object.keys(proto)) {
                 if (typeof proto[key] === "function") {
+
                     // TODO Write jquery-less version of proxy function
                     // TODO can we preserve the function name in the proxy?
-                    _this[key] = $.proxy(proto[key], _this, _scope);
+
+                    obj[key] = $.proxy(proto[key], _this);
                 }
             }
         },
@@ -117,13 +111,13 @@ cog.Factory = {
     /**
      * Inherit component properties off the component's parent
      *
-     * @param _scope
+     * @param obj
      * @param _this
      */
     extend:
-        (_scope, _this) => {
+        (obj, _this) => {
 
-            (function recursivelyExtend(_scope, _this, parentClass) {
+            (function recursivelyExtend(obj, _this, parentClass) {
 
                 if (!parentClass) {
                     return;
@@ -131,21 +125,21 @@ cog.Factory = {
 
                 for (let key of Object.keys(parentClass.prototype)) {
 
-                    if (!_this.hasOwnProperty(key)) {
+                    if (!obj.hasOwnProperty(key)) {
 
                         // Proxy inherited prototype properties
-                        _this[key] = $.proxy(parentClass.prototype[key], _this, _scope);
+                        obj[key] = $.proxy(parentClass.prototype[key], _this);
 
                     } else if (!_this.super[key]) {
 
                         // Add superclass reference for directly overridden functions
-                        _this.super[key] = $.proxy(parentClass.prototype[key], _this, _scope);
+                        _this.super[key] = $.proxy(parentClass.prototype[key], _this);
                     }
                 }
 
-                recursivelyExtend(_scope, _this, parentClass.extends);
+                recursivelyExtend(obj, _this, parentClass.extends);
 
-            })(_scope, _this, _this.constructor.extends);
+            })(obj, _this, obj.constructor.extends);
         },
 
     /**

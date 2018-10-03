@@ -8,61 +8,59 @@
 cog.Component = function Component() {};
 cog.Component.extends = cog.Cog;
 
+(proto => {
+
     /**
      * Construct the Component
      *
-     * @param _scope
      * @param id
      * @param className
      * @param parentDom
      */
-    cog.Component.prototype.construct = function construct(_scope, id, className, parentDom) {
-        _scope.metadata = cog.Metadata.Components[className][id];
-        _scope.id = parentDom ? `${parentDom.id}.${id}` : id;
-        _scope.className = className;
+    proto.construct = function construct(id, className, parentDom) {
+        this.metadata = cog.Metadata.Components[className][id];
+        this.id = parentDom ? `${parentDom.id}.${id}` : id;
+        this.className = className;
 
-        this.buildDom();
-        cog.Factory.resetCss(_scope);
-        cog.Util.appendDom(parentDom, _scope.dom);
-        cog.Factory.buildChildren(_scope);
+        this.self.buildDom();
+        cog.Factory.resetCss(this);
+        cog.Util.appendDom(parentDom, this.dom);
+        cog.Factory.buildChildren(this);
     };
 
     /**
      * Build the DOM
-     *
-     * @param _scope
      */
-    cog.Component.prototype.buildDom = function buildDom(_scope) {
-        _scope.dom = document.createElement("div");
-        _scope.dom.id = _scope.id;
+    proto.buildDom = function buildDom() {
+        this.dom = document.createElement("div");
+        this.dom.id = this.id;
     };
 
     /**
      * Get the ID of this Component
      *
-     * @param _scope
      * @returns {*}
      */
-    cog.Component.prototype.getId = function getId(_scope) {
-        return _scope.id;
+    proto.getId = function getId() {
+        return this.id;
     };
 
     /**
      * Get the Metadata
      *
-     * @param _scope
      * @returns {*|SVGMetadataElement}
      */
-    cog.Component.prototype.getMetadata = function getMetadata(_scope) {
-        return _scope.metadata;
+    proto.getMetadata = function getMetadata() {
+        return this.metadata;
     };
 
     /**
      * Get the DOM
      *
-     * @param _scope
      * @returns {*}
      */
-    cog.Component.prototype.getDom = function getDom(_scope) {
-        return _scope.dom;
+    proto.getDom = function getDom() {
+        return this.dom;
     };
+
+})(cog.Component.prototype);

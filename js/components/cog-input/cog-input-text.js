@@ -11,13 +11,11 @@ cog.InputText.extends = cog.Input;
 
     /**
      * Build the DOM
-     *
-     * @param _scope
      */
-    proto.buildDom = function buildDom(_scope) {
+    proto.buildDom = function buildDom() {
         this.super.buildDom();
-        _scope.dom.type = "text";
-        _scope.dom.value = _scope.metadata.DefaultText;
+        this.dom.type = "text";
+        this.dom.value = this.metadata.DefaultText;
     };
 
 })(cog.InputText.prototype);

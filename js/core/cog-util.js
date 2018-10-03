@@ -3,8 +3,7 @@
  *
  * @constructor
  */
-cog.Util = function Util() {
-};
+cog.Util = function Util() {};
 cog.Util.extends = cog.Cog;
 cog.Util.static = true;
 
@@ -15,10 +14,9 @@ cog.Util.static = true;
     /**
      * Evaluates a reference chain and return the result if it's valid, otherwise return undefined.
      *
-     * @param _scope
      * @returns {?}
      */
-    proto.ref = function ref(_scope) {
+    proto.ref = function ref() {
         return (function ref(args) {
 
             // Check if there are more references to evaluate
@@ -37,10 +35,8 @@ cog.Util.static = true;
     /**
      * Evaluates a reference chain and builds missing references as empty objects.
      * Returns the evaluated reference, whether pre-existing or created by this function.
-     *
-     * @param _scope
      */
-    proto.buildRef = function buildRef(_scope) {
+    proto.buildRef = function buildRef() {
         return (function buildRef(args) {
             if (args.length > 1) {
                 if (args[0]) {
@@ -61,11 +57,10 @@ cog.Util.static = true;
     /**
      *  Append newly constructed Component to the DOM
      *
-     * @param _scope
      * @param parentDom
      * @param dom
      */
-    proto.appendDom = function appendDom(_scope, parentDom, dom) {
+    proto.appendDom = function appendDom(parentDom, dom) {
         if (dom && parentDom) {
             parentDom.appendChild(dom);
         }
@@ -74,11 +69,10 @@ cog.Util.static = true;
     /**
      * Applies the given css definition to the given dom element
      *
-     * @param _scope
      * @param dom
      * @param css
      */
-    proto.applyStyle = function applyStyle(_scope, dom, css) {
+    proto.applyStyle = function applyStyle(dom, css) {
         if (dom && css) {
             for (let key of Object.keys(css)) {
                 dom.style[key] = css[key];
@@ -89,11 +83,10 @@ cog.Util.static = true;
     /**
      * Apply the given array of cssClasses to the given dom element
      *
-     * @param _scope
      * @param dom
      * @param cssClasses
      */
-    proto.applyClass = function applyClass(_scope, dom, cssClasses) {
+    proto.applyClass = function applyClass(dom, cssClasses) {
         if (dom && cssClasses) {
             for (let cssClass of cssClasses) {
                 if (cssClass) {
@@ -106,11 +99,10 @@ cog.Util.static = true;
     /**
      * Determines if obj is empty
      *
-     * @param _scope
      * @param obj
      * @returns {boolean}
      */
-    proto.isEmpty = function isEmpty(_scope, obj) {
+    proto.isEmpty = function isEmpty(obj) {
         switch (typeof obj) {
             case "object":
                 return obj == null || obj.length === 0;
@@ -124,10 +116,9 @@ cog.Util.static = true;
     /**
      * Returns an Array of all the cog Component classes _this object
      *
-     * @param _scope
      * @param className
      */
-    proto.getClasses = function (_scope, className) {
+    proto.getClasses = function (className) {
 
         let clazz = cog[className];
         let classes = [];

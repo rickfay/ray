@@ -4,7 +4,6 @@
  * @constructor
  */
 cog.Cog = function Cog() {};
-cog.Cog.extends = null;
 
 /**
  * asdf

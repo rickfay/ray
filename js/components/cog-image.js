@@ -10,14 +10,12 @@ cog.Image.extends = cog.Component;
 
     /**
      * Builds the DOM
-     *
-     * @param _scope
      */
-    proto.buildDom = function buildDom(_scope) {
-        _scope.dom = document.createElement("img");
-        _scope.dom.id = _scope.id;
-        _scope.dom.src = _scope.metadata.Source;
-        _scope.dom.alt = _scope.metadata.AltText;
+    proto.buildDom = function buildDom() {
+        this.dom = document.createElement("img");
+        this.dom.id = this.id;
+        this.dom.src = this.metadata.Source;
+        this.dom.alt = this.metadata.AltText;
     }
 
 })(cog.Image.prototype);

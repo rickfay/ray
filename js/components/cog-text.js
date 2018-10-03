@@ -10,13 +10,11 @@ cog.Text.extends = cog.Component;
 
     /**
      * Build the DOM
-     *
-     * @param _scope
      */
-    proto.buildDom = function buildDom(_scope) {
-        _scope.dom = document.createElement("p");
-        _scope.dom.id = _scope.id;
-        _scope.dom.innerHTML = _scope.metadata.Text;
+    proto.buildDom = function buildDom() {
+        this.dom = document.createElement("p");
+        this.dom.id = this.id;
+        this.dom.innerHTML = this.metadata.Text;
     }
 
 })(cog.Text.prototype);

@@ -10,11 +10,9 @@ cog.Input.extends = cog.Component;
 
     /**
      * Build the DOM
-     *
-     * @param _scope
      */
-    proto.buildDom = function buildDom(_scope) {
-        _scope.dom = document.createElement("input");
+    proto.buildDom = function buildDom() {
+        this.dom = document.createElement("input");
     };
 
 })(cog.Input.prototype);

@@ -27,6 +27,7 @@ let cog = {
             "js/core/cog-log.js",
             //"js/core/cog-events.js",
             "js/core/cog-factory.js",
+            "js/core/cog-private-scope.js",
             "js/core/cog-util.js",
 
             // Components
