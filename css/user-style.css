@@ -22,7 +22,3 @@ body {
 .demoForm {
     height: 200px;
 }
-
-.demoForm input, .demoForm select {
-    width: 200px;
-}
