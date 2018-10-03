@@ -4,6 +4,7 @@
  * @constructor
  */
 cog.Form = function Form() {};
+cog.Form.extends = cog.Component;
 
 (proto => {
 

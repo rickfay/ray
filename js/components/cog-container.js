@@ -4,6 +4,7 @@
  * @constructor
  */
 cog.Container = function Container() {};
+cog.Container.extends = cog.Component;
 
 (proto => {
 

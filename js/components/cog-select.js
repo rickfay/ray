@@ -4,6 +4,7 @@
  * @constructor
  */
 cog.Select = function Select() {};
+cog.Select.extends = cog.Component;
 
 (proto => {
 

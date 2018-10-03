@@ -4,6 +4,7 @@
  * @constructor
  */
 cog.Text = function Text() {};
+cog.Text.extends = cog.Component;
 
 (proto => {
 

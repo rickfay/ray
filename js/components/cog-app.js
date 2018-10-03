@@ -4,8 +4,13 @@
  * @constructor
  */
 cog.App = function App() {};
+cog.App.extends = cog.Component;
 
-(proto => {
+(function(proto) {
+
+    proto.construct = function construct(_scopeRRRR, id, className, parentDom) {
+        this.super.construct(id, className, parentDom);
+    };
 
     /**
      * Build the DOM

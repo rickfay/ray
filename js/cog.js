@@ -14,6 +14,7 @@ let cog = {
 
         /**
          * System Imports Needed for COG to run
+         * TODO Add wildcard system so we don't need to explicitly name every file
          */
         Dependencies: [
 
@@ -22,15 +23,15 @@ let cog = {
 
             // Framework Core
             "js/core/cog-ajax.js",
+            "js/core/cog-cog.js",
             "js/core/cog-log.js",
+            //"js/core/cog-events.js",
             "js/core/cog-factory.js",
-            "js/core/cog-pubsub.js",
             "js/core/cog-util.js",
 
             // Components
-
-            "js/components/cog-app.js",
             "js/components/cog-component.js",
+            "js/components/cog-app.js",
             "js/components/cog-container.js",
             "js/components/cog-form.js",
             "js/components/cog-image.js",
@@ -50,10 +51,9 @@ let cog = {
          * Imports the file from the provided URL.
          *
          * @param url
-         * @param successCallback
          * @returns {Promise}
          */
-        importFile: (url, successCallback) => {
+        importFile: (url) => {
             return new Promise(function (resolve) {
 
                 // TODO Build in wildcard file loading
@@ -81,7 +81,7 @@ let cog = {
 
                 fileElem.onload = resolve;
                 document.head.appendChild(fileElem);
-            }).then(successCallback);
+            });
         },
 
         /**

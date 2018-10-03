@@ -4,6 +4,7 @@
  * @constructor
  */
 cog.Image = function Image() {};
+cog.Image.extends = cog.Component;
 
 (proto => {
 

@@ -6,17 +6,21 @@
  * @constructor
  */
 cog.Component = function Component() {};
-cog.Component.abstract = true;
-
-(proto => {
+cog.Component.extends = cog.Cog;
 
     /**
      * Construct the Component
      *
      * @param _scope
+     * @param id
+     * @param className
      * @param parentDom
      */
-    proto.construct = function construct(_scope, parentDom) {
+    cog.Component.prototype.construct = function construct(_scope, id, className, parentDom) {
+        _scope.metadata = cog.Metadata.Components[className][id];
+        _scope.id = parentDom ? `${parentDom.id}.${id}` : id;
+        _scope.className = className;
+
         this.buildDom();
         cog.Factory.resetCss(_scope);
         cog.Util.appendDom(parentDom, _scope.dom);
@@ -28,7 +32,7 @@ cog.Component.abstract = true;
      *
      * @param _scope
      */
-    proto.buildDom = function buildDom(_scope) {
+    cog.Component.prototype.buildDom = function buildDom(_scope) {
         _scope.dom = document.createElement("div");
         _scope.dom.id = _scope.id;
     };
@@ -39,7 +43,7 @@ cog.Component.abstract = true;
      * @param _scope
      * @returns {*}
      */
-    proto.getId = function getId(_scope) {
+    cog.Component.prototype.getId = function getId(_scope) {
         return _scope.id;
     };
 
@@ -49,7 +53,7 @@ cog.Component.abstract = true;
      * @param _scope
      * @returns {*|SVGMetadataElement}
      */
-    proto.getMetadata = function getMetadata(_scope) {
+    cog.Component.prototype.getMetadata = function getMetadata(_scope) {
         return _scope.metadata;
     };
 
@@ -59,8 +63,6 @@ cog.Component.abstract = true;
      * @param _scope
      * @returns {*}
      */
-    proto.getDom = function getDom(_scope) {
+    cog.Component.prototype.getDom = function getDom(_scope) {
         return _scope.dom;
     };
-
-})(cog.Component.prototype);
