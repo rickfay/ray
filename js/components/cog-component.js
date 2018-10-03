@@ -23,9 +23,9 @@ cog.Component.extends = cog.Cog;
         this.className = className;
 
         this.self.buildDom();
-        cog.Factory.resetCss(this);
+        cog.Factory.resetCss(this.self);
         cog.Util.appendDom(parentDom, this.dom);
-        cog.Factory.buildChildren(this);
+        cog.Factory.buildChildren(this.self);
     };
 
     /**

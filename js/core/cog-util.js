@@ -17,19 +17,22 @@ cog.Util.static = true;
      * @returns {?}
      */
     proto.ref = function ref() {
-        return (function ref(args) {
 
-            // Check if there are more references to evaluate
-            if (args.length > 1) {
-                if (args[0] && args[0][args[1]]) {
-                    return ref([args[0][args[1]], ...args.slice(2)]); // Valid reference, continue evaluating recursively
-                } else {
-                    return undefined; // Encountered null reference, validation failed
-                }
+        let args = Array.prototype.slice.call(arguments);
+
+        // Check if there are more references to evaluate
+        if (args.length > 1) {
+            if (args[0] && args[0][args[1]]) {
+                // Valid reference, continue evaluating recursively
+                return cog.Util.ref(args[0][args[1]], ...args.slice(2));
             } else {
-                return args[0]; // No more references to validate and the base reference is valid
+                // Encountered null reference, validation failed
+                return undefined;
             }
-        })(Array.prototype.slice.call(arguments, 1));
+        } else {
+            // No more references to validate and the base reference is valid
+            return args[0];
+        }
     };
 
     /**
@@ -37,21 +40,22 @@ cog.Util.static = true;
      * Returns the evaluated reference, whether pre-existing or created by this function.
      */
     proto.buildRef = function buildRef() {
-        return (function buildRef(args) {
-            if (args.length > 1) {
-                if (args[0]) {
-                    if (!args[0][args[1]]) {
-                        args[0][args[1]] = {};
-                    }
-                    return buildRef([args[0][args[1]], ...args.slice(2)]);
-                } else {
-                    args[0] = {};
-                    return buildRef([args[0], ...args.slice(1)]);
+
+        let args = Array.prototype.slice.call(arguments);
+
+        if (args.length > 1) {
+            if (args[0]) {
+                if (!args[0][args[1]]) {
+                    args[0][args[1]] = {};
                 }
+                return buildRef(args[0][args[1]], ...args.slice(2));
             } else {
-                return args[0] ? args[0] : {};
+                args[0] = {};
+                return buildRef([args[0], ...args.slice(1)]);
             }
-        })(Array.prototype.slice.call(arguments, 1));
+        } else {
+            return args[0] ? args[0] : {};
+        }
     };
 
     /**
@@ -116,11 +120,11 @@ cog.Util.static = true;
     /**
      * Returns an Array of all the cog Component classes _this object
      *
-     * @param className
+     * @param obj
      */
-    proto.getClasses = function (className) {
+    proto.getClasses = function (obj) {
 
-        let clazz = cog[className];
+        let clazz = obj.constructor;
         let classes = [];
 
         do {

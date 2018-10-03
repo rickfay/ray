@@ -47,7 +47,7 @@ cog.Factory = {
             return null;
         }
 
-        // Construct the Component
+        // Construct the Component and its Private Scope
         let obj = new cog[className]();
         let _this = new cog.PrivateScope(obj);
 
@@ -145,26 +145,26 @@ cog.Factory = {
     /**
      * Resets the CSS to the default as specified by the metadata
      *
-     * @param _scope
+     * @param obj
      */
     resetCss:
-        _scope => {
-            cog.Util.applyStyle(_scope.dom, _scope.metadata.Style);
-            cog.Util.applyClass(_scope.dom, _scope.metadata.Class);
-            cog.Util.applyClass(_scope.dom, ...[cog.Util.getClasses(_scope.className).map(clazz => `cog${clazz.name}`)]);
+        obj => {
+            cog.Util.applyStyle(obj.getDom(), obj.getMetadata().Style);
+            cog.Util.applyClass(obj.getDom(), obj.getMetadata().Class);
+            cog.Util.applyClass(obj.getDom(), ...[cog.Util.getClasses(obj).map(clazz => `cog${clazz.name}`)]);
         },
 
     /**
      * Recursively builds the child Elements on this Component
      *
-     * @param _scope
+     * @param obj
      */
     buildChildren:
-        _scope => {
-            let dom = _scope.dom;
+        obj => {
+            let dom = obj.getDom();
             if (dom) {
                 // Recursively construct child Component Elements
-                let elements = _scope.metadata.Elements;
+                let elements = obj.getMetadata().Elements;
                 if (elements) {
                     for (let element in elements) {
                         cog.Factory.construct(element, elements[element], dom);
