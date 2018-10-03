@@ -11,10 +11,10 @@ cog.Input.abstract = true;
     /**
      * Build the DOM
      *
-     * @param _this
+     * @param _scope
      */
-    proto.buildDom = function buildDom(_this) {
-        _this.dom = document.createElement("input");
+    proto.buildDom = function buildDom(_scope) {
+        _scope.dom = document.createElement("input");
     };
 
 })(cog.Input.prototype);

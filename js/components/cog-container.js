@@ -10,11 +10,11 @@ cog.Container = function Container() {};
     /**
      * Build the DOM
      *
-     * @param _this
+     * @param _scope
      */
-    proto.buildDom = function buildDom(_this) {
-        _this.dom = document.createElement("div");
-        _this.dom.id = _this.id;
+    proto.buildDom = function buildDom(_scope) {
+        _scope.dom = document.createElement("div");
+        _scope.dom.id = _scope.id;
     };
 
 })(cog.Container.prototype);

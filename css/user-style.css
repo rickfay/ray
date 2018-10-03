@@ -18,3 +18,11 @@ body {
 .meeseeks {
     width: 100%;
 }
+
+.demoForm {
+    height: 200px;
+}
+
+.demoForm input, .demoForm select {
+    width: 200px;
+}

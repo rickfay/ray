@@ -10,11 +10,11 @@ cog.InputDate.extends = cog.Input;
     /**
      * Build the DOM
      *
-     * @param _this
+     * @param _scope
      */
-    proto.buildDom = function buildDom(_this) {
-        _this.super.buildDom();
-        _this.dom.type = "date";
+    proto.buildDom = function buildDom(_scope) {
+        this.super.buildDom();
+        _scope.dom.type = "date";
     };
 
 })(cog.InputDate.prototype);

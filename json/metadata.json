@@ -39,7 +39,8 @@
                     "demoInputText": "InputText",
                     "demoInputDate": "InputDate",
                     "demoInputRadio": "InputRadio"
-                }
+                },
+                "Class": [ "demoForm" ]
             }
         },
         "Image": {
@@ -68,7 +69,8 @@
         },
         "InputText": {
             "demoInputText": {
-                "DefaultText": "Enter a value..."
+                "DefaultText": "Enter a value...",
+                "Label": "Label"
             }
         },
         "Select": {

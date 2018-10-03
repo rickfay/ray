@@ -10,11 +10,11 @@ cog.Form = function Form() {};
     /**
      * Build the DOM
      *
-     * @param _this
+     * @param _scope
      */
-    proto.buildDom = function buildDom(_this) {
-        _this.dom = document.createElement("form");
-        _this.dom.id = _this.id;
+    proto.buildDom = function buildDom(_scope) {
+        _scope.dom = document.createElement("form");
+        _scope.dom.id = _scope.id;
     };
 
 })(cog.Form.prototype);

@@ -12,32 +12,32 @@ cog.InputRadio.extends = cog.Input;
     /**
      * Build the DOM
      *
-     * @param _this
+     * @param _scope
      */
-    proto.buildDom = function buildDom(_this) {
+    proto.buildDom = function buildDom(_scope) {
 
-        _this.dom = document.createElement("div");
-        _this.dom.id = _this.id;
+        _scope.dom = document.createElement("div");
+        _scope.dom.id = _scope.id;
 
-        _this.domInputRadio = [];
-        _this.domLabel = [];
+        _scope.domInputRadio = [];
+        _scope.domLabel = [];
 
-        for (let option in _this.metadata.Options) {
+        for (let option in _scope.metadata.Options) {
 
             // Create Radio Button Input
-            _this.domInputRadio[option] = document.createElement("input");
-            _this.domInputRadio[option].type = "radio";
-            _this.domInputRadio[option].id = `${_this.id}.RADIO.${option}`;
-            _this.domInputRadio[option].name = _this.id;
-            _this.domInputRadio[option].value = _this.metadata.Options[option];
-            _this.dom.appendChild(_this.domInputRadio[option]);
+            _scope.domInputRadio[option] = document.createElement("input");
+            _scope.domInputRadio[option].type = "radio";
+            _scope.domInputRadio[option].id = `${_scope.id}.RADIO.${option}`;
+            _scope.domInputRadio[option].name = _scope.id;
+            _scope.domInputRadio[option].value = _scope.metadata.Options[option];
+            _scope.dom.appendChild(_scope.domInputRadio[option]);
 
             // Create Label for this Radio Button
-            _this.domLabel[option] = document.createElement("label");
-            _this.domLabel[option].id = `${_this.id}.LABEL.${option}`;
-            _this.domLabel[option].setAttribute("for", _this.domInputRadio[option].id);
-            _this.domLabel[option].innerHTML = _this.metadata.Options[option];
-            _this.dom.appendChild(_this.domLabel[option]);
+            _scope.domLabel[option] = document.createElement("label");
+            _scope.domLabel[option].id = `${_scope.id}.LABEL.${option}`;
+            _scope.domLabel[option].setAttribute("for", _scope.domInputRadio[option].id);
+            _scope.domLabel[option].innerHTML = _scope.metadata.Options[option];
+            _scope.dom.appendChild(_scope.domLabel[option]);
         }
     };
 

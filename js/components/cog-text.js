@@ -10,12 +10,12 @@ cog.Text = function Text() {};
     /**
      * Build the DOM
      *
-     * @param _this
+     * @param _scope
      */
-    proto.buildDom = function buildDom(_this) {
-        _this.dom = document.createElement("p");
-        _this.dom.id = _this.id;
-        _this.dom.innerHTML = _this.metadata.Text;
+    proto.buildDom = function buildDom(_scope) {
+        _scope.dom = document.createElement("p");
+        _scope.dom.id = _scope.id;
+        _scope.dom.innerHTML = _scope.metadata.Text;
     }
 
 })(cog.Text.prototype);

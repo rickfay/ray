@@ -10,13 +10,13 @@ cog.Image = function Image() {};
     /**
      * Builds the DOM
      *
-     * @param _this
+     * @param _scope
      */
-    proto.buildDom = function buildDom(_this) {
-        _this.dom = document.createElement("img");
-        _this.dom.id = _this.id;
-        _this.dom.src = _this.metadata.Source;
-        _this.dom.alt = _this.metadata.AltText;
+    proto.buildDom = function buildDom(_scope) {
+        _scope.dom = document.createElement("img");
+        _scope.dom.id = _scope.id;
+        _scope.dom.src = _scope.metadata.Source;
+        _scope.dom.alt = _scope.metadata.AltText;
     }
 
 })(cog.Image.prototype);
