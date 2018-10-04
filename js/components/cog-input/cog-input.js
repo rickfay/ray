@@ -1,9 +1,9 @@
 /**
- *
+ * COG Input Class
  */
-cog.InputDate = {
+cog.Input = {
 
-    proto: Object.create(cog.Input.proto, {
+    proto: Object.create(cog.Component.proto, {
 
         /**
          * Build the DOM
@@ -11,8 +11,7 @@ cog.InputDate = {
         buildDom: {
             enumerable: true,
             value: function buildDom() {
-                this.super.buildDom();
-                this.dom.type = "date";
+                this.dom = document.createElement("input");
             }
         }
     })

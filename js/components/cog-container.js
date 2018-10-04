@@ -1,19 +1,18 @@
 /**
  * COG Container Component Definition
- *
- * @constructor
  */
-cog.Container = function Container() {};
-cog.Container.extends = cog.Component;
+cog.Container = {
+    proto: Object.create(cog.Component.proto, {
 
-(proto => {
-
-    /**
-     * Build the DOM
-     */
-    proto.buildDom = function buildDom() {
-        this.dom = document.createElement("div");
-        this.dom.id = this.id;
-    };
-
-})(cog.Container.prototype);
+        /**
+         * Build the DOM
+         */
+        buildDom: {
+            enumerable: true,
+            value: function buildDom() {
+                this.dom = document.createElement("div");
+                this.dom.id = this.id;
+            }
+        }
+    })
+};

@@ -1,19 +1,19 @@
 /**
  * COG Form Class Definition
- *
- * @constructor
  */
-cog.Form = function Form() {};
-cog.Form.extends = cog.Component;
+cog.Form = {
+    proto: Object.create(cog.Component.proto, {
+        extends: cog.Component,
 
-(proto => {
-
-    /**
-     * Build the DOM
-     */
-    proto.buildDom = function buildDom() {
-        this.dom = document.createElement("form");
-        this.dom.id = this.id;
-    };
-
-})(cog.Form.prototype);
+        /**
+         * Build the DOM
+         */
+        buildDom: {
+            enumerable: true,
+            value: function buildDom() {
+                this.dom = document.createElement("form");
+                this.dom.id = this.id;
+            }
+        }
+    })
+};

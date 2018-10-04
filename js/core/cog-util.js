@@ -3,60 +3,56 @@
  *
  * @constructor
  */
-cog.Util = function Util() {};
-cog.Util.extends = cog.Cog;
-cog.Util.static = true;
+cog.Util = {
 
-(proto => {
+    construct: function construct() {
+    },
 
-    proto.construct = function construct() {};
+    /**
+     * Bind a function to a context, optionally partially applying any arguments.
+     * TODO Create jQuery-less implementation
+     */
+    proxy: function proxy(fn, context) {
+        return $.proxy(fn, context, ...Array.prototype.slice.call(arguments, 2));
+    },
 
     /**
      * Evaluates a reference chain and return the result if it's valid, otherwise return undefined.
      *
      * @returns {?}
      */
-    proto.ref = function ref() {
-
-        let args = Array.prototype.slice.call(arguments);
-
-        // Check if there are more references to evaluate
-        if (args.length > 1) {
-            if (args[0] && args[0][args[1]]) {
-                // Valid reference, continue evaluating recursively
-                return cog.Util.ref(args[0][args[1]], ...args.slice(2));
+    ref: function ref() {
+        if (arguments.length > 1) {
+            if (arguments[0]) {
+                return cog.Util.ref(arguments[0][arguments[1]], ...Array.prototype.slice.call(arguments, 2));
             } else {
-                // Encountered null reference, validation failed
                 return undefined;
             }
         } else {
-            // No more references to validate and the base reference is valid
-            return args[0];
+            return arguments[0];
         }
-    };
+    },
 
     /**
      * Evaluates a reference chain and builds missing references as empty objects.
      * Returns the evaluated reference, whether pre-existing or created by this function.
      */
-    proto.buildRef = function buildRef() {
+    buildRef: function buildRef() {
 
-        let args = Array.prototype.slice.call(arguments);
-
-        if (args.length > 1) {
-            if (args[0]) {
-                if (!args[0][args[1]]) {
-                    args[0][args[1]] = {};
+        if (arguments.length > 1) {
+            if (arguments[0]) {
+                if (!arguments[0][arguments[1]]) {
+                    arguments[0][arguments[1]] = {};
                 }
-                return buildRef(args[0][args[1]], ...args.slice(2));
+                return buildRef(arguments[0][arguments[1]], ...Array.prototype.slice.call(arguments, 2));
             } else {
-                args[0] = {};
-                return buildRef([args[0], ...args.slice(1)]);
+                arguments[0] = {};
+                return buildRef(arguments[0], ...Array.prototype.slice.call(arguments, 1));
             }
         } else {
-            return args[0] ? args[0] : {};
+            return arguments[0] ? arguments[0] : {};
         }
-    };
+    },
 
     /**
      *  Append newly constructed Component to the DOM
@@ -64,11 +60,11 @@ cog.Util.static = true;
      * @param parentDom
      * @param dom
      */
-    proto.appendDom = function appendDom(parentDom, dom) {
+    appendDom: function appendDom(parentDom, dom) {
         if (dom && parentDom) {
             parentDom.appendChild(dom);
         }
-    };
+    },
 
     /**
      * Applies the given css definition to the given dom element
@@ -76,13 +72,13 @@ cog.Util.static = true;
      * @param dom
      * @param css
      */
-    proto.applyStyle = function applyStyle(dom, css) {
+    applyStyle: function applyStyle(dom, css) {
         if (dom && css) {
             for (let key of Object.keys(css)) {
                 dom.style[key] = css[key];
             }
         }
-    };
+    },
 
     /**
      * Apply the given array of cssClasses to the given dom element
@@ -90,7 +86,7 @@ cog.Util.static = true;
      * @param dom
      * @param cssClasses
      */
-    proto.applyClass = function applyClass(dom, cssClasses) {
+    applyClass: function applyClass(dom, cssClasses) {
         if (dom && cssClasses) {
             for (let cssClass of cssClasses) {
                 if (cssClass) {
@@ -98,7 +94,7 @@ cog.Util.static = true;
                 }
             }
         }
-    };
+    },
 
     /**
      * Determines if obj is empty
@@ -106,7 +102,7 @@ cog.Util.static = true;
      * @param obj
      * @returns {boolean}
      */
-    proto.isEmpty = function isEmpty(obj) {
+    isEmpty: function isEmpty(obj) {
         switch (typeof obj) {
             case "object":
                 return obj == null || obj.length === 0;
@@ -115,24 +111,21 @@ cog.Util.static = true;
             default:
                 return obj === undefined || obj == null;
         }
-    };
+    },
 
     /**
-     * Returns an Array of all the cog Component classes _this object
-     *
-     * @param obj
+     * Returns an Array of all the cog Component classes
      */
-    proto.getClasses = function (obj) {
+    getCogClasses: function getCogClasses(obj) {
 
-        let clazz = obj.constructor;
         let classes = [];
+        let proto = Object.getPrototypeOf(obj);
 
-        do {
-            classes.push(clazz);
-            clazz = clazz.extends;
-        } while (clazz);
+        while (proto && proto !== Object.prototype) {
+            classes.push(proto[cog.Symbol.CLASS_NAME]);
+            proto = Object.getPrototypeOf(proto);
+        }
 
         return classes;
-    };
-
-})(cog.Util.prototype);
+    }
+};

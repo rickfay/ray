@@ -7,6 +7,8 @@
  */
 let cog = {
 
+    Metadata: { [Symbol.toStringTag]: "cog.Metadata" },
+
     /**
      * COG Initialization Utility
      */
@@ -27,7 +29,8 @@ let cog = {
             "js/core/cog-log.js",
             //"js/core/cog-events.js",
             "js/core/cog-factory.js",
-            "js/core/cog-private-scope.js",
+            "js/core/cog-scope.js",
+            "js/core/cog-symbol.js",
             "js/core/cog-util.js",
 
             // Components
@@ -36,7 +39,7 @@ let cog = {
             "js/components/cog-container.js",
             "js/components/cog-form.js",
             "js/components/cog-image.js",
-            "js/components/cog-input.js",
+            "js/components/cog-input/cog-input.js",
             "js/components/cog-input/cog-input-date.js",
             "js/components/cog-input/cog-input-radio.js",
             "js/components/cog-input/cog-input-text.js",

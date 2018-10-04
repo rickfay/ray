@@ -1,21 +1,20 @@
 /**
  * COG Input Text Class Definition
- * extends cog.Input
- *
- * @constructor
  */
-cog.InputText = function InputText() {};
-cog.InputText.extends = cog.Input;
+cog.InputText = {
 
-(proto => {
+    proto: Object.create(cog.Input.proto, {
 
-    /**
-     * Build the DOM
-     */
-    proto.buildDom = function buildDom() {
-        this.super.buildDom();
-        this.dom.type = "text";
-        this.dom.value = this.metadata.DefaultText;
-    };
-
-})(cog.InputText.prototype);
+        /**
+         * Build the DOM
+         */
+        buildDom: {
+            enumerable: true,
+            value: function buildDom() {
+                this.super.buildDom();
+                this.dom.type = "text";
+                this.dom.value = this.metadata.DefaultText;
+            }
+        }
+    })
+};

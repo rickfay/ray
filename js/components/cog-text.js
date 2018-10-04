@@ -1,20 +1,20 @@
 /**
  * COG Text Component Definition
- *
- * @constructor
  */
-cog.Text = function Text() {};
-cog.Text.extends = cog.Component;
+cog.Text = {
 
-(proto => {
+    proto: Object.create(cog.Component.proto, {
 
-    /**
-     * Build the DOM
-     */
-    proto.buildDom = function buildDom() {
-        this.dom = document.createElement("p");
-        this.dom.id = this.id;
-        this.dom.innerHTML = this.metadata.Text;
-    }
-
-})(cog.Text.prototype);
+        /**
+         * Build the DOM
+         */
+        buildDom: {
+            enumerable: true,
+            value: function buildDom() {
+                this.dom = document.createElement("p");
+                this.dom.id = this.id;
+                this.dom.innerHTML = this.metadata.Text;
+            }
+        }
+    })
+};
