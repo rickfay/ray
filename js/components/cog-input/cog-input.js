@@ -1,18 +1,17 @@
 /**
  * COG Input Class
+ *
+ * @type {cog.Component}
  */
-cog.Input = {
+cog.Input = Object.create(cog.Component, {
 
-    proto: Object.create(cog.Component.proto, {
-
-        /**
-         * Build the DOM
-         */
-        buildDom: {
-            enumerable: true,
-            value: function buildDom() {
-                this.dom = document.createElement("input");
-            }
+    /**
+     * Build the DOM
+     */
+    buildDom: {
+        enumerable: true,
+        value: function buildDom() {
+            this.dom = document.createElement("input");
         }
-    })
-};
+    }
+});

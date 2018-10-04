@@ -12,7 +12,7 @@ cog.Factory = {
      */
     buildCogApp: function buildCogApp(appId) {
         cog.Factory.registerCogMetaProperties();
-        cog.app = cog.Factory.construct(appId, cog.App.proto[cog.Symbol.CLASS_NAME], null);
+        cog.app = cog.Factory.construct(appId, cog.App[cog.Symbol.CLASS_NAME], null);
     },
 
     /**
@@ -20,12 +20,8 @@ cog.Factory = {
      */
     registerCogMetaProperties: function registerCogObjects() {
         for (let key of Object.keys(cog)) {
-            if (cog[key].proto) {
-                cog[key].proto[cog.Symbol.CLASS_NAME] = key;
-                cog[key].proto[Symbol.toStringTag] = `cog.${key}`;
-            } else {
-                cog[key][Symbol.toStringTag] = key;
-            }
+            cog[key][cog.Symbol.CLASS_NAME] = key;
+            cog[key][Symbol.toStringTag] = `cog.${key}`;
         }
     },
 
@@ -44,7 +40,7 @@ cog.Factory = {
         }
 
         // Construct the Component and its private Scope
-        let obj = Object.create(cog[className].proto);
+        let obj = Object.create(cog[className]);
         let _this = Object.create(cog.Scope, {self: {value: obj}, super: {value: {}}});
 
         cog.Factory.proxyPrototype(obj, _this);
@@ -81,7 +77,7 @@ cog.Factory = {
         (function proxyPrototype(obj, _this, proto) {
 
             // Base case
-            if (!proto || proto === cog.Cog.proto) {
+            if (!proto || proto === cog.Cog) {
                 return;
             }
 
@@ -106,59 +102,6 @@ cog.Factory = {
 
         })(obj, _this, Object.getPrototypeOf(obj));
     },
-
-    /**
-     * Proxy inherited prototype properties
-     *
-     * @param obj
-     * @param _this
-     */
-    /*proxyPrototypeFunctions: function proxyPrototypeFunctions(obj, _this) {
-
-        let proto = Object.getPrototypeOf(obj);
-        for (let key of Object.keys(proto)) {
-            if (typeof proto[key] === "function") {
-
-                // TODO Write jquery-less version of proxy function
-                // TODO can we preserve the function name in the proxy?
-
-                obj[key] = $.proxy(proto[key], _this);
-            }
-        }
-    },*/
-
-    /**
-     * Inherit component properties off the component's parent
-     *
-     * @param obj
-     * @param _this
-     */
-    /*extend: function extend(obj, _this) {
-
-        (function recursivelyExtend(obj, _this, parentClass) {
-
-            if (!parentClass) {
-                return;
-            }
-
-            for (let key of Object.keys(parentClass.proto)) {
-
-                if (!obj.hasOwnProperty(key)) {
-
-                    // Proxy inherited prototype properties
-                    obj[key] = cog.Util.proxy(parentClass.prototype[key], _this);
-
-                } else if (!_this.super[key]) {
-
-                    // Add superclass reference for directly overridden functions
-                    _this.super[key] = cog.Util.proxy(parentClass.prototype[key], _this);
-                }
-            }
-
-            recursivelyExtend(obj, _this, parentClass.proto.extends);
-
-        })(obj, _this, obj.proto);
-    },*/
 
     /**
      * Recursively builds the child Elements on this Component
