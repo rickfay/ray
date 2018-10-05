@@ -1,16 +1,13 @@
 /**
  * COG Form Class Definition
  */
-cog.Form = Object.create(cog.Component, {
+cog.Class.define("Form", cog.Component, {
 
     /**
      * Build the DOM
      */
-    buildDom: {
-        enumerable: true,
-        value: function buildDom() {
-            this.dom = document.createElement("form");
-            this.dom.id = this.id;
-        }
+    buildDom: function buildDom() {
+        this.dom = document.createElement("form");
+        this.dom.id = this.id;
     }
 });

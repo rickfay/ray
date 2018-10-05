@@ -5,15 +5,26 @@
  */
 cog.Util = {
 
-    construct: function construct() {
+    /**
+     * Binds a function to a given context
+     *
+     * @param fn
+     * @param _this
+     * @returns {function(): *}
+     */
+    proxy: function proxy(fn, _this) {
+        return function proxy() {
+            return fn.apply(_this, arguments);
+        };
     },
 
     /**
-     * Bind a function to a context, optionally partially applying any arguments.
-     * TODO Create jQuery-less implementation
+     *
+     * @param obj
+     * @returns {boolean}
      */
-    proxy: function proxy(fn, context) {
-        return $.proxy(fn, context, ...Array.prototype.slice.call(arguments, 2));
+    isFunction: function isFunction(obj) {
+        return typeof obj === "function" && typeof obj.nodeType !== "number";
     },
 
     /**

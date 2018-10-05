@@ -3,7 +3,7 @@
  *
  * Root COG Class all other Components inherit from.
  */
-cog.Component = Object.create(cog.Cog, {
+cog.Class.define("Component", cog.Cog, {
 
     /**
      * Construct the Component
@@ -12,34 +12,28 @@ cog.Component = Object.create(cog.Cog, {
      * @param className
      * @param parentDom
      */
-    construct: {
-        value: function construct(id, className, parentDom) {
+    construct: function construct(id, className, parentDom) {
 
-            // Set properties
-            this.metadata = cog.Metadata.Components[className][id];
-            this.id = parentDom ? `${parentDom.id}.${id}` : id;
-            this.className = className;
+        // Set properties
+        this.metadata = cog.Metadata.Components[className][id];
+        this.id = parentDom ? `${parentDom.id}.${id}` : id;
+        this.className = className;
 
-            // Build
-            this.self.buildDom();
-            this.self.resetCss();
+        // Build
+        this.self.buildDom();
+        this.self.resetCss();
 
-            cog.Util.appendDom(parentDom, this.dom);
+        cog.Util.appendDom(parentDom, this.dom);
 
-            cog.Factory.buildChildren(this.self);
-        },
-        enumerable: true,
+        cog.Factory.buildChildren(this.self);
     },
 
     /**
      * Build the DOM
      */
-    buildDom: {
-        enumerable: true,
-        value: function buildDom() {
-            this.dom = document.createElement("div");
-            this.dom.id = this.id;
-        }
+    buildDom: function buildDom() {
+        this.dom = document.createElement("div");
+        this.dom.id = this.id;
     },
 
     /**
@@ -47,11 +41,8 @@ cog.Component = Object.create(cog.Cog, {
      *
      * @returns {*}
      */
-    getId: {
-        enumerable: true,
-        value: function getId() {
-            return this.id;
-        }
+    getId: function getId() {
+        return this.id;
     },
 
     /**
@@ -59,11 +50,8 @@ cog.Component = Object.create(cog.Cog, {
      *
      * @returns {*|SVGMetadataElement}
      */
-    getMetadata: {
-        enumerable: true,
-        value: function getMetadata() {
-            return this.metadata;
-        }
+    getMetadata: function getMetadata() {
+        return this.metadata;
     },
 
     /**
@@ -71,35 +59,24 @@ cog.Component = Object.create(cog.Cog, {
      *
      * @returns {*}
      */
-    getDom: {
-        enumerable: true,
-        value: function getDom() {
-            return this.dom;
-        }
+    getDom: function getDom() {
+        return this.dom;
     },
 
     /**
      * Get the Cog Class Name
      */
-    getClassName: {
-        enumerable: true,
-        value: function getClassName() {
-            return this.className;
-        }
+    getClassName: function getClassName() {
+        return this.className;
     },
 
     /**
      * Resets the CSS to the default as specified by the metadata
-     *
-     * @param obj
      */
-    resetCss: {
-        enumerable: true,
-        value: function resetCss() {
-            this.dom.removeAttribute("class");
-            cog.Util.applyStyle(this.dom, this.metadata.Style);
-            cog.Util.applyClass(this.dom, this.metadata.Class);
-            cog.Util.applyClass(this.dom, ...[cog.Util.getCogClasses(this.self).map(clazz => `cog${clazz}`)]);
-        }
+    resetCss: function resetCss() {
+        this.dom.removeAttribute("class");
+        cog.Util.applyStyle(this.dom, this.metadata.Style);
+        cog.Util.applyClass(this.dom, this.metadata.Class);
+        cog.Util.applyClass(this.dom, ...[cog.Util.getCogClasses(this.self).map(clazz => `cog${clazz}`)]);
     }
 });

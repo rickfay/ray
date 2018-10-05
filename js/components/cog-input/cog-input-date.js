@@ -1,17 +1,14 @@
 /**
  *
- * @type {cog.Input}
+ * @type {*|{}}
  */
-cog.InputDate = Object.create(cog.Input, {
+cog.Class.define("InputDate", cog.Input, {
 
     /**
      * Build the DOM
      */
-    buildDom: {
-        enumerable: true,
-        value: function buildDom() {
-            this.super.buildDom();
-            this.dom.type = "date";
-        }
+    buildDom: function buildDom() {
+        this.super.buildDom();
+        this.dom.type = "date";
     }
 });

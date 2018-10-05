@@ -3,15 +3,12 @@
  *
  * @type {cog.Component}
  */
-cog.Input = Object.create(cog.Component, {
+cog.Class.define("Input", cog.Component, {
 
     /**
      * Build the DOM
      */
-    buildDom: {
-        enumerable: true,
-        value: function buildDom() {
-            this.dom = document.createElement("input");
-        }
+    buildDom: function buildDom() {
+        this.dom = document.createElement("input");
     }
 });

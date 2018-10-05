@@ -1,16 +1,13 @@
 /**
  * COG Container Component Definition
  */
-cog.Container = Object.create(cog.Component, {
+cog.Class.define("Container", cog.Component, {
 
     /**
      * Build the DOM
      */
-    buildDom: {
-        enumerable: true,
-        value: function buildDom() {
-            this.dom = document.createElement("div");
-            this.dom.id = this.id;
-        }
+    buildDom: function buildDom() {
+        this.dom = document.createElement("div");
+        this.dom.id = this.id;
     }
 });

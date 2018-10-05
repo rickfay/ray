@@ -86,6 +86,12 @@
                 }
             }
         },
+        "Table": {
+        
+        },
+        "TableRow": {
+        
+        },
         "Text": {
             "cogDemoText": {
                 "Text": "COG Framework Demo",
