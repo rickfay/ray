@@ -1,9 +1,7 @@
 /**
  * COG Utilities
- *
- * @constructor
  */
-cog.Util = {
+cog.Class.define("Util", null, {
 
     /**
      * Binds a function to a given context
@@ -139,4 +137,4 @@ cog.Util = {
 
         return classes;
     }
-};
+});

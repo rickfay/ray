@@ -1,9 +1,7 @@
 /**
  * COG Ajax Utilities
- *
- * @type {{get: (function(*=, *=): (*|{readyState, getResponseHeader, getAllResponseHeaders, setRequestHeader, overrideMimeType, statusCode, abort}))}}
  */
-cog.Ajax = {
+cog.Class.define("Ajax", null, {
 
     /**
      * Ajax GET
@@ -24,4 +22,4 @@ cog.Ajax = {
             }
         });
     }
-};
+});

@@ -2,10 +2,8 @@
  * COG Framework Logging API
  *
  * TODO Implement this correctly...
- *
- * @type {{error: cog.Log.error, info: cog.Log.info, debug: cog.Log.debug, warn: cog.Log.warn}}
  */
-cog.Log = {
+cog.Class.define("Log", null, {
 
     /**
      * Log ERROR level message
@@ -44,4 +42,4 @@ cog.Log = {
     warn: msg => {
         console.warn(msg);
     }
-};
+});

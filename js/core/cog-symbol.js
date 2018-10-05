@@ -1,7 +1,5 @@
 /**
  * COG Framework Private Symbol Registry
- *
- * @type {{CLASS_NAME: Symbol}}
  */
 cog.Symbol = {
 
@@ -14,6 +12,6 @@ cog.Symbol = {
 };
 
 // Attach unique Symbols to cog.Symbol
-for (let key in cog.Symbol) {
+for (let key of Object.keys(cog.Symbol)) {
     cog.Symbol[key] = Symbol(key);
 }

@@ -1,9 +1,7 @@
 /**
  * Component Object Generator Factory
- *
- * @type {{buildCogApp: cog.Factory.buildCogApp, construct: cog.Factory.construct, validate: (function(*, *): boolean), proxyPrototype: cog.Factory.proxyPrototype, proxyPrototypeFunctions: cog.Factory.proxyPrototypeFunctions, extend: cog.Factory.extend, resetCss: cog.Factory.resetCss, buildChildren: cog.Factory.buildChildren}}
  */
-cog.Factory = {
+cog.Class.define("Factory", null, {
 
     /**
      * Builds the COG Application
@@ -85,15 +83,6 @@ cog.Factory = {
 
             proto = Object.getPrototypeOf(proto);
         }
-
-
-        /*(function proxyPrototype(obj, _this, proto) {
-
-
-
-            proxyPrototype(obj, _this, Object.getPrototypeOf(proto));
-
-        })(obj, _this, Object.getPrototypeOf(obj));*/
     },
 
     /**
@@ -113,4 +102,4 @@ cog.Factory = {
             }
         }
     },
-};
+});

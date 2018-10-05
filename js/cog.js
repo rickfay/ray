@@ -13,6 +13,8 @@ const cog = {
      * TODO Add wildcard system so we don't need to explicitly name every file
      */
     Imports: [
+
+        // CSS
         {type: "css", url: "css/cog-style.css", defer: true},
         {type: "css", url: "css/user-style.css", defer: true},
 
@@ -93,8 +95,8 @@ const cog = {
 
             if (imports.length > 0) {
 
-                let _import = imports[0];
                 let element;
+                let _import = imports[0];
 
                 // Build a dom element for the js or css file to import
                 switch (_import.type) {
@@ -122,10 +124,14 @@ const cog = {
                  * Else, wait until this dependency has loaded and then continuing loading other imports
                  */
                 if (_import.defer) {
+                    element.onload = function onload() {
+                        console.debug(`Loaded: ${_import.url}`);
+                    };
                     loadImports(imports.slice(1));
                 } else if (imports.length > 1) {
                     if (element.readyState) {  // IE
                         element.onreadystatechange = function onreadystatechange() {
+                            console.debug(`Loaded: ${_import.url}`);
                             if (element.readyState === "loaded" || element.readyState === "complete") {
                                 element.onreadystatechange = null;
                                 loadImports(imports.slice(1));
@@ -133,6 +139,7 @@ const cog = {
                         };
                     } else {  // Others
                         element.onload = function onload() {
+                            console.debug(`Loaded: ${_import.url}`);
                             loadImports(imports.slice(1));
                         };
                     }
