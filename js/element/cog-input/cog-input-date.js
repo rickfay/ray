@@ -1,6 +1,5 @@
 /**
- *
- * @type {*|{}}
+ * Input Date Class Definition
  */
 cog.Class.define("InputDate", cog.Input, {
 

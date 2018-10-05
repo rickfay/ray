@@ -2,4 +2,4 @@
 
 Version 1.0.0
 
-Run "node server.js" to start a lightweight server to host the app at localhost:8080
+Run "run.bat" to start a lightweight server to host the app at localhost:8080.

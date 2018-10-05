@@ -1,28 +1,25 @@
 /**
- * COG Component
- *
- * Root COG Class all other Components inherit from.
+ * COG Element
  */
-cog.Class.define("Component", cog.Cog, {
+cog.Class.define("Element", cog.Cog, {
 
     /**
      * Construct the Component
      *
      * @param id
-     * @param className
      * @param parentDom
      */
-    construct: function construct(id, className, parentDom) {
+    construct: function construct(id, parentDom) {
 
         // Set properties
-        this.metadata = cog.Metadata.Components[className][id];
+        this.metadata = cog.Metadata.Elements[this.self.getClassName()][id];
         this.id = parentDom ? `${parentDom.id}.${id}` : id;
-        this.className = className;
 
         // Build
         this.self.buildDom();
         this.self.resetCss();
 
+        // FIXME parent should be in charge of adding child elements
         cog.Util.appendDom(parentDom, this.dom);
 
         cog.Factory.buildChildren(this.self);
@@ -61,13 +58,6 @@ cog.Class.define("Component", cog.Cog, {
      */
     getDom: function getDom() {
         return this.dom;
-    },
-
-    /**
-     * Get the Cog Class Name
-     */
-    getClassName: function getClassName() {
-        return this.className;
     },
 
     /**

@@ -1,7 +1,7 @@
 /**
  * Cog Table Class Definition
  */
-cog.Class.define("Table", cog.Component, {
+cog.Class.define("Table", cog.Element, {
 
     /**
      * Build the DOM

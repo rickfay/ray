@@ -4,4 +4,4 @@
  * @param obj
  * @constructor
  */
-cog.Scope = {};
+cog.Class.define("Scope", null, {});

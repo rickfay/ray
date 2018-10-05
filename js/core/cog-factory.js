@@ -11,18 +11,7 @@ cog.Factory = {
      * @param appId
      */
     buildCogApp: function buildCogApp(appId) {
-        cog.Factory.registerCogMetaProperties();
         cog.app = cog.Factory.construct(appId, cog.App[cog.Symbol.CLASS_NAME], null);
-    },
-
-    /**
-     * TODO Write this :P
-     */
-    registerCogMetaProperties: function registerCogObjects() {
-        for (let key of Object.keys(cog)) {
-            cog[key][cog.Symbol.CLASS_NAME] = key;
-            cog[key][Symbol.toStringTag] = `cog.${key}`;
-        }
     },
 
     /**
@@ -46,7 +35,7 @@ cog.Factory = {
         cog.Factory.proxyPrototype(obj, _this);
 
         // Allow the object to construct itself
-        obj.construct(id, className, parentDom);
+        obj.construct(id, parentDom);
 
         return obj;
     },
@@ -60,7 +49,7 @@ cog.Factory = {
      */
     validate: function validate(id, className) {
         let isValid = true;
-        if (!cog.Util.ref(cog, className, "static") && cog.Util.ref(cog.Metadata, "Components", "id")) {
+        if (!cog.Util.ref(cog.Metadata.Elements, className, id)) {
             console.error(`Cannot construct non-static instance from metadata definition: { ${id}: ${className} }`);
             isValid = false;
         }
@@ -74,16 +63,12 @@ cog.Factory = {
      */
     proxyPrototype: function proxyPrototype(obj, _this) {
 
-        (function proxyPrototype(obj, _this, proto) {
+        let proto = Object.getPrototypeOf(obj);
 
-            // Base case
-            if (!proto || proto === cog.Cog) {
-                return;
-            }
+        while (proto && proto !== Object.prototype) {
 
             for (let key of Object.keys(proto)) {
-                if (proto[key] instanceof Function) {
-
+                if (cog.Util.isFunction(proto[key])) {
                     if (!obj.hasOwnProperty(key)) {
                         Object.defineProperty(obj, key, {
                             enumerable: true,
@@ -98,9 +83,17 @@ cog.Factory = {
                 }
             }
 
+            proto = Object.getPrototypeOf(proto);
+        }
+
+
+        /*(function proxyPrototype(obj, _this, proto) {
+
+
+
             proxyPrototype(obj, _this, Object.getPrototypeOf(proto));
 
-        })(obj, _this, Object.getPrototypeOf(obj));
+        })(obj, _this, Object.getPrototypeOf(obj));*/
     },
 
     /**

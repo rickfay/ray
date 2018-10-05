@@ -1,7 +1,7 @@
 /**
  * COG Container Component Definition
  */
-cog.Class.define("Container", cog.Component, {
+cog.Class.define("Container", cog.Element, {
 
     /**
      * Build the DOM

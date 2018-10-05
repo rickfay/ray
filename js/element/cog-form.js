@@ -1,13 +1,13 @@
 /**
- * COG App Component Definition
+ * COG Form Class Definition
  */
-cog.Class.define("App", cog.Component, {
+cog.Class.define("Form", cog.Element, {
 
     /**
      * Build the DOM
      */
     buildDom: function buildDom() {
-        this.dom = cog.Root;
+        this.dom = document.createElement("form");
         this.dom.id = this.id;
     }
 });
