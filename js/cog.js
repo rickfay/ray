@@ -14,10 +14,6 @@ const cog = {
      */
     Imports: [
 
-        // CSS
-        {type: "css", url: "css/cog-style.css", defer: true},
-        {type: "css", url: "css/user-style.css", defer: true},
-
         // Libs
         {type: "js", url: "js/lib/jquery.js"},
 
@@ -44,7 +40,11 @@ const cog = {
         {type: "js", url: "js/element/cog-input/cog-input-radio.js", defer: true},
         {type: "js", url: "js/element/cog-input/cog-input-text.js", defer: true},
         {type: "js", url: "js/element/cog-select.js", defer: true},
-        {type: "js", url: "js/element/cog-text.js", defer: true}
+        {type: "js", url: "js/element/cog-text.js", defer: true},
+
+        // CSS
+        {type: "css", url: "css/cog-style.css", defer: true},
+        {type: "css", url: "css/user-style.css", defer: true}
     ],
 
     /**
@@ -56,8 +56,6 @@ const cog = {
          * Bootstraps the COG Application
          */
         bootstrap: function bootstrap() {
-
-            console.log("Bootstrapping COG Framework...");
 
             // Get base element to anchor COG app
             const COG_APP_ATTRIBUTE = "[data-cog-app-id]";
@@ -74,8 +72,6 @@ const cog = {
                 console.log(`Error initializing COG framework. Missing data-cog-meta-src attribute for App: ${cogAppId}`);
                 return;
             }
-
-            console.log(`Initializing App "${cogAppId}" with Metadata definition "${cogMetaSrc}"`);
 
             // Fetch the Metadata Configuration
             cog.Ajax.get(cogMetaSrc, response => {
@@ -102,14 +98,14 @@ const cog = {
                 switch (_import.type) {
                     case "css":
                         element = document.createElement("link");
+                        element.href = _import.url
                         element.type = "text/css";
                         element.rel = "stylesheet";
-                        element.href = _import.url;
                         break;
                     case "js":
                         element = document.createElement("script");
-                        element.type = "text/javascript";
                         element.src = _import.url;
+                        element.type = "text/javascript";
                         if (_import.defer) {
                             element.setAttribute("defer", "");
                         }
