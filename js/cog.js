@@ -3,186 +3,59 @@
 /**
  * cog Framework API
  *
- * @type {{}}
+ * @type {{Imports: *[], Init: {bootstrap: cog.Init.bootstrap, loadImports: cog.Init.loadImports}}}
  */
-const cog = {};
-
-cog.Symbol = {
-
-    /**
-     * Name of the COG Class
-     */
-    CLASS_NAME: undefined
-};
-
-// Attach unique Symbols to the cog.Symbol
-for (let key in cog.Symbol) {
-    cog.Symbol[key] = Symbol(key);
-}
-
-/**
- * COG Class Interaction API
- */
-cog.Class = {
-
-    [cog.Symbol.CLASS_NAME]: "Class",
-    [Symbol.toStringTag]: "cog.Class",
-
-    /**
-     * Builds a cog Class Definition.
-     *
-     * @param className
-     * @param superClass
-     * @param def
-     */
-    define: function define(className, superClass, def) {
-
-        // Classes should only be defined once
-        if (cog[className]) {
-            console.error(`cog class "${className}" already exists`);
-            return;
-        }
-
-        // Construct the class from its prototype definition, extending the given superClass if provided
-        let classDef = superClass ? Object.create(superClass, Object.getOwnPropertyDescriptors(def)) : def;
-
-        // Set meta properties of the class definition
-        classDef[cog.Symbol.CLASS_NAME] = className;
-        classDef[Symbol.toStringTag] = `cog.${className}`;
-
-        // Attach the class definition to the cog API
-        cog[className] = classDef;
-    },
-
-    makePrivate: function makePrivate(obj, property) {
-
-        if (!obj[property]) {
-            console.error(`Cannot make non-existant property ${propery} private on Object ${obj}`);
-            return;
-        }
-
-        Object.defineProperty(obj, property, Object.assign(Object.getOwnPropertyDescriptors(obj[property]), {enumerable: false}))
-    }
-};
-
-/**
- * COG Base Object
- */
-cog.Class.define("Cog", null, {
-
-    /**
-     * Default constructor
-     */
-    construct: function construct() {
-        console.debug(`No constructor defined for ${this.self.getClassName()}`);
-    },
-
-    /**
-     * Get the Cog Class Name
-     */
-    getClassName: function getClassName() {
-        return this.self[cog.Symbol.CLASS_NAME];
-    }
-});
-
-
-/**
- * COG Initialization Utility
- */
-cog.Init = {
-
-    [cog.Symbol.CLASS_NAME]: "cog.Init",
+const cog = {
 
     /**
      * System Imports Needed for COG to run
+     *
      * TODO Add wildcard system so we don't need to explicitly name every file
      */
-    Dependencies: [
+    Imports: [
+        {type: "css", url: "css/cog-style.css", defer: true},
+        {type: "css", url: "css/user-style.css", defer: true},
 
         // Libs
-        "js/lib/jquery.js",
+        {type: "js", url: "js/lib/jquery.js"},
 
-        // Framework Core
-        "js/core/cog-ajax.js",
-        "js/core/cog-log.js",
-        //"js/core/cog-events.js",
-        "js/core/cog-factory.js",
-        "js/core/cog-scope.js",
-        //"js/core/cog-symbol.js",
-        "js/core/cog-util.js",
+        // Core Components needed before everything else
+        {type: "js", url: "js/core/cog-symbol.js"},
+        {type: "js", url: "js/core/cog-class.js"},
+        {type: "js", url: "js/core/cog-cog.js"},
 
-        //"js/cog-cog.js",
+        // Core
+        {type: "js", url: "js/core/cog-ajax.js"},
+        {type: "js", url: "js/core/cog-log.js"},
+        {type: "js", url: "js/core/cog-factory.js"},
+        {type: "js", url: "js/core/cog-scope.js"},
+        {type: "js", url: "js/core/cog-util.js"},
 
         // Elements
-        "js/element/cog-element.js",
-        "js/element/cog-app.js",
-        "js/element/cog-container.js",
-        "js/element/cog-form.js",
-        "js/element/cog-image.js",
-        "js/element/cog-input/cog-input.js",
-        "js/element/cog-input/cog-input-date.js",
-        "js/element/cog-input/cog-input-radio.js",
-        "js/element/cog-input/cog-input-text.js",
-        "js/element/cog-select.js",
-        "js/element/cog-text.js",
-
-        // CSS
-        "css/cog-style.css",
-        "css/user-style.css"
+        {type: "js", url: "js/element/cog-element.js"},
+        {type: "js", url: "js/element/cog-app.js", defer: true},
+        {type: "js", url: "js/element/cog-container.js", defer: true},
+        {type: "js", url: "js/element/cog-form.js", defer: true},
+        {type: "js", url: "js/element/cog-image.js", defer: true},
+        {type: "js", url: "js/element/cog-input/cog-input.js"},
+        {type: "js", url: "js/element/cog-input/cog-input-date.js", defer: true},
+        {type: "js", url: "js/element/cog-input/cog-input-radio.js", defer: true},
+        {type: "js", url: "js/element/cog-input/cog-input-text.js", defer: true},
+        {type: "js", url: "js/element/cog-select.js", defer: true},
+        {type: "js", url: "js/element/cog-text.js", defer: true}
     ],
 
     /**
-     * Imports the file from the provided URL.
-     *
-     * @param url
-     * @returns {Promise}
+     * COG Initialization Utility
      */
-    importFile: function importFile(url) {
-        return new Promise(function (resolve) {
+    Init: {
 
-            // TODO Build in wildcard file loading
+        /**
+         * Bootstraps the COG Application
+         */
+        bootstrap: function bootstrap() {
 
-            let fileType = url.substring(url.lastIndexOf("."));
-            let fileElem = undefined;
-
-            // TODO Build plugin support to support importing arbitrary file types
-            switch (fileType) {
-                case ".css":
-                    fileElem = document.createElement("link");
-                    fileElem.type = "text/css";
-                    fileElem.rel = "stylesheet";
-                    fileElem.href = url;
-                    break;
-                case ".js":
-                    fileElem = document.createElement("script");
-                    fileElem.type = "text/javascript";
-                    fileElem.src = url;
-                    break;
-                default:
-                    console.error(`Don't know how to load file type ${type}`);
-                    break;
-            }
-
-            fileElem.onload = resolve;
-            document.head.appendChild(fileElem);
-        });
-    },
-
-    /**
-     * Bootstraps the COG Application
-     */
-    bootstrap: function bootstrap() {
-
-        console.log("Bootstrapping COG Framework...");
-
-        // Load system dependencies
-        let dependencyPromises = [];
-        for (let dependency of cog.Init.Dependencies) {
-            dependencyPromises.push(cog.Init.importFile(dependency));
-        }
-
-        // Ensure all dependencies have loaded before continuing...
-        Promise.all(dependencyPromises).then(() => {
+            console.log("Bootstrapping COG Framework...");
 
             // Get base element to anchor COG app
             const COG_APP_ATTRIBUTE = "[data-cog-app-id]";
@@ -209,15 +82,67 @@ cog.Init = {
                 cog.Metadata = response;
                 cog.Factory.buildCogApp(cogAppId);
             });
-        });
+        },
+
+        /**
+         * Loads the given imports
+         *
+         * @param imports
+         */
+        loadImports: function loadImports(imports) {
+
+            if (imports.length > 0) {
+
+                let _import = imports[0];
+                let element;
+
+                // Build a dom element for the js or css file to import
+                switch (_import.type) {
+                    case "css":
+                        element = document.createElement("link");
+                        element.type = "text/css";
+                        element.rel = "stylesheet";
+                        element.href = _import.url;
+                        break;
+                    case "js":
+                        element = document.createElement("script");
+                        element.type = "text/javascript";
+                        element.src = _import.url;
+                        if (_import.defer) {
+                            element.setAttribute("defer", "");
+                        }
+                        break;
+                    default:
+                        console.error(`Don't know how to load file type ${_import.type}`);
+                        return;
+                }
+
+                /*
+                 * If marked as defer, move onto loading the next dependency immediately.
+                 * Else, wait until this dependency has loaded and then continuing loading other imports
+                 */
+                if (_import.defer) {
+                    loadImports(imports.slice(1));
+                } else if (imports.length > 1) {
+                    if (element.readyState) {  // IE
+                        element.onreadystatechange = function onreadystatechange() {
+                            if (element.readyState === "loaded" || element.readyState === "complete") {
+                                element.onreadystatechange = null;
+                                loadImports(imports.slice(1));
+                            }
+                        };
+                    } else {  // Others
+                        element.onload = function onload() {
+                            loadImports(imports.slice(1));
+                        };
+                    }
+                }
+
+                document.head.appendChild(element);
+            }
+        }
     }
 };
 
-/**
- *
- */
-cog.Metadata = {
-    [Symbol.toStringTag]: "cog.Metadata"
-};
-
-document.addEventListener("DOMContentLoaded", cog.Init.bootstrap);
+cog.Init.loadImports(cog.Imports);
+window.addEventListener("load", cog.Init.bootstrap);
