@@ -97,9 +97,13 @@ cog.Class.define("Util", null, {
      */
     applyClass: function applyClass(dom, cssClasses) {
         if (dom && cssClasses) {
-            for (let cssClass of cssClasses) {
-                if (cssClass) {
-                    dom.classList.add(cssClass);
+            if (typeof cssClasses === "string") {
+                dom.classList.add(cssClasses);
+            } else if (cssClasses instanceof Array) {
+                for (let cssClass of cssClasses) {
+                    if (cssClass) {
+                        dom.classList.add(cssClass);
+                    }
                 }
             }
         }

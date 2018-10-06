@@ -34,6 +34,34 @@ cog.Class = {
 
     /**
      *
+     * @param _this
+     * @param fn
+     * @returns {*}
+     */
+    super: function (_this, fn) {
+
+        // First locate the prototype of the normal function call
+        let proto = Object.getPrototypeOf(_this.self);
+        while (proto && !proto.hasOwnProperty(fn)) {
+            proto = Object.getPrototypeOf(proto);
+        }
+
+        // Attempt to find a super reference to call
+        let superProto = Object.getPrototypeOf(proto);
+        while (superProto && !superProto.hasOwnProperty(fn)) {
+            superProto = Object.getPrototypeOf(superProto);
+        }
+
+        // Call the super class's function if it exists, applying our current scope and any arguments
+        if (superProto.hasOwnProperty(fn)) {
+            return superProto[fn].apply(_this, Array.prototype.slice.call(arguments, 2));
+        } else {
+            console.error(`No superclass definition found for cog.${_this.self.getClassName()}.${fn}`);
+        }
+    },
+
+    /**
+     *
      * @param obj
      * @param property
      */

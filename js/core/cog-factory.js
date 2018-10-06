@@ -4,22 +4,12 @@
 cog.Class.define("Factory", null, {
 
     /**
-     * Builds the COG Application
-     *
-     * @param appId
-     */
-    buildCogApp: function buildCogApp(appId) {
-        cog.app = cog.Factory.construct(appId, cog.App[cog.Symbol.CLASS_NAME], null);
-    },
-
-    /**
      * Constructs a new COG Component
      *
-     * @param className
-     * @param id
-     * @param parentDom
+     * @param id ID of the object
+     * @param className COG Class of the object
      */
-    construct: function construct(id, className, parentDom) {
+    construct: function construct(id, className) {
 
         // Validate
         if (!cog.Factory.validate(id, className)) {
@@ -33,7 +23,7 @@ cog.Class.define("Factory", null, {
         cog.Factory.proxyPrototype(obj, _this);
 
         // Allow the object to construct itself
-        obj.construct(id, parentDom);
+        obj.construct(id);
 
         return obj;
     },
@@ -46,6 +36,9 @@ cog.Class.define("Factory", null, {
      * @returns {boolean}
      */
     validate: function validate(id, className) {
+
+        return true; // FIXME remove this
+
         let isValid = true;
         if (!cog.Util.ref(cog.Metadata.Elements, className, id)) {
             console.error(`Cannot construct non-static instance from metadata definition: { ${id}: ${className} }`);
@@ -90,16 +83,17 @@ cog.Class.define("Factory", null, {
      *
      * @param obj
      */
-    buildChildren: function buildChildren(obj) {
-        let dom = obj.getDom();
-        if (dom) {
-            // Recursively construct child Component Elements
-            let elements = obj.getMetadata().Elements;
-            if (elements) {
-                for (let element in elements) {
-                    cog.Factory.construct(element, elements[element], dom);
-                }
+    constructChildren: function buildChildren(obj) {
+
+        let childElements = [];
+        let elements = obj.getMetadata().Elements;
+
+        if (elements) {
+            for (let element of Object.keys(elements)) {
+                childElements.push(cog.Factory.construct(`${obj.getId()}.${element}`, elements[element]));
             }
         }
+
+        return childElements;
     },
 });

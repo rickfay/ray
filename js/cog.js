@@ -78,7 +78,7 @@ const cog = {
 
                 // TODO need error handling
                 cog.Metadata = response;
-                cog.Factory.buildCogApp(cogAppId);
+                cog.Factory.construct(cogAppId, "App");
             });
         },
 

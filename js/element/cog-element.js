@@ -7,22 +7,21 @@ cog.Class.define("Element", cog.Cog, {
      * Construct the Component
      *
      * @param id
-     * @param parentDom
      */
-    construct: function construct(id, parentDom) {
+    construct: function construct(id) {
 
         // Set properties
-        this.metadata = cog.Metadata.Elements[this.self.getClassName()][id];
-        this.id = parentDom ? `${parentDom.id}.${id}` : id;
+        this.metadata = cog.Metadata.Elements[this.self.getClassName()][id.substring(id.lastIndexOf(".") + 1)];
+        this.id = id;
 
         // Build
         this.self.buildDom();
         this.self.resetCss();
 
-        // FIXME parent should be in charge of adding child elements
-        cog.Util.appendDom(parentDom, this.dom);
-
-        cog.Factory.buildChildren(this.self);
+        // Construct the children and append them to this element's DOM
+        for (let childElement of cog.Factory.constructChildren(this.self)) {
+            cog.Util.appendDom(this.dom, childElement.getDom());
+        }
     },
 
     /**

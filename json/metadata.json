@@ -46,9 +46,7 @@
         "Image": {
             "meeseeks": {
                 "Source": "https://cdn-images-1.medium.com/max/1600/0*eGkQxJeiBuNzwKG9.jpg",
-                "Class": [
-                    "meeseeks"
-                ]
+                "Class": "meeseeks"
             }
         },
         "InputDate": {
