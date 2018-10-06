@@ -8,18 +8,38 @@ cog.Class.define("Ajax", null, {
      *
      * @param url
      * @param callback
-     * @returns {*|{readyState, getResponseHeader, getAllResponseHeaders, setRequestHeader, overrideMimeType, statusCode, abort}}
      */
     get: function get(url, callback) {
-        return $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json",
-            success: callback,
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert(`The following error occurred: ${jqXHR} || ${textStatus} || ${errorThrown} || ${jqXHR.responseText}`);
+
+        let request = new XMLHttpRequest();
+        request.open("GET", url, true);
+
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                callback(request.response);
+            } else {
+                console.error("We reached our target server, but it returned an error");
             }
-        });
+        };
+
+        request.onerror = function() {
+            console.error("There was a connection error of some sort");
+        };
+
+        request.open("GET", url, true);
+        request.send();
+    },
+
+    /**
+     * Ajax POST
+     *
+     * @param url
+     * @param data
+     */
+    post: function post(url, data) {
+        let request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send(data);
     }
 });

@@ -14,9 +14,6 @@ const cog = {
      */
     Imports: [
 
-        // Libs
-        {type: "js", url: "js/lib/jquery.js"},
-
         // Core Components needed before everything else
         {type: "js", url: "js/core/cog-symbol.js"},
         {type: "js", url: "js/core/cog-class.js"},
@@ -60,10 +57,17 @@ const cog = {
             // Get base element to anchor COG app
             const COG_APP_ATTRIBUTE = "[data-cog-app-id]";
 
-            cog.Root = document.querySelector(COG_APP_ATTRIBUTE); // TODO Add multiplicity
-            let cogAppId = cog.Root.dataset.cogAppId;
-            let cogMetaSrc = cog.Root.dataset.cogMetaSrc;
-            cog.Root.id = cogAppId;
+            let rootElement = document.querySelector(COG_APP_ATTRIBUTE); // TODO Add multiplicity
+            let cogAppId = rootElement.dataset.cogAppId;
+
+            if (cog.Root[cogAppId]) {
+                console.error(`cog App with id ${cogAppId} already deployed.`);
+                return;
+            }
+
+            let cogMetaSrc = rootElement.dataset.cogMetaSrc;
+            rootElement.id = cogAppId;
+            cog.Root[cogAppId] = rootElement;
 
             if (!cogAppId) {
                 console.log(`Error initializing COG framework. No base element found with specified ${COG_APP_ATTRIBUTE} attribute.`);
@@ -77,7 +81,7 @@ const cog = {
             cog.Ajax.get(cogMetaSrc, response => {
 
                 // TODO need error handling
-                cog.Metadata = response;
+                cog.Metadata = JSON.parse(response);
                 cog.Factory.construct(cogAppId, "App");
             });
         },
@@ -144,7 +148,8 @@ const cog = {
                 document.head.appendChild(element);
             }
         }
-    }
+    },
+    Root: {}
 };
 
 cog.Init.loadImports(cog.Imports);
