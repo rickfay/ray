@@ -8,11 +8,12 @@ cog.Class.define("Factory", null, {
      *
      * @param id ID of the object
      * @param className COG Class of the object
+     * @param args
      */
-    construct: function construct(id, className) {
+    construct: function construct(className, id, ...args) {
 
         // Validate
-        if (!cog.Factory.validate(id, className)) {
+        if (!cog.Factory.validate(className, id)) {
             return null;
         }
 
@@ -23,7 +24,7 @@ cog.Class.define("Factory", null, {
         cog.Factory.proxyPrototype(obj, _this);
 
         // Allow the object to construct itself
-        obj.construct(id);
+        obj.construct(id, ...args);
 
         return obj;
     },
@@ -35,7 +36,7 @@ cog.Class.define("Factory", null, {
      * @param className
      * @returns {boolean}
      */
-    validate: function validate(id, className) {
+    validate: function validate(className, id) {
 
         return true; // FIXME remove this
 
@@ -90,7 +91,7 @@ cog.Class.define("Factory", null, {
 
         if (elements) {
             for (let element of Object.keys(elements)) {
-                childElements.push(cog.Factory.construct(`${obj.getId()}.${element}`, elements[element]));
+                childElements.push(cog.Factory.construct(elements[element], `${obj.getId()}.${element}`));
             }
         }
 

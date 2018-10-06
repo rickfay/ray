@@ -15,7 +15,6 @@ cog.Class = {
      */
     define: function define(className, superClass, def) {
 
-        // Classes should only be defined once
         if (cog[className]) {
             console.error(`cog class "${className}" already exists`);
             return;

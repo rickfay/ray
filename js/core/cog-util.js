@@ -28,17 +28,19 @@ cog.Class.define("Util", null, {
     /**
      * Evaluates a reference chain and return the result if it's valid, otherwise return undefined.
      *
-     * @returns {?}
+     * @param obj
+     * @param propChain
+     * @returns {*}
      */
-    ref: function ref() {
-        if (arguments.length > 1) {
-            if (arguments[0]) {
-                return cog.Util.ref(arguments[0][arguments[1]], ...Array.prototype.slice.call(arguments, 2));
+    ref: function ref(obj, ...propChain) {
+        if (propChain.length > 0) {
+            if (obj) {
+                return cog.Util.ref(obj[propChain[0]], ...Array.prototype.slice.call(propChain, 1));
             } else {
                 return undefined;
             }
         } else {
-            return arguments[0];
+            return obj;
         }
     },
 
@@ -46,20 +48,20 @@ cog.Class.define("Util", null, {
      * Evaluates a reference chain and builds missing references as empty objects.
      * Returns the evaluated reference, whether pre-existing or created by this function.
      */
-    buildRef: function buildRef() {
+    buildRef: function buildRef(obj, ...propChain) {
 
-        if (arguments.length > 1) {
-            if (arguments[0]) {
-                if (!arguments[0][arguments[1]]) {
-                    arguments[0][arguments[1]] = {};
+        if (propChain.length > 0) {
+            if (obj) {
+                if (!obj[propChain[0]]) {
+                    obj[propChain[0]] = {};
                 }
-                return buildRef(arguments[0][arguments[1]], ...Array.prototype.slice.call(arguments, 2));
+                return buildRef(obj[propChain[0]], ...Array.prototype.slice.call(propChain, 1));
             } else {
-                arguments[0] = {};
-                return buildRef(arguments[0], ...Array.prototype.slice.call(arguments, 1));
+                obj = {};
+                return buildRef(obj, propChain);
             }
         } else {
-            return arguments[0] ? arguments[0] : {};
+            return obj ? obj : {};
         }
     },
 

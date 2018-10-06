@@ -20,6 +20,8 @@ const cog = {
         {type: "js", url: "js/core/cog-cog.js"},
 
         // Core
+        {type: "js", url: "js/core/cog-event.js"},
+        {type: "js", url: "js/core/cog-events.js"},
         {type: "js", url: "js/core/cog-ajax.js"},
         {type: "js", url: "js/core/cog-log.js"},
         {type: "js", url: "js/core/cog-factory.js"},
@@ -82,7 +84,8 @@ const cog = {
 
                 // TODO need error handling
                 cog.Metadata = JSON.parse(response);
-                cog.Factory.construct(cogAppId, "App");
+                cog.Events = cog.Factory.construct("Events", null);
+                cog.Factory.construct("App", cogAppId);
             });
         },
 

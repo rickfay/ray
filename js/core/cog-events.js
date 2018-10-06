@@ -1,85 +1,44 @@
 /**
- * COG Framework Events System
+ * COG Framework Event Management System
  *
  * @constructor
  */
-cog.Events = function Events() {};
-cog.Events.extends = cog.Cog;
-cog.Events.static = true;
 
-(proto => {
+cog.Class.define("Events", null, {
 
     /**
-     *
-     * @param _scope
+     * Constructor
      */
-    proto.construct = function construct(_scope) {
-        _scope.events = {};
-    };
+    construct: function construct() {
+        this.events = {};
+    },
 
     /**
+     * Publish an Event
      *
-     * @param _scope
      * @param eventName
      * @param args
-     * @returns {*}
+     * @returns {{}}
      */
-    proto.pub = function pub(_scope, eventName, args) {
-        return !cog.Util.isEmpty(_scope.events[_scope.id] && !cog.Util.isEmpty(_scope.events[_scope.id][eventName]))
-            ? _scope.events[_scope.id][eventName].trigger(args) : null;
-    };
+    pub: function pub(eventName, ...args) {
+        let event = cog.Util.ref(this.events, this.id, eventName);
+        return event ? event.trigger(...args) : null;
+    },
 
     /**
+     * Subscribe to an Event
      *
-     * @param _scope
      * @param eventName
      * @param callback
      */
-    proto.sub = function sub(_scope, eventName, callback) {
+    sub: function sub(eventName, callback) {
 
-        let myEvents = cog.Util.buildRef(_scope.events, _scope.id);
+        let myEvents = cog.Util.buildRef(this.events, this.id);
 
         if (cog.Util.isEmpty(myEvents[eventName])) {
-            myEvents[eventName] = new function (eventName) {
-
-                let _scope = {
-                    eventName: eventName,
-                    subscribers: {}
-                };
-
-                return Object.create({
-
-                    addSub: (id, callback) => {
-                        if (!cog.Util.isEmpty(callback)) {
-                            _scope.subscribers[id] = callback;
-                        }
-                    },
-
-                    removeSub: (id) => {
-                        if (!cog.Util.isEmpty(id) && !cog.Util.isEmpty(_scope.subscribers[id])) {
-                            delete _scope.subscribers[id];
-                        }
-                    },
-
-                    trigger: () => {
-                        console.log("trigger!");
-                        console.log(_scope.subscribers);
-
-                        let eventReturns = {};
-                        $.each(_scope.subscribers, function(i, v) {
-                            eventReturns[i] = {};
-                            if (!cog.Util.isEmpty(v)) {
-                                eventReturns[i][v] = v(args);
-                            }
-                        });
-
-                        return eventReturns;
-                    }
-                });
-            };
+            myEvents[eventName] = cog.Factory.construct("Event", eventName);
         }
 
-        _scope.subscribers[_scope.id][eventName].addSub(_scope, _scope.id, callback);
-    };
-
-})(cog.Events.prototype);
+        myEvents[eventName].addSub(eventName, callback);
+    }
+});
