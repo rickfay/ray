@@ -17,16 +17,16 @@ const cog = {
         // Core Components needed before everything else
         {type: "js", url: "js/core/cog-symbol.js"},
         {type: "js", url: "js/core/cog-class.js"},
+        {type: "js", url: "js/core/cog-scope.js"},
+        {type: "js", url: "js/core/cog-util.js"},
+
+        {type: "js", url: "js/core/cog-log.js"},
+
         {type: "js", url: "js/core/cog-cog.js"},
 
-        // Core
         {type: "js", url: "js/core/cog-event.js"},
         {type: "js", url: "js/core/cog-events.js"},
         {type: "js", url: "js/core/cog-ajax.js"},
-        {type: "js", url: "js/core/cog-log.js"},
-        {type: "js", url: "js/core/cog-factory.js"},
-        {type: "js", url: "js/core/cog-scope.js"},
-        {type: "js", url: "js/core/cog-util.js"},
 
         // Elements
         {type: "js", url: "js/element/cog-element.js"},
@@ -84,8 +84,7 @@ const cog = {
 
                 // TODO need error handling
                 cog.Metadata = JSON.parse(response);
-                cog.Events = cog.Factory.construct("Events", null);
-                cog.Factory.construct("App", cogAppId);
+                cog.Class.construct("App", cogAppId);
             });
         },
 

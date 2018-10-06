@@ -1,10 +1,7 @@
 /**
  * COG Framework Event Management System
- *
- * @constructor
  */
-
-cog.Class.define("Events", null, {
+cog.Class.singleton("Events", {
 
     /**
      * Constructor

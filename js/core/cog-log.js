@@ -3,14 +3,18 @@
  *
  * TODO Implement this correctly...
  */
-cog.Class.define("Log", null, {
+cog.Class.singleton("Log", {
+
+    construct: function construct() {
+        console.debug("Initializing cog logging system...");
+    },
 
     /**
      * Log ERROR level message
      *
      * @param msg
      */
-    error: msg => {
+    error: function error(msg) {
         console.error(msg);
     },
 
@@ -19,7 +23,7 @@ cog.Class.define("Log", null, {
      *
      * @param msg
      */
-    info: msg => {
+    info: function info(msg) {
         console.info(msg);
     },
 
@@ -28,10 +32,8 @@ cog.Class.define("Log", null, {
      *
      * @param msg
      */
-    debug: msg => {
-        if (cog.Metadata.Config.DEBUG) {
-            console.debug(msg);
-        }
+    debug: function debug(msg) {
+        console.debug(msg);
     },
 
     /**
@@ -39,7 +41,7 @@ cog.Class.define("Log", null, {
      *
      * @param msg
      */
-    warn: msg => {
+    warn: function warn(msg) {
         console.warn(msg);
     }
 });

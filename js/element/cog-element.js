@@ -19,7 +19,7 @@ cog.Class.define("Element", cog.Cog, {
         this.self.resetCss();
 
         // Construct the children and append them to this element's DOM
-        for (let childElement of cog.Factory.constructChildren(this.self)) {
+        for (let childElement of cog.Class.constructChildren(this.self)) {
             cog.Util.appendDom(this.dom, childElement.getDom());
         }
     },

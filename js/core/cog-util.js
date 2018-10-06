@@ -10,10 +10,21 @@ cog.Class.define("Util", null, {
      * @param _this
      * @returns {function(): *}
      */
-    proxy: function proxy(fn, _this) {
-        return function proxy() {
+    proxy: (fn, _this) => {
+
+        // Build Proxy
+        let _proxy = function proxy() {
             return fn.apply(_this, arguments);
         };
+
+        // Overwrite toString() definition for ease of debugging
+        Object.defineProperty(_proxy, "toString", {
+            value: function toString() {
+                return `proxy: ${fn}`;
+            }
+        });
+
+        return _proxy;
     },
 
     /**
