@@ -22,5 +22,7 @@ cog.Class.define("Select", cog.Element, {
             optionDom.value = options[option];
             this.dom.appendChild(optionDom);
         }
+
+        this.self.resetCss();
     }
 });

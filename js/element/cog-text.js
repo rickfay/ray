@@ -12,5 +12,6 @@ cog.Class.define("Text", cog.Element, {
         this.dom = document.createElement("p");
         this.dom.id = this.id;
         this.dom.innerHTML = this.metadata.Text;
+        this.self.resetCss();
     }
 });

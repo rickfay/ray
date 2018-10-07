@@ -1,7 +1,5 @@
 /**
  * COG Table Row Class
- *
- * @type {*|{}}
  */
 cog.Class.define("TableRow", cog.Element, {
 

@@ -19,11 +19,9 @@ const cog = {
         {type: "js", url: "js/core/cog-class.js"},
         {type: "js", url: "js/core/cog-scope.js"},
         {type: "js", url: "js/core/cog-util.js"},
-
+        {type: "js", url: "js/core/cog-root.js"},
         {type: "js", url: "js/core/cog-log.js"},
-
         {type: "js", url: "js/core/cog-cog.js"},
-
         {type: "js", url: "js/core/cog-event.js"},
         {type: "js", url: "js/core/cog-events.js"},
         {type: "js", url: "js/core/cog-ajax.js"},
@@ -106,52 +104,27 @@ const cog = {
             }
         };
 
-        /**
-         * Bootstraps the COG Application
-         */
-        let bootstrap = function bootstrap() {
-
-            // Get base element to anchor COG app
-            const COG_APP_ATTRIBUTE = "[data-cog-app-id]";
-
-            let rootElement = document.querySelector(COG_APP_ATTRIBUTE); // TODO Add multiplicity
-            let cogAppId = rootElement.dataset.cogAppId;
-
-            if (cog.Root[cogAppId]) {
-                console.error(`cog App with id ${cogAppId} already deployed.`);
-                return;
-            }
-
-            let cogMetaSrc = rootElement.dataset.cogMetaSrc;
-            rootElement.id = cogAppId;
-            cog.Root[cogAppId] = rootElement;
-
-            if (!cogAppId) {
-                console.log(`Error initializing COG framework. No base element found with specified ${COG_APP_ATTRIBUTE} attribute.`);
-                return;
-            } else if (!cogMetaSrc) {
-                console.log(`Error initializing COG framework. Missing data-cog-meta-src attribute for App: ${cogAppId}`);
-                return;
-            }
-
-            // Fetch the Metadata Configuration
-            cog.Ajax.get(cogMetaSrc, response => {
-
-                // TODO need error handling
-                cog.Metadata = JSON.parse(response);
-                cog.Class.construct("App", cogAppId);
-            });
-        };
-
         return {
             init: function init() {
                 loadImports(cog.Imports);
-                window.addEventListener("load", bootstrap);
+                window.addEventListener("load", function load() {
+                    cog.Root.bootstrap();
+                });
             }
         };
     })(),
 
-    Root: {}
+    Metadata: {},
+
+    Ajax: undefined,
+    Cog: undefined,
+    Element: undefined,
+    Event: undefined,
+    Events: undefined,
+    Log: undefined,
+    Root: undefined,
+    Scope: undefined,
+    Util: undefined
 };
 
 cog.Init.init();

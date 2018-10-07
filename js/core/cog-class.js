@@ -3,6 +3,42 @@
  */
 cog.Class = (function Class() {
 
+
+    /**
+     *
+     * @param proto
+     */
+    let instantiate = function instantiate(proto) {
+        let obj = Object.create(proto);
+        let scope = Object.create(cog.Scope, {self: {value: obj}});
+        proxyPrototype(obj, scope);
+        return obj;
+    };
+
+    /**
+     * Build Proxy references to prototype methods on the given obj, binding the proxy to the given scope context
+     *
+     * @param obj
+     * @param scope
+     */
+    let proxyPrototype = function proxyPrototype(obj, scope) {
+
+        let proto = Object.getPrototypeOf(obj);
+
+        while (proto && proto !== Object.prototype) {
+            for (let key of Object.keys(proto)) {
+                if (cog.Util.isFunction(proto[key]) && !obj.hasOwnProperty(key)) {
+                    Object.defineProperty(obj, key, {
+                        enumerable: true,
+                        value: cog.Util.proxy(proto[key], scope)
+                    });
+                }
+            }
+
+            proto = Object.getPrototypeOf(proto);
+        }
+    };
+
     /**
      *
      * @param obj
@@ -11,31 +47,6 @@ cog.Class = (function Class() {
     let assignMetaProperties = function assignMetaProperties(obj, className) {
         obj[cog.Symbol.CLASS_NAME] = className;
         obj[Symbol.toStringTag] = `cog.${className}`;
-    };
-
-    /**
-     * Build Proxy references to prototype methods on the given obj, binding the proxy to the given context _this.
-     *
-     * @param obj
-     * @param _this
-     */
-    let proxyPrototype = function proxyPrototype(obj, _this) {
-
-        let proto = Object.getPrototypeOf(obj);
-
-        while (proto && proto !== Object.prototype) {
-
-            for (let key of Object.keys(proto)) {
-                if (cog.Util.isFunction(proto[key]) && !obj.hasOwnProperty(key)) {
-                    Object.defineProperty(obj, key, {
-                        enumerable: true,
-                        value: cog.Util.proxy(proto[key], _this)
-                    });
-                }
-            }
-
-            proto = Object.getPrototypeOf(proto);
-        }
     };
 
     return {
@@ -81,7 +92,14 @@ cog.Class = (function Class() {
             }
 
             assignMetaProperties(proto, id);
-            cog[id] = cog.Class.construct(proto, id);
+
+            let obj = instantiate(proto);
+
+            if (obj.construct) {
+                obj.construct(id);
+            }
+
+            cog[id] = obj;
         },
 
         /**
@@ -89,9 +107,9 @@ cog.Class = (function Class() {
          *
          * @param id ID of the object
          * @param proto COG Class prototype for the object
-         * @param args
+         * @param parentScope The Parent Objects's Scope
          */
-        construct: function construct(proto, id, ...args) {
+        construct: function construct(proto, id, parentScope) {
 
             // Allow construction by passing in either the name or prototype definition of an object
             if (typeof proto === "string") {
@@ -103,31 +121,28 @@ cog.Class = (function Class() {
 
             // FIXME Add back validation
 
-            // Construct the Component and its private Scope
-            let obj = Object.create(proto);
-            let _this = Object.create(cog.Scope, {self: {value: obj}});
+            let obj = instantiate(proto);
 
-            proxyPrototype(obj, _this);
-
-            // Allow the object to construct itself
-            obj.construct(id, ...args);
+            obj.construct(id, parentScope);
 
             return obj;
         },
 
         /**
-         * Recursively builds the child Elements on this Component
+         * Builds the child Elements on this Component
          *
-         * @param obj
+         * @param scope
          */
-        constructChildren: function buildChildren(obj) {
+        constructChildren: function buildChildren(scope) {
+
+            let obj = scope.self;
+            let elements = obj.getMetadata().Elements;
 
             let childElements = [];
-            let elements = obj.getMetadata().Elements;
 
             if (elements) {
                 for (let element of Object.keys(elements)) {
-                    childElements.push(cog.Class.construct(elements[element], `${obj.getId()}.${element}`));
+                    childElements.push(cog.Class.construct(elements[element], element, scope));
                 }
             }
 
@@ -136,14 +151,14 @@ cog.Class = (function Class() {
 
         /**
          *
-         * @param _this
+         * @param scope
          * @param fn
          * @returns {*}
          */
-        super: function (_this, fn) {
+        super: function (scope, fn) {
 
             // First locate the prototype of the normal function call
-            let proto = Object.getPrototypeOf(_this.self);
+            let proto = Object.getPrototypeOf(scope.self);
             while (proto && !proto.hasOwnProperty(fn)) {
                 proto = Object.getPrototypeOf(proto);
             }
@@ -156,9 +171,9 @@ cog.Class = (function Class() {
 
             // Call the super class's function if it exists, applying our current scope and any arguments
             if (superProto.hasOwnProperty(fn)) {
-                return superProto[fn].apply(_this, Array.prototype.slice.call(arguments, 2));
+                return superProto[fn].apply(scope, Array.prototype.slice.call(arguments, 2));
             } else {
-                console.error(`No superclass definition found for cog.${_this.self.getClassName()}.${fn}`);
+                console.error(`No superclass definition found for cog.${scope.self.getClassName()}.${fn}`);
             }
         }
     }

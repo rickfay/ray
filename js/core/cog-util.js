@@ -4,27 +4,42 @@
 cog.Class.define("Util", null, {
 
     /**
+     *
+     * @param obj
+     * @returns {*}
+     */
+    getMetadata: (obj) => {
+
+        let appName = cog.Util.getAppName(obj);
+        let id = obj.getId();
+        let className = obj.getClassName();
+
+        return cog.Metadata[appName].Elements[className][id.substring(id.lastIndexOf(".") + 1)];
+    },
+
+    /**
+     * Gets the App Name the given cog object belongs to by parsing off the first token of the object's ID
+     *
+     * @param obj
+     * @returns {string}
+     */
+    getAppName: (obj) => {
+        let id = obj.getId();
+        let dotIndex = id.indexOf(".");
+        return dotIndex !== -1 ? id.substring(0, dotIndex) : id;
+    },
+
+    /**
      * Binds a function to a given context
      *
      * @param fn
-     * @param _this
+     * @param scope
      * @returns {function(): *}
      */
-    proxy: (fn, _this) => {
-
-        // Build Proxy
-        let proxy = function () {
-            return fn.apply(_this, arguments);
+    proxy: function proxy(fn, scope) {
+        return function proxy() {
+            return fn.apply(scope, arguments);
         };
-
-        // Overwrite toString() definition for ease of debugging
-        Object.defineProperty(proxy, "toString", {
-            value: function toString() {
-                return `proxy: ${fn}`;
-            }
-        });
-
-        return proxy;
     },
 
     /**

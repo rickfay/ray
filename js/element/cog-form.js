@@ -9,5 +9,6 @@ cog.Class.define("Form", cog.Element, {
     buildDom: function buildDom() {
         this.dom = document.createElement("form");
         this.dom.id = this.id;
+        this.self.resetCss();
     }
 });

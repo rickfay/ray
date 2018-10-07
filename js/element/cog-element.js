@@ -7,21 +7,16 @@ cog.Class.define("Element", cog.Cog, {
      * Construct the Component
      *
      * @param id
+     * @param parentScope
      */
-    construct: function construct(id) {
+    construct: function construct(id, parentScope) {
 
         // Set properties
-        this.metadata = cog.Metadata.Elements[this.self.getClassName()][id.substring(id.lastIndexOf(".") + 1)];
-        this.id = id;
-
-        // Build
+        this.id = `${parentScope.id}.${id}`;
+        this.metadata = cog.Util.getMetadata(this.self);
         this.self.buildDom();
-        this.self.resetCss();
-
-        // Construct the children and append them to this element's DOM
-        for (let childElement of cog.Class.constructChildren(this.self)) {
-            cog.Util.appendDom(this.dom, childElement.getDom());
-        }
+        parentScope.dom.appendChild(this.dom);
+        this.children = cog.Class.constructChildren(this);
     },
 
     /**
@@ -30,6 +25,8 @@ cog.Class.define("Element", cog.Cog, {
     buildDom: function buildDom() {
         this.dom = document.createElement("div");
         this.dom.id = this.id;
+        this.self.resetCss();
+
     },
 
     /**
