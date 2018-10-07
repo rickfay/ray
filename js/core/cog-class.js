@@ -160,21 +160,6 @@ cog.Class = (function Class() {
             } else {
                 console.error(`No superclass definition found for cog.${_this.self.getClassName()}.${fn}`);
             }
-        },
-
-        /**
-         *
-         * @param obj
-         * @param property
-         */
-        makePrivate: function makePrivate(obj, property) {
-
-            if (!obj[property]) {
-                console.error(`Cannot make non-existant property ${propery} private on Object ${obj}`);
-                return;
-            }
-
-            Object.defineProperty(obj, property, Object.assign(Object.getOwnPropertyDescriptors(obj[property]), {enumerable: false}))
         }
     }
 })();

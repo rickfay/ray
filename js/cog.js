@@ -30,8 +30,10 @@ const cog = {
 
         // Elements
         {type: "js", url: "js/element/cog-element.js"},
+
         {type: "js", url: "js/element/cog-app.js", defer: true},
         {type: "js", url: "js/element/cog-container.js", defer: true},
+
         {type: "js", url: "js/element/cog-form.js", defer: true},
         {type: "js", url: "js/element/cog-image.js", defer: true},
         {type: "js", url: "js/element/cog-input/cog-input.js"},
@@ -49,51 +51,14 @@ const cog = {
     /**
      * COG Initialization Utility
      */
-    Init: {
-
-        /**
-         * Bootstraps the COG Application
-         */
-        bootstrap: function bootstrap() {
-
-            // Get base element to anchor COG app
-            const COG_APP_ATTRIBUTE = "[data-cog-app-id]";
-
-            let rootElement = document.querySelector(COG_APP_ATTRIBUTE); // TODO Add multiplicity
-            let cogAppId = rootElement.dataset.cogAppId;
-
-            if (cog.Root[cogAppId]) {
-                console.error(`cog App with id ${cogAppId} already deployed.`);
-                return;
-            }
-
-            let cogMetaSrc = rootElement.dataset.cogMetaSrc;
-            rootElement.id = cogAppId;
-            cog.Root[cogAppId] = rootElement;
-
-            if (!cogAppId) {
-                console.log(`Error initializing COG framework. No base element found with specified ${COG_APP_ATTRIBUTE} attribute.`);
-                return;
-            } else if (!cogMetaSrc) {
-                console.log(`Error initializing COG framework. Missing data-cog-meta-src attribute for App: ${cogAppId}`);
-                return;
-            }
-
-            // Fetch the Metadata Configuration
-            cog.Ajax.get(cogMetaSrc, response => {
-
-                // TODO need error handling
-                cog.Metadata = JSON.parse(response);
-                cog.Class.construct("App", cogAppId);
-            });
-        },
+    Init: (function Init() {
 
         /**
          * Loads the given imports
          *
          * @param imports
          */
-        loadImports: function loadImports(imports) {
+        let loadImports = function loadImports(imports) {
 
             if (imports.length > 0) {
 
@@ -131,28 +96,62 @@ const cog = {
                     };
                     loadImports(imports.slice(1));
                 } else if (imports.length > 1) {
-                    if (element.readyState) {  // IE
-                        element.onreadystatechange = function onreadystatechange() {
-                            console.debug(`Loaded: ${_import.url}`);
-                            if (element.readyState === "loaded" || element.readyState === "complete") {
-                                element.onreadystatechange = null;
-                                loadImports(imports.slice(1));
-                            }
-                        };
-                    } else {  // Others
-                        element.onload = function onload() {
-                            console.debug(`Loaded: ${_import.url}`);
-                            loadImports(imports.slice(1));
-                        };
-                    }
+                    element.onload = function onload() {
+                        console.debug(`Loaded: ${_import.url}`);
+                        loadImports(imports.slice(1));
+                    };
                 }
 
                 document.head.appendChild(element);
             }
-        }
-    },
+        };
+
+        /**
+         * Bootstraps the COG Application
+         */
+        let bootstrap = function bootstrap() {
+
+            // Get base element to anchor COG app
+            const COG_APP_ATTRIBUTE = "[data-cog-app-id]";
+
+            let rootElement = document.querySelector(COG_APP_ATTRIBUTE); // TODO Add multiplicity
+            let cogAppId = rootElement.dataset.cogAppId;
+
+            if (cog.Root[cogAppId]) {
+                console.error(`cog App with id ${cogAppId} already deployed.`);
+                return;
+            }
+
+            let cogMetaSrc = rootElement.dataset.cogMetaSrc;
+            rootElement.id = cogAppId;
+            cog.Root[cogAppId] = rootElement;
+
+            if (!cogAppId) {
+                console.log(`Error initializing COG framework. No base element found with specified ${COG_APP_ATTRIBUTE} attribute.`);
+                return;
+            } else if (!cogMetaSrc) {
+                console.log(`Error initializing COG framework. Missing data-cog-meta-src attribute for App: ${cogAppId}`);
+                return;
+            }
+
+            // Fetch the Metadata Configuration
+            cog.Ajax.get(cogMetaSrc, response => {
+
+                // TODO need error handling
+                cog.Metadata = JSON.parse(response);
+                cog.Class.construct("App", cogAppId);
+            });
+        };
+
+        return {
+            init: function init() {
+                loadImports(cog.Imports);
+                window.addEventListener("load", bootstrap);
+            }
+        };
+    })(),
+
     Root: {}
 };
 
-cog.Init.loadImports(cog.Imports);
-window.addEventListener("load", cog.Init.bootstrap);
+cog.Init.init();

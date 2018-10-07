@@ -13,18 +13,18 @@ cog.Class.define("Util", null, {
     proxy: (fn, _this) => {
 
         // Build Proxy
-        let _proxy = function proxy() {
+        let proxy = function () {
             return fn.apply(_this, arguments);
         };
 
         // Overwrite toString() definition for ease of debugging
-        Object.defineProperty(_proxy, "toString", {
+        Object.defineProperty(proxy, "toString", {
             value: function toString() {
                 return `proxy: ${fn}`;
             }
         });
 
-        return _proxy;
+        return proxy;
     },
 
     /**
@@ -45,11 +45,7 @@ cog.Class.define("Util", null, {
      */
     ref: function ref(obj, ...propChain) {
         if (propChain.length > 0) {
-            if (obj) {
-                return cog.Util.ref(obj[propChain[0]], ...Array.prototype.slice.call(propChain, 1));
-            } else {
-                return undefined;
-            }
+            return obj ? cog.Util.ref(obj[propChain[0]], ...Array.prototype.slice.call(propChain, 1)) : undefined;
         } else {
             return obj;
         }
@@ -58,6 +54,10 @@ cog.Class.define("Util", null, {
     /**
      * Evaluates a reference chain and builds missing references as empty objects.
      * Returns the evaluated reference, whether pre-existing or created by this function.
+     *
+     * @param obj
+     * @param propChain
+     * @returns {{}}
      */
     buildRef: function buildRef(obj, ...propChain) {
 
