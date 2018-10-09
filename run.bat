@@ -1,5 +1,5 @@
 :: Launches a lightweight server instance
 call uglifyjs js/cog.js js/core/cog-symbol.js js/core/cog-class.js js/core/cog-scope.js js/core/cog-util.js js/core/cog-root.js js/core/cog-log.js js/core/cog-cog.js js/core/cog-event.js js/core/cog-events.js js/core/cog-ajax.js js/element/cog-element.js js/element/cog-app.js js/element/cog-container.js js/element/cog-form.js js/element/cog-form.js js/element/cog-image.js js/element/cog-select.js js/element/cog-text.js js/element/cog-input/cog-input.js js/element/cog-input/cog-input-text.js js/element/cog-input/cog-input-radio.js js/element/cog-input/cog-input-date.js js/element/cog-table/*.js --output cog.min.js --verbose --compress --mangle --toplevel --source-map "root='localhost:8080',url='cog.min.js.map'"
 call uglifycss css/cog-style.css css/user-style.css > style.min.css
-call node server.js
+call node js/server.js
 pause
