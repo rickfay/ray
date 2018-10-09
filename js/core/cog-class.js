@@ -135,9 +135,7 @@ cog.Class = (function Class() {
          */
         constructChildren: function buildChildren(scope) {
 
-            let obj = scope.self;
-            let elements = obj.getMetadata().Elements;
-
+            let elements = scope.self.getMetadata().Elements;
             let childElements = [];
 
             if (elements) {

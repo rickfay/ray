@@ -83,8 +83,7 @@ cog.Class.define("Util", null, {
                 }
                 return buildRef(obj[propChain[0]], ...Array.prototype.slice.call(propChain, 1));
             } else {
-                obj = {};
-                return buildRef(obj, propChain);
+                return buildRef({}, propChain);
             }
         } else {
             return obj ? obj : {};
