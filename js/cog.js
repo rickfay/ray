@@ -5,218 +5,66 @@
  */
 const cog = {};
 
-/**
- * COG Framework Private Symbol Registry
- */
-cog.Symbol = {
+// Load the dependencies
+(function load(dependencies) {
 
-    [Symbol.toStringTag]: "cog.Symbol",
-
-    /**
-     * Name of the COG Class
-     */
-    CLASS_NAME: undefined
-};
-
-// Attach unique Symbols to cog.Symbol
-for (let key of Object.keys(cog.Symbol)) {
-    cog.Symbol[key] = Symbol(key);
-}
-
-/**
- * COG Class Interaction API
- */
-cog.Class = (function Class() {
-
-    /**
-     * Assign Meta properties to the object
-     *
-     * @param obj
-     * @param name
-     */
-    function assignMetaProperties(obj, name) {
-        obj[cog.Symbol.CLASS_NAME] = name;
-        obj[Symbol.toStringTag] = `cog.${name}`;
+    if (!dependencies || dependencies.length === 0) {
+        return;
     }
 
-    /**
-     * Instantiate the cog object from the given prototype
-     *
-     * @param proto
-     * @param id
-     * @param args
-     */
-    function instantiate(proto, id, ...args) {
+    let dependency = dependencies[0];
+    let element;
 
-        let obj = Object.create(proto);
-        proxyPrototype(obj, {self: obj});
-
-        if (obj.construct) {
-            obj.construct(id, ...args);
-        }
-
-        return obj;
+    switch (dependency.type) {
+        case "css":
+            element = document.createElement("link");
+            element.href = dependency.url;
+            element.rel = "stylesheet";
+            element.type = "text/css";
+            break;
+        case "js":
+            element = document.createElement("script");
+            element.src = dependency.url;
+            element.type = "text/javascript";
+            break;
     }
 
-    /**
-     * Build Proxy references to prototype methods on the given obj, binding the proxy to the given scope context.
-     *
-     * Ignores Symbols.
-     *
-     * @param obj
-     * @param scope
-     */
-    function proxyPrototype(obj, scope) {
+    element.onload = function onload() {
+        load(Array.prototype.slice.call(dependencies, 1));
+    };
 
-        let proto = Object.getPrototypeOf(obj);
+    document.head.appendChild(element);
+})([
+    {"type": "js", "url": "js/init/symbol.js"},
+    {"type": "js", "url": "js/init/class.js"},
+    {"type": "js", "url": "js/util/prototype.js"},
+    {"type": "js", "url": "js/util/namespace.js"},
+    {"type": "js", "url": "js/service/metadata.js"},
+    {"type": "js", "url": "js/util/util.js"},
+    {"type": "js", "url": "js/service/root.js"},
+    {"type": "js", "url": "js/util/log.js"},
+    {"type": "js", "url": "js/proto/object.js"},
+    {"type": "js", "url": "js/proto/event.js"},
+    {"type": "js", "url": "js/service/events.js"},
+    {"type": "js", "url": "js/util/ajax.js"},
+    {"type": "js", "url": "js/proto/element/element.js"},
+    {"type": "js", "url": "js/proto/element/app.js"},
+    {"type": "js", "url": "js/proto/element/container.js"},
+    {"type": "js", "url": "js/proto/element/form.js"},
+    {"type": "js", "url": "js/proto/element/image.js"},
+    {"type": "js", "url": "js/proto/element/select.js"},
+    {"type": "js", "url": "js/proto/element/text.js"},
+    {"type": "js", "url": "js/proto/element/input/input.js"},
+    {"type": "js", "url": "js/proto/element/input/input-text.js"},
+    {"type": "js", "url": "js/proto/element/input/input-radio.js"},
+    {"type": "js", "url": "js/proto/element/input/input-date.js"},
+    {"type": "js", "url": "js/proto/element/table/table.js"},
+    {"type": "js", "url": "js/proto/element/table/table-row.js"},
+    {"type": "css", "url": "css/cog-style.css"},
+    {"type": "css", "url": "css/user-style.css"}
+]);
 
-        while (proto && proto !== Object.prototype) {
-            for (let key of Object.keys(proto)) {
-                if (typeof proto[key] === "function" && !obj.hasOwnProperty(key)) {
-
-                    // Define a proxy function bound to the given scope
-                    Object.defineProperty(obj, key, {
-                        enumerable: true,
-                        value: ((fn, scope) => {
-                            return function proxy() {
-                                return fn.apply(scope, arguments);
-                            };
-                        })(proto[key], scope)
-                    });
-                } else if (!obj.hasOwnProperty(key)) {
-
-                    // Add defined prototype properties onto the private scope
-                    Object.defineProperty(scope, key, {
-                        enumerable: true,
-                        value: proto[key]
-                    });
-                }
-            }
-
-            proto = Object.getPrototypeOf(proto);
-        }
-    }
-
-    return {
-
-        [cog.Symbol.CLASS_NAME]: "Class",
-        [Symbol.toStringTag]: "cog.Class",
-
-        /**
-         * Constructs a new COG Component
-         *
-         * @param id ID of the object
-         * @param proto COG Class prototype for the object
-         * @param args Any arguments to pass to the constructor
-         */
-        new: function (proto, id, ...args) {
-
-            // Allow construction by passing in either the name or prototype definition of an object
-            if (typeof proto === "string") {
-                proto = cog[proto];
-            } else if (typeof proto !== "object") {
-                console.error(`Cannot construct class from prototype: ${proto}`);
-                return;
-            }
-
-            // FIXME Add back validation
-
-            let obj = instantiate(proto, id, ...args);
-
-            return obj;
-        },
-
-        /**
-         * Constructs a service instance of a Class and appends it to the cog API.
-         *
-         * @param name
-         * @param proto
-         */
-        service: function service(name, proto) {
-
-            if (cog[name]) {
-                console.error(`Service instance cog.${name} already exists`);
-                return;
-            } else if (typeof proto !== "object") {
-                console.error(`Cannot construct class from prototype: ${proto}`);
-                return;
-            }
-
-            assignMetaProperties(proto, name);
-
-            let obj = instantiate(proto, name);
-
-            cog[name] = obj;
-        },
-
-        /**
-         * Appends a Utility object definition to the cog API
-         *
-         * @param name
-         * @param obj
-         */
-        util: function util(name, obj) {
-
-            if (cog[name]) {
-                console.error(`Utility cog.${name} already exists`);
-            } else if (typeof obj !== "object") {
-                console.error(`Cannot create Utility from non-object: ${obj}`);
-            }
-
-            assignMetaProperties(obj, name);
-
-            cog[name] = obj;
-        },
-
-        /**
-         * Builds the child Elements on this Component
-         *
-         * @param obj
-         */
-        buildChildElements: function buildChildElements(obj) {
-
-            let elements = obj.getMetadata().Elements;
-            let childElements = [];
-
-            if (elements) {
-                for (let element of Object.keys(elements)) {
-                    childElements.push(cog.Class.new(elements[element], element, obj));
-                }
-            }
-
-            return childElements;
-        },
-
-        /**
-         *
-         * @param scope
-         * @param fn
-         * @returns {*}
-         */
-        super: function (scope, fn) {
-
-            // First locate the prototype of the normal function call
-            let proto = Object.getPrototypeOf(scope.self);
-            while (proto && !proto.hasOwnProperty(fn)) {
-                proto = Object.getPrototypeOf(proto);
-            }
-
-            // Attempt to find a super reference to call
-            let superProto = Object.getPrototypeOf(proto);
-            while (superProto && !superProto.hasOwnProperty(fn)) {
-                superProto = Object.getPrototypeOf(superProto);
-            }
-
-            // Call the super class's function if it exists, applying our current scope and any arguments
-            if (superProto.hasOwnProperty(fn)) {
-                return superProto[fn].apply(scope, Array.prototype.slice.call(arguments, 2));
-            } else {
-                console.error(`No superclass definition found for cog.${scope.self.getClassName()}.${fn}`);
-            }
-        }
-    }
-})();
-
+// Wait for everything to be loaded, and then bootstrap the app
 window.addEventListener("load", function bootstrap() {
     cog.Root.bootstrap();
 });
