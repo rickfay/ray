@@ -1,7 +1,7 @@
 /**
  * COG Image Class Definition
  */
-cog.Class.define("Image", cog.Element, {
+cog.Prototype.define("Image", cog.Element, {
 
     /**
      * Builds the DOM

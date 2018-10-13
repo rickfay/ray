@@ -3,11 +3,7 @@
  *
  * TODO Implement this correctly...
  */
-cog.Class.singleton("Log", {
-
-    construct: function construct() {
-        console.debug("Initializing cog logging system...");
-    },
+cog.Class.util("Log", {
 
     /**
      * Log ERROR level message

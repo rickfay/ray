@@ -1,7 +1,7 @@
 /**
  * Cog Root Element Representation
  */
-cog.Class.singleton("Root", {
+cog.Class.service("Root", {
 
     /**
      * Builds and bootstraps the cog Apps
@@ -20,10 +20,19 @@ cog.Class.singleton("Root", {
             this.appDoms[cogAppId] = appDom;
 
             // Fetch the Metadata Configuration and build the App
-            cog.Ajax.get(cogMetaSrc, response => {
-                cog.Metadata[cogAppId] = JSON.parse(response);
-                cog.Class.construct("App", cogAppId, this);
+            cog.Ajax.get(cogMetaSrc, (response) => {
+                cog.Metadata.addAppMetadata(cogAppId, JSON.parse(response));
+                cog.Class.new("App", cogAppId);
             });
         }
+    },
+
+    /**
+     *
+     * @param namespace
+     * @returns {*}
+     */
+    getAppDom: function getAppDom(namespace) {
+        return this.appDoms[namespace];
     }
 });

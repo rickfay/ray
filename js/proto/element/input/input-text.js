@@ -1,7 +1,7 @@
 /**
  * COG Input Text Class Definition
  */
-cog.Class.define("InputText", cog.Input, {
+cog.Prototype.define("InputText", cog.Input, {
 
     /**
      * Build the DOM

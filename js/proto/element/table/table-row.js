@@ -1,7 +1,7 @@
 /**
  * COG Table Row Class
  */
-cog.Class.define("TableRow", cog.Element, {
+cog.Prototype.define("TableRow", cog.Element, {
 
     /**
      * Build the DOM

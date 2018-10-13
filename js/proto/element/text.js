@@ -3,7 +3,7 @@
  *
  * @type {*|{}}
  */
-cog.Class.define("Text", cog.Element, {
+cog.Prototype.define("Text", cog.Element, {
 
     /**
      * Build the DOM

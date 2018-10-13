@@ -1,7 +1,7 @@
 /**
  * COG Element
  */
-cog.Class.define("Element", cog.Cog, {
+cog.Prototype.define("Element", cog.Object, {
 
     /**
      * Construct the Component
@@ -9,14 +9,12 @@ cog.Class.define("Element", cog.Cog, {
      * @param id
      * @param parentScope
      */
-    construct: function construct(id, parentScope) {
-
-        // Set properties
-        this.id = `${parentScope.id}.${id}`;
-        this.metadata = cog.Util.getMetadata(this.self);
+    construct: function construct(id, parent) {
+        this.namespace = cog.Namespace.build(parent.getNamespace(), id);
+        this.metadata = cog.Metadata.get(this.self);
         this.self.buildDom();
-        parentScope.dom.appendChild(this.dom);
-        this.children = cog.Class.constructChildren(this);
+        parent.getDom().appendChild(this.dom);
+        this.children = cog.Class.buildChildElements(this.self);
     },
 
     /**
@@ -24,27 +22,8 @@ cog.Class.define("Element", cog.Cog, {
      */
     buildDom: function buildDom() {
         this.dom = document.createElement("div");
-        this.dom.id = this.id;
+        this.dom.id = this.namespace;
         this.self.resetCss();
-
-    },
-
-    /**
-     * Get the ID of this Component
-     *
-     * @returns {*}
-     */
-    getId: function getId() {
-        return this.id;
-    },
-
-    /**
-     * Get the Metadata
-     *
-     * @returns {*|SVGMetadataElement}
-     */
-    getMetadata: function getMetadata() {
-        return this.metadata;
     },
 
     /**
@@ -54,6 +33,23 @@ cog.Class.define("Element", cog.Cog, {
      */
     getDom: function getDom() {
         return this.dom;
+    },
+
+    /**
+     *
+     * @returns {*}
+     */
+    getMetadata: function getMetadata() {
+        return this.metadata;
+    },
+
+    /**
+     * Get the ID of this Component
+     *
+     * @returns {*}
+     */
+    getNamespace: function getNamespace() {
+        return this.namespace;
     },
 
     /**

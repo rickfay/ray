@@ -1,14 +1,7 @@
 /**
  * COG Framework Event Management System
  */
-cog.Class.singleton("Events", {
-
-    /**
-     * Constructor
-     */
-    construct: function construct() {
-        this.events = {};
-    },
+cog.Class.service("Events", {
 
     /**
      * Publish an Event
@@ -19,7 +12,7 @@ cog.Class.singleton("Events", {
      * @returns {{}}
      */
     pub: function pub(eventName, id, ...args) {
-        let event = cog.Util.ref(this.events, id, eventName);
+        let event = cog.Util.ref(this, "events", id, eventName);
         return event ? event.trigger(...args) : null;
     },
 
@@ -32,10 +25,10 @@ cog.Class.singleton("Events", {
      */
     sub: function sub(eventName, id, callback) {
 
-        let myEvents = cog.Util.buildRef(this.events, id);
+        let myEvents = cog.Util.buildRef(this, "events", id);
 
         if (cog.Util.isEmpty(myEvents[eventName])) {
-            myEvents[eventName] = cog.Class.construct("Event", eventName);
+            myEvents[eventName] = cog.Class.new("Event", eventName);
         }
 
         myEvents[eventName].addSub(eventName, callback);

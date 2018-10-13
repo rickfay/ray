@@ -1,7 +1,7 @@
 /**
  * COG Input Class
  */
-cog.Class.define("Input", cog.Element, {
+cog.Prototype.define("Input", cog.Element, {
 
     /**
      * Build the DOM

@@ -1,7 +1,7 @@
 /**
  * Input Date Class Definition
  */
-cog.Class.define("InputDate", cog.Input, {
+cog.Prototype.define("InputDate", cog.Input, {
 
     /**
      * Build the DOM

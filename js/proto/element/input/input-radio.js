@@ -1,7 +1,7 @@
 /**
  * COG Input Text Class Definition
  */
-cog.Class.define("InputRadio", cog.Input, {
+cog.Prototype.define("InputRadio", cog.Input, {
 
     /**
      * Build the DOM

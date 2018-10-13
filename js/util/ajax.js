@@ -1,7 +1,8 @@
 /**
  * COG Ajax Utilities
  */
-cog.Class.define("Ajax", null, {
+
+cog.Class.util("Ajax", {
 
     /**
      * Ajax GET
@@ -13,7 +14,7 @@ cog.Class.define("Ajax", null, {
 
         let request = new XMLHttpRequest();
 
-        request.onload = function() {
+        request.onload = function () {
             if (request.status >= 200 && request.status < 400) {
                 callback(request.response);
             } else {
@@ -21,7 +22,7 @@ cog.Class.define("Ajax", null, {
             }
         };
 
-        request.onerror = function() {
+        request.onerror = function () {
             console.error("There was a connection error of some sort");
         };
 

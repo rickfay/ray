@@ -1,7 +1,7 @@
 /**
  * COG Form Class Definition
  */
-cog.Class.define("Form", cog.Element, {
+cog.Prototype.define("Form", cog.Element, {
 
     /**
      * Build the DOM
