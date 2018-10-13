@@ -1,7 +1,5 @@
 /**
  * cog Prototype Utility
- *
- * @type {{}}
  */
 cog.Class.util("Prototype", {
 

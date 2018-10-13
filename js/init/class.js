@@ -58,13 +58,6 @@ cog.Class = (function Class() {
                             };
                         })(proto[key], scope)
                     });
-                } else if (!obj.hasOwnProperty(key)) {
-
-                    // Add defined prototype properties onto the private scope
-                    Object.defineProperty(scope, key, {
-                        enumerable: true,
-                        value: proto[key]
-                    });
                 }
             }
 
