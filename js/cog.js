@@ -2,6 +2,8 @@
 
 /**
  * cog Framework API
+ *
+ * @namespace
  */
 const cog = {};
 

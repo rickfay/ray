@@ -1,5 +1,7 @@
 /**
  * COG Class Interaction API
+ *
+ * @namespace cog.Class
  */
 cog.Class = (function Class() {
 
@@ -24,7 +26,7 @@ cog.Class = (function Class() {
     function instantiate(proto, id, ...args) {
 
         let obj = Object.create(proto);
-        proxyPrototype(obj, {self: obj});
+        proxyPrototype(obj, {obj: obj});
 
         if (obj.construct) {
             obj.construct(id, ...args);
@@ -89,9 +91,7 @@ cog.Class = (function Class() {
 
             // FIXME Add back validation
 
-            let obj = instantiate(proto, id, ...args);
-
-            return obj;
+            return instantiate(proto, id, ...args);
         },
 
         /**
@@ -111,10 +111,7 @@ cog.Class = (function Class() {
             }
 
             assignMetaProperties(proto, name);
-
-            let obj = instantiate(proto, name);
-
-            cog[name] = obj;
+            cog[name] = instantiate(proto, name);
         },
 
         /**
@@ -132,27 +129,7 @@ cog.Class = (function Class() {
             }
 
             assignMetaProperties(obj, name);
-
             cog[name] = obj;
-        },
-
-        /**
-         * Builds the child Elements on this Component
-         *
-         * @param obj
-         */
-        buildChildElements: function buildChildElements(obj) {
-
-            let elements = obj.getMetadata().Elements;
-            let childElements = [];
-
-            if (elements) {
-                for (let element of Object.keys(elements)) {
-                    childElements.push(cog.Class.new(elements[element], element, obj));
-                }
-            }
-
-            return childElements;
         },
 
         /**
@@ -164,7 +141,7 @@ cog.Class = (function Class() {
         super: function (scope, fn) {
 
             // First locate the prototype of the normal function call
-            let proto = Object.getPrototypeOf(scope.self);
+            let proto = Object.getPrototypeOf(scope.obj);
             while (proto && !proto.hasOwnProperty(fn)) {
                 proto = Object.getPrototypeOf(proto);
             }
@@ -179,7 +156,7 @@ cog.Class = (function Class() {
             if (superProto.hasOwnProperty(fn)) {
                 return superProto[fn].apply(scope, Array.prototype.slice.call(arguments, 2));
             } else {
-                console.error(`No superclass definition found for cog.${scope.self.getClassName()}.${fn}`);
+                console.warn(`No superclass definition found for cog.${scope.obj.getClassName()}.${fn}`);
             }
         }
     }

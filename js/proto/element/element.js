@@ -7,14 +7,14 @@ cog.Prototype.define("Element", cog.Object, {
      * Construct the Component
      *
      * @param id
-     * @param parentScope
+     * @param parent
      */
-    construct: function construct(id, parent) {
-        this.namespace = cog.Namespace.build(parent.getNamespace(), id);
-        this.metadata = cog.Metadata.get(this.self);
-        this.self.buildDom();
-        parent.getDom().appendChild(this.dom);
-        this.children = cog.Class.buildChildElements(this.self);
+    construct: function construct(id, namespace) {
+        this.namespace = cog.Namespace.build(namespace, id);
+        this.id = this.namespace;
+        this.metadata = cog.Metadata.get(this.obj);
+        this.obj.buildDom();
+        this.obj.buildChildren();
     },
 
     /**
@@ -23,7 +23,19 @@ cog.Prototype.define("Element", cog.Object, {
     buildDom: function buildDom() {
         this.dom = document.createElement("div");
         this.dom.id = this.namespace;
-        this.self.resetCss();
+        this.obj.resetCss();
+    },
+
+    /**
+     * Builds the children using a generic strategy
+     */
+    buildChildren: function buildChildren() {
+        let elements = this.obj.getMetadata().Elements;
+        if (elements) {
+            for (let element of Object.keys(elements)) {
+                this.dom.appendChild(cog.Class.new(elements[element], element, this.namespace).getDom());
+            }
+        }
     },
 
     /**
@@ -59,6 +71,6 @@ cog.Prototype.define("Element", cog.Object, {
         this.dom.removeAttribute("class");
         cog.Util.applyStyle(this.dom, this.metadata.Style);
         cog.Util.applyClass(this.dom, this.metadata.Class);
-        cog.Util.applyClass(this.dom, ...[cog.Util.getCogClasses(this.self).map(clazz => `cog${clazz}`)]);
+        cog.Util.applyClass(this.dom, ...[cog.Util.getCogClasses(this.obj).map(clazz => `cog${clazz}`)]);
     }
 });

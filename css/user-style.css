@@ -1,11 +1,15 @@
 body {
+    background-color: #18171F;
     font-family: Arial, serif;
     display: block;
     width: 640px;
+    color: rgb(145, 146, 155);
 }
 
 .cogDemoTitle {
-    background-color: #00FF00;
+    background-color: rgb(34, 36, 45);
+
+    border-radius: 10px;
     font-size: 24px;
     padding: 10px;
 }

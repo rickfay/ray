@@ -1,5 +1,7 @@
 /**
  * cog Prototype Utility
+ *
+ * @namespace cog.Prototype
  */
 cog.Class.util("Prototype", {
 

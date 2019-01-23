@@ -8,5 +8,6 @@ cog.Prototype.define("Input", cog.Element, {
      */
     buildDom: function buildDom() {
         this.dom = document.createElement("input");
+        this.dom.id = this.namespace;
     }
 });

@@ -9,6 +9,6 @@ cog.Prototype.define("Form", cog.Element, {
     buildDom: function buildDom() {
         this.dom = document.createElement("form");
         this.dom.id = this.id;
-        this.self.resetCss();
+        this.obj.resetCss();
     }
 });

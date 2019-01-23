@@ -1,14 +1,20 @@
 {
+    "Ajax": {
+        "testGet": {
+            "Headers": {},
+            "Params": {},
+            "Payload": {},
+            "Type": "GET",
+            "Url": ""
+        }
+    },
     "Config": {
         "DEBUG": false,
         "LOG": true
     },
     "Constant": {},
-    "Data": {
-        "Boolean": {
-            "true": "Yes",
-            "false": "No"
-        }
+    "DataMap": {
+    
     },
     "Elements": {
         "App": {
@@ -24,7 +30,8 @@
                     "cogDemoText": "Text",
                     "meeseeks": "Image",
                     "meeseeksText": "Text",
-                    "demoForm": "Form"
+                    "demoForm": "Form",
+                    "demoTable": "Table"
                 },
                 "Style": {
                     "text-align": "center"
@@ -51,6 +58,7 @@
         },
         "InputDate": {
             "demoInputDate": {
+                "Placeholder": "MM-DD-YYYY"
             }
         },
         "InputRadio": {
@@ -67,8 +75,8 @@
         },
         "InputText": {
             "demoInputText": {
-                "DefaultText": "Enter a value...",
-                "Label": "Label"
+                "Label": "Label",
+                "Placeholder": "Enter Text"
             }
         },
         "Select": {
@@ -85,10 +93,13 @@
             }
         },
         "Table": {
-        
-        },
-        "TableRow": {
-        
+            "demoTable": {
+                "Data": [
+                    [{"meeseeks": "Image"}, {"meeseeksText": "Text"}],
+                    [{"meeseeks": "Image"}, {"meeseeksText": "Text"}]
+
+                ]
+            }
         },
         "Text": {
             "cogDemoText": {

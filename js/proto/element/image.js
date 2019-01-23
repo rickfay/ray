@@ -11,6 +11,6 @@ cog.Prototype.define("Image", cog.Element, {
         this.dom.id = this.id;
         this.dom.src = this.metadata.Source;
         this.dom.alt = this.metadata.AltText;
-        this.self.resetCss();
+        this.obj.resetCss();
     }
 });

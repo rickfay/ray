@@ -9,5 +9,7 @@ cog.Prototype.define("InputDate", cog.Input, {
     buildDom: function buildDom() {
         cog.Class.super(this, 'buildDom');
         this.dom.type = "date";
+        this.dom.placeholder = this.metadata.Placeholder;
+        this.obj.resetCss();
     }
 });

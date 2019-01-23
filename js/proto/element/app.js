@@ -10,9 +10,9 @@ cog.Prototype.define("App", cog.Element, {
      */
     construct: function construct(id) {
         this.namespace = id;
-        this.metadata = cog.Metadata.get(this.self);
-        this.self.buildDom();
-        this.children = cog.Class.buildChildElements(this.self);
+        this.metadata = cog.Metadata.get(this.obj);
+        this.obj.buildDom();
+        this.obj.buildChildren();
     },
 
     /**
@@ -22,6 +22,6 @@ cog.Prototype.define("App", cog.Element, {
     buildDom: function buildDom() {
         this.dom = cog.Root.getAppDom(this.namespace);
         this.dom.id = this.namespace;
-        this.self.resetCss();
+        this.obj.resetCss();
     }
 });

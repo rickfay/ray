@@ -23,6 +23,6 @@ cog.Prototype.define("Select", cog.Element, {
             this.dom.appendChild(optionDom);
         }
 
-        this.self.resetCss();
+        this.obj.resetCss();
     }
 });

@@ -5,15 +5,15 @@
  *
  */
 
+.cogApp {
+    padding: 10px;
+}
+
 .cogComponent {
     display: block;
     border-collapse: collapse;
     font-family: Calibri, serif;
     font-size: 20px;
-}
-
-.cogApp {
-    padding: 10px;
 }
 
 .cogContainer {
@@ -31,13 +31,15 @@
     display: inline-block;
 }
 
-.cogInputDate {
-}
-
 .cogInputRadio {
 }
 
-.cogInputText {
+.cogInputDate, .cogInputText {
+    background-color: #000000;
+    border: none;
+    border-radius: 10px;
+    color: #FFFFFF;
+    text-align: center;
 }
 
 .cogSelect {
@@ -46,7 +48,8 @@
 }
 
 .cogText {
-    background-color: #00AAAA;
+    background-color: #22242D;
+    border-radius: 10px;
     padding: 10px;
     margin-top: 0;
 }

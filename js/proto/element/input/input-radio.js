@@ -9,8 +9,10 @@ cog.Prototype.define("InputRadio", cog.Input, {
     buildDom: function buildDom() {
 
         this.dom = document.createElement("div");
-        this.dom.id = this.id;
+        this.dom.id = this.namespace;
+    },
 
+    buildChildren: function buildChildren() {
         this.domInputRadio = [];
         this.domLabel = [];
 
