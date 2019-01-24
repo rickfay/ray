@@ -3,6 +3,14 @@
  */
 cog.Class.service("Events", {
 
+    construct: function construct() {
+        this.events = {};
+    },
+
+    debug: function debug() {
+        return this.events;
+    },
+
     /**
      * Publish an Event
      *
@@ -12,8 +20,7 @@ cog.Class.service("Events", {
      * @returns {{}}
      */
     pub: function pub(eventName, id, ...args) {
-        let event = cog.Util.ref(this, "events", id, eventName);
-        return event ? event.trigger(...args) : null;
+        return this.events[eventName] ? this.events[eventName].trigger(...args) : null;
     },
 
     /**
@@ -25,12 +32,10 @@ cog.Class.service("Events", {
      */
     sub: function sub(eventName, id, callback) {
 
-        let myEvents = cog.Util.buildRef(this, "events", id);
-
-        if (cog.Util.isEmpty(myEvents[eventName])) {
-            myEvents[eventName] = cog.Class.new("Event", eventName);
+        if (!this.events[eventName]) {
+            this.events[eventName] = cog.Class.new("Event", eventName);
         }
 
-        myEvents[eventName].addSub(eventName, callback);
+        this.events[eventName].addSub(id, callback);
     }
 });

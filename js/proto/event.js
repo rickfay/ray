@@ -20,7 +20,7 @@ cog.Prototype.define("Event", cog.Object, {
      * @param callback
      */
     addSub: function addSub(id, callback) {
-        if (!cog.Util.isEmpty(callback)) {
+        if (typeof callback === "function") {
             this.subscribers[id] = callback;
         }
     },
@@ -49,7 +49,7 @@ cog.Prototype.define("Event", cog.Object, {
             eventReturns[subKey] = {};
             let callback = this.subscribers[subKey];
 
-            if (!cog.Util.isEmpty(callback)) {
+            if (typeof callback === "function") {
                 eventReturns[subKey][callback] = callback(arguments);
             }
         }
