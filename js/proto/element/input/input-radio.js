@@ -10,28 +10,36 @@ cog.Prototype.define("InputRadio", cog.Input, {
 
         this.dom = document.createElement("div");
         this.dom.id = this.namespace;
+        this.obj.resetCss();
     },
 
     buildChildren: function buildChildren() {
-        this.domInputRadio = [];
-        this.domLabel = [];
 
         for (let option in this.metadata.Options) {
 
             // Create Radio Button Input
-            this.domInputRadio[option] = document.createElement("input");
-            this.domInputRadio[option].type = "radio";
-            this.domInputRadio[option].id = `${this.id}.RADIO.${option}`;
-            this.domInputRadio[option].name = this.id;
-            this.domInputRadio[option].value = this.metadata.Options[option];
-            this.dom.appendChild(this.domInputRadio[option]);
+            let inputDom = document.createElement("input");
+            inputDom.type = "radio";
+            inputDom.id = `${this.id}.RADIO.${option}`;
+            inputDom.name = this.id;
+            inputDom.value = this.metadata.Options[option];
+            cog.Util.applyClass(inputDom, "cogInputRadioButton")
 
             // Create Label for this Radio Button
-            this.domLabel[option] = document.createElement("label");
-            this.domLabel[option].id = `${this.id}.LABEL.${option}`;
-            this.domLabel[option].setAttribute("for", this.domInputRadio[option].id);
-            this.domLabel[option].innerHTML = this.metadata.Options[option];
-            this.dom.appendChild(this.domLabel[option]);
+            let labelDom = document.createElement("label");
+            labelDom.id = `${this.id}.LABEL.${option}`;
+            labelDom.setAttribute("for", inputDom.id);
+            labelDom.innerHTML = option;
+            cog.Util.applyClass(labelDom, "cogInputRadioLabel");
+
+            // Create Wrapper
+            let wrapDom = document.createElement("div");
+            cog.Util.applyClass(wrapDom, "cogOption");
+
+            // Append Radio Button and Label to the Wrapper, and the Wrapper to the DOM
+            wrapDom.appendChild(inputDom);
+            wrapDom.appendChild(labelDom);
+            this.dom.appendChild(wrapDom);
         }
     }
 });

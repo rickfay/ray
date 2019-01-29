@@ -6,22 +6,22 @@ cog.Prototype.define("Event", cog.Object, {
     /**
      * Constructor
      *
-     * @param id
+     * @param eventName
      */
-    construct: function construct(id) {
+    construct: function construct(eventName) {
+        this.eventName = eventName;
         this.subscribers = {};
-        this.id = id;
     },
 
     /**
      * Add a subscriber to this Event
      *
-     * @param id
+     * @param namespace
      * @param callback
      */
-    addSub: function addSub(id, callback) {
+    addSub: function addSub(namespace, callback) {
         if (typeof callback === "function") {
-            this.subscribers[id] = callback;
+            this.subscribers[namespace] = callback;
         }
     },
 
@@ -36,21 +36,23 @@ cog.Prototype.define("Event", cog.Object, {
         }
     },
 
+    getSubs: function getSubs() {
+        return this.subscribers;
+    },
+
     /**
      * Trigger this event for all subscribers and return an object containing
      * all the subscriber callback return values
      */
     trigger: function trigger() {
-        console.log("trigger!");
-
         let eventReturns = {};
-        for (let subKey of Object.keys(this.subscribers)) {
+        for (let sub of Object.keys(this.subscribers)) {
 
-            eventReturns[subKey] = {};
-            let callback = this.subscribers[subKey];
+            eventReturns[sub] = {};
+            let callback = this.subscribers[sub];
 
             if (typeof callback === "function") {
-                eventReturns[subKey][callback] = callback(arguments);
+                eventReturns[sub][callback.name] = callback(...arguments);
             }
         }
 

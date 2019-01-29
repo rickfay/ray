@@ -26,13 +26,19 @@ cog.Class.service("Metadata", {
      * @param obj
      * @returns {*}
      */
-    get: function getMetadata(obj) {
+    get: function get(obj) {
 
-        let appId = cog.Namespace.getRoot(obj.getNamespace());
-        let id = cog.Namespace.getId(obj.getNamespace());
-        let className = obj.getClassName();
+        let metadata;
 
-        let metadata = cog.Util.ref(this.metadata, appId, "Elements", className, id);
+        if (typeof obj === "string") {
+            metadata = cog.Util.ref(this.metadata, ...obj.split("."));
+        } else if (typeof obj === "object") {
+            let appId = cog.Namespace.getRoot(obj.getNamespace());
+            let id = cog.Namespace.getId(obj.getNamespace());
+            let className = obj.getClassName();
+
+            metadata = cog.Util.ref(this.metadata, appId, "Elements", className, id);
+        }
 
         if (!metadata) {
             console.warn(`No metadata definition found for object ${className} with ID: ${id} in App ${appId}`);

@@ -24,5 +24,13 @@ cog.Prototype.define("Select", cog.Element, {
         }
 
         this.obj.resetCss();
+    },
+
+    toggleEdit: function toggleEdit() {
+        if (this.dom.style.visibility === "hidden") {
+            this.dom.style.visibility = "visible";
+        } else {
+            this.dom.style.visibility = "hidden";
+        }
     }
 });

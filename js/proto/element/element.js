@@ -6,15 +6,29 @@ cog.Prototype.define("Element", cog.Object, {
     /**
      * Construct the Component
      *
-     * @param id
-     * @param parent
+     * @param def
+     * @param namespace
      */
-    construct: function construct(id, namespace) {
-        this.namespace = cog.Namespace.build(namespace, id);
-        this.id = this.namespace;
-        this.metadata = cog.Metadata.get(this.obj);
+    construct: function construct(def, namespace) {
+
+        if (typeof def === "string") {
+            this.namespace = cog.Namespace.build(namespace, def);
+            this.id = this.namespace;
+            this.metadata = cog.Metadata.get(this.obj);
+        } else if (typeof def === "object") {
+            this.metadata = def;
+            this.namespace = cog.Namespace.build(namespace, this.metadata.id);
+            this.id = this.namespace;
+        }
+
         this.obj.buildDom();
         this.obj.buildChildren();
+
+        let fn = function callback() {
+            console.log("tacofunk!: " + this.obj.getClassName());
+        }.bind(this);
+
+        cog.Events.sub("tacos", this, fn);
     },
 
     /**

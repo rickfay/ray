@@ -38,11 +38,13 @@ const cog = {};
     document.head.appendChild(element);
 })([
     {"type": "js", "url": "js/init/symbol.js"},
+
     {"type": "js", "url": "js/init/class.js"},
     {"type": "js", "url": "js/util/prototype.js"},
     {"type": "js", "url": "js/util/namespace.js"},
     {"type": "js", "url": "js/service/metadata.js"},
     {"type": "js", "url": "js/util/util.js"},
+    {"type": "js", "url": "js/init/enum.js"},
     {"type": "js", "url": "js/service/root.js"},
     {"type": "js", "url": "js/util/log.js"},
     {"type": "js", "url": "js/proto/object.js"},
@@ -62,6 +64,8 @@ const cog = {};
     {"type": "js", "url": "js/proto/element/input/input-date.js"},
     {"type": "js", "url": "js/proto/element/table/table.js"},
     {"type": "js", "url": "js/proto/element/table/table-row.js"},
+    {"type": "js", "url": "js/proto/element/label.js"},
+    {"type": "js", "url": "js/proto/element/field.js"},
     {"type": "css", "url": "css/cog-style.css"},
     {"type": "css", "url": "css/user-style.css"}
 ]);

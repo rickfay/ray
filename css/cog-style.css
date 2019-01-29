@@ -9,18 +9,29 @@
     padding: 10px;
 }
 
-.cogComponent {
-    display: block;
-    border-collapse: collapse;
-    font-family: Calibri, serif;
-    font-size: 20px;
+.cogContainer {
 }
 
-.cogContainer {
+.cogElement {
+    display: block;
+}
+
+.cogField {
+    display: inline-block;
+    height: 50px;
+    vertical-align: top;
+    padding-bottom: 5px;
+    /*border: 1px solid #22242D;*/
+    min-width: 400px;
+}
+
+.cogField .cogRadio {
+    height: unset;
 }
 
 .cogForm {
     border: 1px solid gray;
+    display: block;
 }
 
 .cogImage {
@@ -28,10 +39,17 @@
 
 .cogInput {
     height: 30px;
-    display: inline-block;
 }
 
 .cogInputRadio {
+    height: unset;
+    float: left;
+}
+
+.cogInputRadioButton {
+}
+
+.cogInputRadioLabel {
 }
 
 .cogInputDate, .cogInputText {
@@ -40,11 +58,28 @@
     border-radius: 10px;
     color: #FFFFFF;
     text-align: center;
+    width: 200px;
+}
+
+.cogLabel {
+    width: 150px;
+    padding: 5px 5px 5px 15px;
+    float: left;
+}
+
+.cogOption {
+    width: fit-content;
 }
 
 .cogSelect {
-    display: inline-block;
     height: 30px;
+    width: 200px;
+    background-color: #000000;
+    border: none;
+    border-radius: 10px;
+    color: rgb(145, 146, 155);
+    text-align: center;
+    text-align-last: center;
 }
 
 .cogText {
@@ -52,4 +87,6 @@
     border-radius: 10px;
     padding: 10px;
     margin-top: 0;
+    /* width: 100%; */
+    float: left;
 }

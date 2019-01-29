@@ -14,13 +14,12 @@
     },
     "Constant": {},
     "DataMap": {
-    
     },
     "Elements": {
         "App": {
             "demoApp": {
                 "Elements": {
-                    "cogDemoContainer": "Container"
+                    "cogFormDemo": "Container"
                 }
             }
         },
@@ -30,24 +29,52 @@
                     "cogDemoText": "Text",
                     "meeseeks": "Image",
                     "meeseeksText": "Text",
-                    "demoForm": "Form",
-                    "demoTable": "Table"
+                    "demoForm": "Form"
                 },
                 "Style": {
                     "text-align": "center"
                 }
+            },
+            "cogFormDemo": {
+                "Elements": {
+                    "demoForm": "Form"
+                }
+            }
+        },
+        "Field": {
+            "demoTextField": {
+                "Label": "Text:",
+                "Type": "Text",
+                "Input": "demoInputText"
+            },
+            "demoSelectField": {
+                "Label": "Select:",
+                "Type": "Select",
+                "Input": "selectDemo"
+            },
+            "demoDateField": {
+                "Label": "Date:",
+                "Type": "Date",
+                "Input": "demoInputDate"
+            },
+            "demoRadioField": {
+                "Label": "Radio:",
+                "Type": "Radio",
+                "Input": "demoInputRadio"
             }
         },
         "Form": {
             "demoForm": {
                 "Elements": {
                     "demoText": "Text",
-                    "selectDemo": "Select",
-                    "demoInputText": "InputText",
-                    "demoInputDate": "InputDate",
-                    "demoInputRadio": "InputRadio"
+                    "demoTextField": "Field",
+                    "demoRadioField": "Field",
+                    "demoSelectField": "Field",
+                    "demoDateField": "Field"
                 },
-                "Class": [ "demoForm" ]
+                "Class": [
+                    "demoForm"
+                ]
             }
         },
         "Image": {
@@ -64,7 +91,6 @@
         "InputRadio": {
             "demoInputRadio": {
                 "Options": {
-                    "Select": "Select",
                     "Rick": "Rick",
                     "Morty": "Morty",
                     "Summer": "Summer",
@@ -77,6 +103,11 @@
             "demoInputText": {
                 "Label": "Label",
                 "Placeholder": "Enter Text"
+            }
+        },
+        "Label": {
+            "demoLabel": {
+                "Text": "Label"
             }
         },
         "Select": {
@@ -93,13 +124,18 @@
             }
         },
         "Table": {
-            "demoTable": {
-                "Data": [
-                    [{"meeseeks": "Image"}, {"meeseeksText": "Text"}],
-                    [{"meeseeks": "Image"}, {"meeseeksText": "Text"}]
-
-                ]
-            }
+            "demoTable": [
+                "row1",
+                "row2",
+                "row3"
+            ]
+        },
+        "TableRow": {
+            "row1": {
+                "TableData": []
+            },
+            "row2": {},
+            "row3": {}
         },
         "Text": {
             "cogDemoText": {
@@ -118,5 +154,11 @@
                 "Text": "All right, all right, cool it! I see what's happening here. You're both young, you're both unsure about your place in the universe, and you both want to be Grandpa's favorite. I can fix this. Morty, sit here. Summer, you sit here. Now, listen—I know the two of you are very different from each other in a lot of ways, but you have to understand that as far as Grandpa's concerned, you're both pieces of shit! Yeah. I can prove it mathematically. Actually, l-l-let me grab my whiteboard. This has been a long time coming, anyways."
             }
         }
+    },
+    "Enums": {
+        "FieldState": [
+            "EDIT",
+            "VIEW"
+        ]
     }
 }

@@ -22,6 +22,7 @@ cog.Class.service("Root", {
             // Fetch the Metadata Configuration and build the App
             cog.Ajax.get(cogMetaSrc, (response) => {
                 cog.Metadata.addAppMetadata(cogAppId, JSON.parse(response));
+                cog.Enum.init(cogAppId);
                 cog.Class.new("App", cogAppId);
             });
         }

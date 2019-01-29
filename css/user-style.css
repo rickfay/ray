@@ -1,8 +1,7 @@
 body {
     background-color: #18171F;
     font-family: Arial, serif;
-    display: block;
-    width: 640px;
+    width: 100%;
     color: rgb(145, 146, 155);
 }
 
@@ -14,6 +13,7 @@ body {
     padding: 10px;
 }
 
+/*
 .demoInput {
     width: 250px;
     border: 5px solid red;
@@ -24,5 +24,5 @@ body {
 }
 
 .demoForm {
-    height: 200px;
-}
+    /* height: 200px;
+}*/

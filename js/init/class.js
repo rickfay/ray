@@ -20,16 +20,16 @@ cog.Class = (function Class() {
      * Instantiate the cog object from the given prototype
      *
      * @param proto
-     * @param id
+     * @param def
      * @param args
      */
-    function instantiate(proto, id, ...args) {
+    function instantiate(proto, def, ...args) {
 
         let obj = Object.create(proto);
         proxyPrototype(obj, {obj: obj});
 
         if (obj.construct) {
-            obj.construct(id, ...args);
+            obj.construct(def, ...args);
         }
 
         return obj;
@@ -75,11 +75,11 @@ cog.Class = (function Class() {
         /**
          * Constructs a new COG Component
          *
-         * @param id ID of the object
+         * @param def ID of the object
          * @param proto COG Class prototype for the object
          * @param args Any arguments to pass to the constructor
          */
-        new: function (proto, id, ...args) {
+        new: function (proto, def, ...args) {
 
             // Allow construction by passing in either the name or prototype definition of an object
             if (typeof proto === "string") {
@@ -91,7 +91,7 @@ cog.Class = (function Class() {
 
             // FIXME Add back validation
 
-            return instantiate(proto, id, ...args);
+            return instantiate(proto, def, ...args);
         },
 
         /**
