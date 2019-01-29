@@ -48,7 +48,6 @@ const cog = {};
     {"type": "js", "url": "js/service/root.js"},
     {"type": "js", "url": "js/util/log.js"},
     {"type": "js", "url": "js/proto/object.js"},
-    {"type": "js", "url": "js/proto/event.js"},
     {"type": "js", "url": "js/service/events.js"},
     {"type": "js", "url": "js/util/ajax.js"},
     {"type": "js", "url": "js/proto/element/element.js"},
