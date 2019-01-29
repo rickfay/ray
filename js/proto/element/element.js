@@ -24,11 +24,11 @@ cog.Prototype.define("Element", cog.Object, {
         this.obj.buildDom();
         this.obj.buildChildren();
 
-        let fn = function callback() {
+        /*let fn = function callback() {
             console.log("tacofunk!: " + this.obj.getClassName());
         }.bind(this);
 
-        cog.Events.sub("tacos", this, fn);
+        cog.Events.sub("tacos", this, fn);*/
     },
 
     /**
@@ -86,5 +86,19 @@ cog.Prototype.define("Element", cog.Object, {
         cog.Util.applyStyle(this.dom, this.metadata.Style);
         cog.Util.applyClass(this.dom, this.metadata.Class);
         cog.Util.applyClass(this.dom, ...[cog.Util.getCogClasses(this.obj).map(clazz => `cog${clazz}`)]);
+    },
+
+
+    /**
+     * FIXME For testing events, don't leave here.
+     * @returns {*}
+     */
+    toggleEdit: function toggleEdit() {
+        if (this.dom.style.visibility === "hidden") {
+            this.dom.style.visibility = "visible";
+        } else {
+            this.dom.style.visibility = "hidden";
+        }
+        return this.obj.getNamespace();
     }
 });

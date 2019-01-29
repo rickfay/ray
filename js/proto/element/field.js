@@ -40,7 +40,6 @@ cog.Prototype.define("Field", cog.Element, (function Field() {
                     console.log(`Invalid input type '${this.metadata.Type}' on '${this.id}'`);
             }
 
-
             let label = cog.Class.new("Label", {"id": "label", "Text": this.metadata.Label}, this.namespace);
             let input = cog.Class.new(inputType, this.metadata.Input, this.namespace);
             let text = cog.Class.new("Text", { "id": "text", "Text": "Hot garbage" }, this.namespace);
@@ -49,8 +48,9 @@ cog.Prototype.define("Field", cog.Element, (function Field() {
             this.dom.appendChild(input.getDom());
             this.dom.appendChild(text.getDom());
 
-            cog.Events.sub("toggle", input.getNamespace(), input.toggleEdit);
-            cog.Events.sub("toggle", text.getNamespace(), text.toggleEdit);
+            const parentNamespace = cog.Namespace.getParent(this.namespace);
+            cog.Events.sub("toggle", parentNamespace, input.toggleEdit);
+            cog.Events.sub("toggle", parentNamespace, text.toggleEdit);
 
             text.toggleEdit();
         },
