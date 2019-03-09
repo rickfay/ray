@@ -1,7 +1,9 @@
 /**
- * COG Input Text Class Definition
+ * Ray Input Text Class Definition
+ *
+ * @namespace ray.InputRadio
  */
-cog.Prototype.define("InputRadio", cog.Input, {
+ray.Prototype.define("InputRadio", ray.Input, {
 
     /**
      * Build the DOM
@@ -23,18 +25,18 @@ cog.Prototype.define("InputRadio", cog.Input, {
             inputDom.id = `${this.id}.RADIO.${option}`;
             inputDom.name = this.id;
             inputDom.value = this.metadata.Options[option];
-            cog.Util.applyClass(inputDom, "cogInputRadioButton")
+            ray.Util.applyClass(inputDom, "rayInputRadioButton")
 
             // Create Label for this Radio Button
             let labelDom = document.createElement("label");
             labelDom.id = `${this.id}.LABEL.${option}`;
             labelDom.setAttribute("for", inputDom.id);
             labelDom.innerHTML = option;
-            cog.Util.applyClass(labelDom, "cogInputRadioLabel");
+            ray.Util.applyClass(labelDom, "rayInputRadioLabel");
 
             // Create Wrapper
             let wrapDom = document.createElement("div");
-            cog.Util.applyClass(wrapDom, "cogOption");
+            ray.Util.applyClass(wrapDom, "rayOption");
 
             // Append Radio Button and Label to the Wrapper, and the Wrapper to the DOM
             wrapDom.appendChild(inputDom);

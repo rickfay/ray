@@ -1,13 +1,15 @@
 /**
  * Input Date Class Definition
+ *
+ * @namespace ray.InputDate
  */
-cog.Prototype.define("InputDate", cog.Input, {
+ray.Prototype.define("InputDate", ray.Input, {
 
     /**
      * Build the DOM
      */
     buildDom: function buildDom() {
-        cog.Class.super(this, 'buildDom');
+        ray.Class.super(this, 'buildDom');
         this.dom.type = "date";
         this.dom.placeholder = this.metadata.Placeholder;
         this.obj.resetCss();

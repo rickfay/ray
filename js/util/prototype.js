@@ -1,12 +1,12 @@
 /**
- * cog Prototype Utility
+ * Ray Prototype Utility
  *
- * @namespace cog.Prototype
+ * @namespace ray.Prototype
  */
-cog.Class.util("Prototype", {
+ray.Class.util("Prototype", {
 
     /**
-     * Builds a cog Prototype definition to be later used as the prototype in constructing a cog object
+     * Builds a ray Prototype definition to be later used as the prototype in constructing a ray object
      *
      * @param name
      * @param parent
@@ -14,8 +14,8 @@ cog.Class.util("Prototype", {
      */
     define: function define(name, parent, def) {
 
-        if (cog[name]) {
-            console.error(`cog prototype "${name}" already exists`);
+        if (ray[name]) {
+            console.error(`ray prototype "${name}" already exists`);
             return;
         }
 
@@ -23,10 +23,10 @@ cog.Class.util("Prototype", {
         let proto = parent ? Object.create(parent, Object.getOwnPropertyDescriptors(def)) : def;
 
         // Set meta properties of the prototype definition
-        proto[cog.Symbol.CLASS_NAME] = name;
-        proto[Symbol.toStringTag] = `cog.${name}`;
+        proto[ray.Symbol.CLASS_NAME] = name;
+        proto[Symbol.toStringTag] = `ray.${name}`;
 
-        // Attach the class definition to the cog API
-        cog[name] = proto;
+        // Attach the class definition to the ray API
+        ray[name] = proto;
     }
 });

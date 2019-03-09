@@ -1,7 +1,9 @@
 /**
- * COG Element
+ * Ray Element
+ *
+ * @namespace ray.Element
  */
-cog.Prototype.define("Element", cog.Object, {
+ray.Prototype.define("Element", ray.Object, {
 
     /**
      * Construct the Component
@@ -12,12 +14,12 @@ cog.Prototype.define("Element", cog.Object, {
     construct: function construct(def, namespace) {
 
         if (typeof def === "string") {
-            this.namespace = cog.Namespace.build(namespace, def);
+            this.namespace = ray.Namespace.build(namespace, def);
             this.id = this.namespace;
-            this.metadata = cog.Metadata.get(this.obj);
+            this.metadata = ray.Metadata.get(this.obj);
         } else if (typeof def === "object") {
             this.metadata = def;
-            this.namespace = cog.Namespace.build(namespace, this.metadata.id);
+            this.namespace = ray.Namespace.build(namespace, this.metadata.id);
             this.id = this.namespace;
         }
 
@@ -28,7 +30,7 @@ cog.Prototype.define("Element", cog.Object, {
             console.log("tacofunk!: " + this.obj.getClassName());
         }.bind(this);
 
-        cog.Events.sub("tacos", this, fn);*/
+        ray.Events.sub("tacos", this, fn);*/
     },
 
     /**
@@ -47,7 +49,7 @@ cog.Prototype.define("Element", cog.Object, {
         let elements = this.obj.getMetadata().Elements;
         if (elements) {
             for (let element of Object.keys(elements)) {
-                this.dom.appendChild(cog.Class.new(elements[element], element, this.namespace).getDom());
+                this.dom.appendChild(ray.Class.new(elements[element], element, this.namespace).getDom());
             }
         }
     },
@@ -83,9 +85,9 @@ cog.Prototype.define("Element", cog.Object, {
      */
     resetCss: function resetCss() {
         this.dom.removeAttribute("class");
-        cog.Util.applyStyle(this.dom, this.metadata.Style);
-        cog.Util.applyClass(this.dom, this.metadata.Class);
-        cog.Util.applyClass(this.dom, ...[cog.Util.getCogClasses(this.obj).map(clazz => `cog${clazz}`)]);
+        ray.Util.applyStyle(this.dom, this.metadata.Style);
+        ray.Util.applyClass(this.dom, this.metadata.Class);
+        ray.Util.applyClass(this.dom, ...[ray.Util.getRayClasses(this.obj).map(clazz => `ray${clazz}`)]);
     },
 
 

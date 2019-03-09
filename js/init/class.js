@@ -1,9 +1,9 @@
 /**
- * COG Class Interaction API
+ * Ray Class Interaction API
  *
- * @namespace cog.Class
+ * @namespace ray.Class
  */
-cog.Class = (function Class() {
+ray.Class = (function Class() {
 
     /**
      * Assign Meta properties to the object
@@ -12,12 +12,12 @@ cog.Class = (function Class() {
      * @param name
      */
     function assignMetaProperties(obj, name) {
-        obj[cog.Symbol.CLASS_NAME] = name;
-        obj[Symbol.toStringTag] = `cog.${name}`;
+        obj[ray.Symbol.CLASS_NAME] = name;
+        obj[Symbol.toStringTag] = `ray.${name}`;
     }
 
     /**
-     * Instantiate the cog object from the given prototype
+     * Instantiate the ray object from the given prototype
      *
      * @param proto
      * @param def
@@ -69,21 +69,21 @@ cog.Class = (function Class() {
 
     return {
 
-        [cog.Symbol.CLASS_NAME]: "Class",
-        [Symbol.toStringTag]: "cog.Class",
+        [ray.Symbol.CLASS_NAME]: "Class",
+        [Symbol.toStringTag]: "ray.Class",
 
         /**
-         * Constructs a new COG Component
+         * Constructs a new Ray Component
          *
          * @param def ID of the object
-         * @param proto COG Class prototype for the object
+         * @param proto Ray Class prototype for the object
          * @param args Any arguments to pass to the constructor
          */
         new: function (proto, def, ...args) {
 
             // Allow construction by passing in either the name or prototype definition of an object
             if (typeof proto === "string") {
-                proto = cog[proto];
+                proto = ray[proto];
             } else if (typeof proto !== "object") {
                 console.error(`Cannot construct class from prototype: ${proto}`);
                 return;
@@ -95,15 +95,15 @@ cog.Class = (function Class() {
         },
 
         /**
-         * Constructs a service instance of a Class and appends it to the cog API.
+         * Constructs a service instance of a Class and appends it to the ray API.
          *
          * @param name
          * @param proto
          */
         service: function service(name, proto) {
 
-            if (cog[name]) {
-                console.error(`Service instance cog.${name} already exists`);
+            if (ray[name]) {
+                console.error(`Service instance ray.${name} already exists`);
                 return;
             } else if (typeof proto !== "object") {
                 console.error(`Cannot construct class from prototype: ${proto}`);
@@ -111,25 +111,25 @@ cog.Class = (function Class() {
             }
 
             assignMetaProperties(proto, name);
-            cog[name] = instantiate(proto, name);
+            ray[name] = instantiate(proto, name);
         },
 
         /**
-         * Appends a Utility object definition to the cog API
+         * Appends a Utility object definition to the ray API
          *
          * @param name
          * @param obj
          */
         util: function util(name, obj) {
 
-            if (cog[name]) {
-                console.error(`Utility cog.${name} already exists`);
+            if (ray[name]) {
+                console.error(`Utility ray.${name} already exists`);
             } else if (typeof obj !== "object") {
                 console.error(`Cannot create Utility from non-object: ${obj}`);
             }
 
             assignMetaProperties(obj, name);
-            cog[name] = obj;
+            ray[name] = obj;
         },
 
         /**
@@ -156,7 +156,7 @@ cog.Class = (function Class() {
             if (superProto.hasOwnProperty(fn)) {
                 return superProto[fn].apply(scope, Array.prototype.slice.call(arguments, 2));
             } else {
-                console.warn(`No superclass definition found for cog.${scope.obj.getClassName()}.${fn}`);
+                console.warn(`No superclass definition found for ray.${scope.obj.getClassName()}.${fn}`);
             }
         }
     }

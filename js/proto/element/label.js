@@ -1,4 +1,4 @@
-cog.Prototype.define("Label", cog.Element, {
+ray.Prototype.define("Label", ray.Element, {
 
     /**
      * Build the DOM

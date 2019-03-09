@@ -1,7 +1,7 @@
 /**
- * COG Utilities
+ * Ray Utilities
  */
-cog.Class.util("Util", {
+ray.Class.util("Util", {
 
     /**
      * Append dom to the parentDom
@@ -74,15 +74,15 @@ cog.Class.util("Util", {
     },
 
     /**
-     * Returns an Array of all the cog Component classes
+     * Returns an Array of all the ray Component classes
      */
-    getCogClasses: function getCogClasses(obj) {
+    getRayClasses: function getRayClasses(obj) {
 
         let classes = [];
         let proto = Object.getPrototypeOf(obj);
 
         while (proto && proto !== Object.prototype) {
-            classes.push(proto[cog.Symbol.CLASS_NAME]);
+            classes.push(proto[ray.Symbol.CLASS_NAME]);
             proto = Object.getPrototypeOf(proto);
         }
 
@@ -98,7 +98,7 @@ cog.Class.util("Util", {
      */
     ref: function ref(obj, ...propChain) {
         if (propChain.length > 0) {
-            return obj ? cog.Util.ref(obj[propChain[0]], ...Array.prototype.slice.call(propChain, 1)) : undefined;
+            return obj ? ray.Util.ref(obj[propChain[0]], ...Array.prototype.slice.call(propChain, 1)) : undefined;
         } else {
             return obj;
         }

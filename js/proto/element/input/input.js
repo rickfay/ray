@@ -1,7 +1,9 @@
 /**
- * COG Input Class
+ * Ray Input Class
+ *
+ * @namespace ray.Input
  */
-cog.Prototype.define("Input", cog.Element, {
+ray.Prototype.define("Input", ray.Element, {
 
     /**
      * Build the DOM

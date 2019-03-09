@@ -1,7 +1,7 @@
 /**
- * cog Metadata data-store
+ * Ray Metadata data-store
  */
-cog.Class.service("Metadata", {
+ray.Class.service("Metadata", {
 
     /**
      * Constructor
@@ -11,7 +11,7 @@ cog.Class.service("Metadata", {
     },
 
     /**
-     * Add App Metadata to the private cog Metadata store
+     * Add App Metadata to the private Ray Metadata store
      *
      * @param appId
      * @param metadata
@@ -31,13 +31,13 @@ cog.Class.service("Metadata", {
         let metadata;
 
         if (typeof obj === "string") {
-            metadata = cog.Util.ref(this.metadata, ...obj.split("."));
+            metadata = ray.Util.ref(this.metadata, ...obj.split("."));
         } else if (typeof obj === "object") {
-            let appId = cog.Namespace.getRoot(obj.getNamespace());
-            let id = cog.Namespace.getId(obj.getNamespace());
+            let appId = ray.Namespace.getRoot(obj.getNamespace());
+            let id = ray.Namespace.getId(obj.getNamespace());
             let className = obj.getClassName();
 
-            metadata = cog.Util.ref(this.metadata, appId, "Elements", className, id);
+            metadata = ray.Util.ref(this.metadata, appId, "Elements", className, id);
         }
 
         if (!metadata) {

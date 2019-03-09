@@ -1,7 +1,7 @@
 /**
- * COG Image Class Definition
+ * Ray Image Class Definition
  */
-cog.Prototype.define("Image", cog.Element, {
+ray.Prototype.define("Image", ray.Element, {
 
     /**
      * Builds the DOM

@@ -1,7 +1,7 @@
 /**
- * cog Namespace utilities
+ * Ray Namespace utilities
  */
-cog.Class.util("Namespace", (function Namespace() {
+ray.Class.util("Namespace", (function Namespace() {
 
     // Private closure scope
 

@@ -1,9 +1,9 @@
 /**
- * COG Text Component Definition
+ * Ray Text Component Definition
  *
  * @type {*|{}}
  */
-cog.Prototype.define("Text", cog.Element, {
+ray.Prototype.define("Text", ray.Element, {
 
     /**
      * Build the DOM

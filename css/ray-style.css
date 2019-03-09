@@ -1,22 +1,22 @@
 /*
- * cog-style.css
+ * ray-style.css
  *
- * Stylesheet for default COG Component CSS classes
+ * Stylesheet for default Ray Component CSS classes
  *
  */
 
-.cogApp {
+.rayApp {
     padding: 10px;
 }
 
-.cogContainer {
+.rayContainer {
 }
 
-.cogElement {
+.rayElement {
     display: block;
 }
 
-.cogField {
+.rayField {
     display: inline-block;
     height: 50px;
     vertical-align: top;
@@ -25,34 +25,34 @@
     min-width: 400px;
 }
 
-.cogField .cogRadio {
+.rayField .rayRadio {
     height: unset;
 }
 
-.cogForm {
+.rayForm {
     border: 1px solid gray;
     display: block;
 }
 
-.cogImage {
+.rayImage {
 }
 
-.cogInput {
+.rayInput {
     height: 30px;
 }
 
-.cogInputRadio {
+.rayInputRadio {
     height: unset;
     float: left;
 }
 
-.cogInputRadioButton {
+.rayInputRadioButton {
 }
 
-.cogInputRadioLabel {
+.rayInputRadioLabel {
 }
 
-.cogInputDate, .cogInputText {
+.rayInputDate, .rayInputText {
     background-color: #000000;
     border: none;
     border-radius: 10px;
@@ -61,17 +61,17 @@
     width: 200px;
 }
 
-.cogLabel {
+.rayLabel {
     width: 150px;
     padding: 5px 5px 5px 15px;
     float: left;
 }
 
-.cogOption {
+.rayOption {
     width: fit-content;
 }
 
-.cogSelect {
+.raySelect {
     height: 30px;
     width: 200px;
     background-color: #000000;
@@ -82,7 +82,7 @@
     text-align-last: center;
 }
 
-.cogText {
+.rayText {
     background-color: #22242D;
     border-radius: 10px;
     padding: 10px;

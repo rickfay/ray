@@ -19,14 +19,14 @@
         "App": {
             "demoApp": {
                 "Elements": {
-                    "cogFormDemo": "Container"
+                    "rayFormDemo": "Container"
                 }
             }
         },
         "Container": {
-            "cogDemoContainer": {
+            "rayDemoContainer": {
                 "Elements": {
-                    "cogDemoText": "Text",
+                    "rayDemoText": "Text",
                     "meeseeks": "Image",
                     "meeseeksText": "Text",
                     "demoForm": "Form"
@@ -35,7 +35,7 @@
                     "text-align": "center"
                 }
             },
-            "cogFormDemo": {
+            "rayFormDemo": {
                 "Elements": {
                     "demoForm": "Form"
                 }
@@ -138,10 +138,10 @@
             "row3": {}
         },
         "Text": {
-            "cogDemoText": {
-                "Text": "COG Framework Demo",
+            "rayDemoText": {
+                "Text": "Ray Framework Demo",
                 "Class": [
-                    "cogDemoTitle"
+                    "rayDemoTitle"
                 ]
             },
             "demoText": {

@@ -1,7 +1,7 @@
 /**
- * COG Form Class Definition
+ * Ray Form Class Definition
  */
-cog.Prototype.define("Form", cog.Element, {
+ray.Prototype.define("Form", ray.Element, {
 
     /**
      * Build the DOM

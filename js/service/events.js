@@ -1,7 +1,7 @@
 /**
- * COG Framework Event Management System
+ * Ray Framework Event Management System
  */
-cog.Class.service("Events", (function Events() {
+ray.Class.service("Events", (function Events() {
 
     function trigger(event, namespace, ...args) {
 
@@ -51,7 +51,7 @@ cog.Class.service("Events", (function Events() {
          * @param callback
          */
         sub: function sub(eventName, namespace, callback) {
-            let event = cog.Util.buildRef(this.events, eventName);
+            let event = ray.Util.buildRef(this.events, eventName);
 
             if (!event[namespace]) {
                 event[namespace] = [];

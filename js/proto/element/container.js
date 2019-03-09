@@ -1,4 +1,4 @@
 /**
- * COG Container Component Definition
+ * Ray Container Component Definition
  */
-cog.Prototype.define("Container", cog.Element, {});
+ray.Prototype.define("Container", ray.Element, {});

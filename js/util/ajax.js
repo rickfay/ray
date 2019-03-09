@@ -1,8 +1,8 @@
 /**
- * COG Ajax Utilities
+ * Ray Ajax Utilities
  */
 
-cog.Class.util("Ajax", {
+ray.Class.util("Ajax", {
 
     /**
      * Ajax GET

@@ -1,5 +1,5 @@
 {
-  "name": "cog",
+  "name": "ray",
   "version": "1.0.0",
   "dependencies": {
     "connect": "^3.6.6",
@@ -13,7 +13,7 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/richfay/cog.git"
+    "url": "git+https://github.com/richfay/ray.git"
   },
   "keywords": [
     "cog"
@@ -21,7 +21,7 @@
   "author": "Rich Fay <therichfay@gmail.com>",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/richfay/cog/issues"
+    "url": "https://github.com/richfay/ray/issues"
   },
-  "homepage": "https://github.com/richfay/cog#readme"
+  "homepage": "https://github.com/richfay/ray#readme"
 }

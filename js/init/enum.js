@@ -1,7 +1,7 @@
 /**
  * Utility Class to store sets of Enumerated values
  */
-cog.Class.service("Enum", {
+ray.Class.service("Enum", {
 
     init: function init() {
 
@@ -10,7 +10,7 @@ cog.Class.service("Enum", {
             "FieldState": ["EDIT", "VIEW"]
         };
 
-        //let enums = cog.Metadata.get(`${cogAppId}.Enums`);
+        //let enums = ray.Metadata.get(`${rayAppId}.Enums`);
 
         for (let e of Object.keys(enums)) {
             this.obj[e] = {};

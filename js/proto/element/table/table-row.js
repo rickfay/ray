@@ -1,7 +1,7 @@
 /**
- * COG Table Row Class
+ * Ray Table Row Class
  */
-cog.Prototype.define("TableRow", cog.Element, {
+ray.Prototype.define("TableRow", ray.Element, {
 
     construct: function construct(id, parent) {
         this.obj.buildDom();

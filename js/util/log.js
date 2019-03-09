@@ -1,9 +1,9 @@
 /**
- * COG Framework Logging API
+ * Ray Framework Logging API
  *
  * TODO Implement this correctly...
  */
-cog.Class.util("Log", {
+ray.Class.util("Log", {
 
     /**
      * Log ERROR level message

@@ -1,9 +1,9 @@
 /**
- * COG Select Class Definition
+ * Ray Select Class Definition
  *
  * @type {*|{}}
  */
-cog.Prototype.define("Select", cog.Element, {
+ray.Prototype.define("Select", ray.Element, {
 
     /**
      * Build the DOM

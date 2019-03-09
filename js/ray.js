@@ -1,11 +1,11 @@
 "use strict";
 
 /**
- * cog Framework API
+ * Ray Framework API
  *
  * @namespace
  */
-const cog = {};
+const ray = {};
 
 // Load the dependencies
 (function load(dependencies) {
@@ -65,11 +65,11 @@ const cog = {};
     {"type": "js", "url": "js/proto/element/table/table-row.js"},
     {"type": "js", "url": "js/proto/element/label.js"},
     {"type": "js", "url": "js/proto/element/field.js"},
-    {"type": "css", "url": "css/cog-style.css"},
+    {"type": "css", "url": "css/ray-style.css"},
     {"type": "css", "url": "css/user-style.css"}
 ]);
 
 // Wait for everything to be loaded, and then bootstrap the app
 window.addEventListener("load", function bootstrap() {
-    cog.Root.bootstrap();
+    ray.Root.bootstrap();
 });

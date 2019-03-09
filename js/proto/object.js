@@ -1,12 +1,14 @@
 /**
- * COG Base Object
+ * Ray Base Object
+ *
+ * @namespace ray.Object
  */
-cog.Prototype.define("Object", null, {
+ray.Prototype.define("Object", null, {
 
     /**
-     * Get the Cog Class Name
+     * Get the ray Class Name
      */
     getClassName: function getClassName() {
-        return this.obj[cog.Symbol.CLASS_NAME];
+        return this.obj[ray.Symbol.CLASS_NAME];
     }
 });

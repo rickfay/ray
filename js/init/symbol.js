@@ -1,17 +1,17 @@
 /**
- * COG Framework Private Symbol Registry
+ * Ray Framework Private Symbol Registry
  */
-cog.Symbol = {
+ray.Symbol = {
 
-    [Symbol.toStringTag]: "cog.Symbol",
+    [Symbol.toStringTag]: "ray.Symbol",
 
     /**
-     * Name of the COG Class
+     * Name of the ray Class
      */
     CLASS_NAME: undefined
 };
 
-// Attach unique Symbols to cog.Symbol
-for (let key of Object.keys(cog.Symbol)) {
-    cog.Symbol[key] = Symbol(key);
+// Attach unique Symbols to ray.Symbol
+for (let key of Object.keys(ray.Symbol)) {
+    ray.Symbol[key] = Symbol(key);
 }

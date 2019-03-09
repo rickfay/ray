@@ -1,4 +1,4 @@
-cog.Prototype.define("Field", cog.Element, (function Field() {
+ray.Prototype.define("Field", ray.Element, (function Field() {
 
 
     let FIELD_STATE_ENUM = {"VIEW": 0, "EDIT": 1};
@@ -9,7 +9,7 @@ cog.Prototype.define("Field", cog.Element, (function Field() {
          *
          */
         construct: function construct(def, namespace) {
-            cog.Class.super(this, "construct", def, namespace);
+            ray.Class.super(this, "construct", def, namespace);
             this.state = FIELD_STATE_ENUM.VIEW;
         },
 
@@ -28,7 +28,7 @@ cog.Prototype.define("Field", cog.Element, (function Field() {
                     break;
                 case "Radio":
                     inputType = "InputRadio";
-                    cog.Util.applyStyle(this.dom, {"height": "unset"});
+                    ray.Util.applyStyle(this.dom, {"height": "unset"});
                     break;
                 case "Date":
                     inputType = "InputDate";
@@ -40,17 +40,17 @@ cog.Prototype.define("Field", cog.Element, (function Field() {
                     console.log(`Invalid input type '${this.metadata.Type}' on '${this.id}'`);
             }
 
-            let label = cog.Class.new("Label", {"id": "label", "Text": this.metadata.Label}, this.namespace);
-            let input = cog.Class.new(inputType, this.metadata.Input, this.namespace);
-            let text = cog.Class.new("Text", { "id": "text", "Text": "Hot garbage" }, this.namespace);
+            let label = ray.Class.new("Label", {"id": "label", "Text": this.metadata.Label}, this.namespace);
+            let input = ray.Class.new(inputType, this.metadata.Input, this.namespace);
+            let text = ray.Class.new("Text", { "id": "text", "Text": "Hot garbage" }, this.namespace);
 
             this.dom.appendChild(label.getDom());
             this.dom.appendChild(input.getDom());
             this.dom.appendChild(text.getDom());
 
-            const parentNamespace = cog.Namespace.getParent(this.namespace);
-            cog.Events.sub("toggle", parentNamespace, input.toggleEdit);
-            cog.Events.sub("toggle", parentNamespace, text.toggleEdit);
+            const parentNamespace = ray.Namespace.getParent(this.namespace);
+            ray.Events.sub("toggle", parentNamespace, input.toggleEdit);
+            ray.Events.sub("toggle", parentNamespace, text.toggleEdit);
 
             text.toggleEdit();
         },

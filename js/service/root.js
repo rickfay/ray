@@ -1,29 +1,29 @@
 /**
- * Cog Root Element Representation
+ * Ray Root Element Representation
  */
-cog.Class.service("Root", {
+ray.Class.service("Root", {
 
     /**
-     * Builds and bootstraps the cog Apps
+     * Builds and bootstraps the ray Apps
      */
     bootstrap: function bootstrap() {
 
         this.appDoms = {};
 
-        // Query for cog apps to build, then build them
-        for (let appDom of document.querySelectorAll("[data-cog-app-id]")) {
+        // Query for ray apps to build, then build them
+        for (let appDom of document.querySelectorAll("[data-ray-app-id]")) {
 
-            let cogAppId = appDom.dataset.cogAppId;
-            let cogMetaSrc = appDom.dataset.cogMetaSrc;
+            let rayAppId = appDom.dataset.rayAppId;
+            let rayMetaSrc = appDom.dataset.rayMetaSrc;
 
-            // cog.Root keeps track of all the cog App DOMs
-            this.appDoms[cogAppId] = appDom;
+            // ray.Root keeps track of all the ray App DOMs
+            this.appDoms[rayAppId] = appDom;
 
             // Fetch the Metadata Configuration and build the App
-            cog.Ajax.get(cogMetaSrc, (response) => {
-                cog.Metadata.addAppMetadata(cogAppId, JSON.parse(response));
-                cog.Enum.init(cogAppId);
-                cog.Class.new("App", cogAppId);
+            ray.Ajax.get(rayMetaSrc, (response) => {
+                ray.Metadata.addAppMetadata(rayAppId, JSON.parse(response));
+                ray.Enum.init(rayAppId);
+                ray.Class.new("App", rayAppId);
             });
         }
     },

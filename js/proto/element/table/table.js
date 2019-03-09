@@ -1,7 +1,7 @@
 /**
- * Cog Table Class Definition
+ * Ray Table Class Definition
  */
-cog.Prototype.define("Table", cog.Element, {
+ray.Prototype.define("Table", ray.Element, {
 
     /**
      * Build the DOM
@@ -28,7 +28,7 @@ cog.Prototype.define("Table", cog.Element, {
                 let cellDom = document.createElement("td");
 
                 for (let element of Object.keys(cell)) {
-                    cellDom.appendChild(cog.Class.new(cell[element], element, this.obj.getNamespace()).getDom());
+                    cellDom.appendChild(ray.Class.new(cell[element], element, this.obj.getNamespace()).getDom());
                 }
 
                 rowDom.appendChild(cellDom);

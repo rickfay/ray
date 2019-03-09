@@ -1,13 +1,15 @@
 /**
- * COG Input Text Class Definition
+ * Ray Input Text Class Definition
+ *
+ * @namespace ray.InputText
  */
-cog.Prototype.define("InputText", cog.Input, {
+ray.Prototype.define("InputText", ray.Input, {
 
     /**
      * Build the DOM
      */
     buildDom: function buildDom() {
-        cog.Class.super(this, 'buildDom');
+        ray.Class.super(this, 'buildDom');
         this.dom.type = "text";
         this.dom.placeholder = this.metadata.Placeholder;
         this.obj.resetCss();
